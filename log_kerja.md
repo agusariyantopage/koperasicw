@@ -10,4 +10,6 @@ Rabo 10 November 2021
 Kamis 11 November 2021
 --> Buat Tabel Jual dan Detail Jual
 07:00 S/D 08:00--> Create Modul User
+Sabtu 25 November 2021
+08:00 S/d 10:00--> Buat Modul Laporan
 
