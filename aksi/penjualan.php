@@ -66,7 +66,8 @@
 
                 $sql3="insert into jual_detail(id_jual, id_produk, hpp, harga_jual, jumlah, dibuat_pada, diubah_pada) values($id_jual,$id_produk,$hpp,$harga_jual,$jumlah,DEFAULT,DEFAULT)";
                 mysqli_query($koneksi,$sql3);
-                $sql4="update produk set qty=qty-$jumlah where id_produk=$id_produk";
+                // Update Stok Produk Pada Jenis Barang Non Jasa
+                $sql4="update produk set qty=qty-$jumlah where id_produk=$id_produk and servis=0";
                 mysqli_query($koneksi,$sql4);
             }
 

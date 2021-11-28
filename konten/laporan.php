@@ -28,7 +28,7 @@
             <a target="blank" href="pdf/output/lap_pembelian_umum.php">
                 <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>Cetak</h3>
 
                     <p>Laporan Pembelian</p>
                 </div>
@@ -44,7 +44,7 @@
             <a target="blank" href="pdf/output/lap_penjualan_umum.php">
                 <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>Cetak</h3>
 
                     <p>Laporan Penjualan</p>
                 </div>
@@ -57,12 +57,12 @@
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <a target="blank" href="pdf/output/lap_penjualan_umum.php">
+            <a target="blank" href="pdf/output/lap_kontribusi_belanja.php">
                 <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>Cetak</h3>
 
-                    <p>Laporan Penjualan</p>
+                    <p>Laporan Kontribusi Belanja</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-clipboard"></i>
@@ -76,7 +76,7 @@
             <a target="blank" href="pdf/output/lap_penjualan_umum.php">
                 <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>Cetak</h3>
 
                     <p>Laporan Penjualan</p>
                 </div>
