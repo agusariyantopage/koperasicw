@@ -79,7 +79,7 @@ $pdf->AddPage();
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
 // create some HTML content
-$html = '<p style="text-align: center;"><strong>Laporan Transaksi Penjualan</strong></p>
+$html = '<p style="text-align: center;"><strong>Laporan Kontribusi Belanja Toko Anggota</strong></p>
 <table style="width:100%;">    
     <tr>
         <td>Periode</td>

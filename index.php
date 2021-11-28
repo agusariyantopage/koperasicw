@@ -92,6 +92,7 @@
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">App Koperasi 1.0</span>
     </a>
+    
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -102,7 +103,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block"><?= $_SESSION['backend_user_nama']; ?></a>
-        </div>
+        </div>        
       </div>
 
       <!-- SidebarSearch Form -->
@@ -112,17 +113,19 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="index.php" class="nav-link active">
+          <li class="nav-header">Periode Pembukuan : 2021.11</li>
+
+          <li class="nav-item">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
+                
               </p>
             </a>            
           </li>
           
-          <li class="nav-header">MENU APLIKASI</li>
+          
 <?php
           $_SESSION['backend_level']=1;
           if($_SESSION['backend_level']==1){
@@ -259,6 +262,7 @@
       "autoWidth": true,
       "responsive": true,
     });
+    
 
     //$('.select2').select2();
     //Initialize Select2 Elements

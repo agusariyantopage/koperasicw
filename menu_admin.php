@@ -76,24 +76,48 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?p=pesanan" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Penjualan</p>
+                  <p>Simpanan</p>
                   
                 </a>
               </li>
               <li class="nav-item">
-                <a href="index.php?p=pesanan-gagal" class="nav-link">
+                <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Pembelian</p>
+                  <p>Pinjaman</p>
+                </a>
+              </li>                           
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-money-check"></i>
+              <p>
+                Keuangan               
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?p=anggota-saldo" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Periode Pembukuan</p>                  
                 </a>
               </li>
               <li class="nav-item">
-                <a href="index.php?p=pesanan-laporan" class="nav-link">
+                <a href="index.php?p=anggota-saldo" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Stok</p>
+                  <p>Saldo</p>                  
                 </a>
-              </li>              
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Poin</p>
+                </a>
+              </li>                           
             </ul>
           </li>
 
