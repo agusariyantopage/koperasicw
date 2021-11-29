@@ -101,7 +101,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?p=anggota-saldo" class="nav-link">
+                <a href="index.php?p=keuangan-periode" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Periode Pembukuan</p>                  
                 </a>
@@ -123,7 +123,7 @@
 
           <li class="nav-item">
             <a href="index.php?p=user" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
+              <i class="nav-icon fas fa-key"></i>
               <p>
                 User
               </p>

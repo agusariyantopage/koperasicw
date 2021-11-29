@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2021 at 09:01 AM
+-- Generation Time: Nov 27, 2021 at 10:57 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.1.32
 
@@ -350,8 +350,7 @@ INSERT INTO `beli` (`id_beli`, `id_pemasok`, `id_user`, `metode_bayar`, `tanggal
 (1, 1, 1, 'KAS', '2021-11-25', '890000.00', '0.00', '0.00', '2021-11-25 09:57:07', '2021-11-25 09:57:07'),
 (2, 3, 1, 'KAS', '2021-11-25', '200000.00', '0.00', '0.00', '2021-11-25 09:58:58', '2021-11-25 09:58:58'),
 (3, 3, 1, 'KAS', '2021-11-26', '100000.00', '0.00', '0.00', '2021-11-26 14:35:46', '2021-11-26 14:35:46'),
-(4, 1, 1, 'UTANG', '2021-11-26', '105000.00', '0.00', '0.00', '2021-11-26 14:37:32', '2021-11-26 14:37:32'),
-(5, 1, 1, 'KAS', '2021-11-28', '400000.00', '0.00', '0.00', '2021-11-28 09:58:18', '2021-11-28 09:58:18');
+(4, 1, 1, 'UTANG', '2021-11-26', '105000.00', '0.00', '0.00', '2021-11-26 14:37:32', '2021-11-26 14:37:32');
 
 -- --------------------------------------------------------
 
@@ -380,8 +379,7 @@ INSERT INTO `beli_detail` (`id_beli_detail`, `id_beli`, `id_produk`, `hpp`, `har
 (3, 1, 405, '0.00', '33000.00', '10.00', '2021-11-25 09:57:07', '2021-11-25 09:57:07'),
 (4, 2, 433, '25000.00', '20000.00', '10.00', '2021-11-25 09:58:58', '2021-11-25 09:58:58'),
 (5, 3, 406, '0.00', '10000.00', '10.00', '2021-11-26 14:35:46', '2021-11-26 14:35:46'),
-(6, 4, 406, '10000.00', '10500.00', '10.00', '2021-11-26 14:37:32', '2021-11-26 14:37:32'),
-(7, 5, 433, '23275.86', '20000.00', '20.00', '2021-11-28 09:58:18', '2021-11-28 09:58:18');
+(6, 4, 406, '10000.00', '10500.00', '10.00', '2021-11-26 14:37:32', '2021-11-26 14:37:32');
 
 -- --------------------------------------------------------
 
@@ -409,9 +407,7 @@ CREATE TABLE `jual` (
 INSERT INTO `jual` (`id_jual`, `id_anggota`, `id_user`, `metode_bayar`, `tanggal_transaksi`, `total`, `diskon`, `pajak`, `dibuat_pada`, `diubah_pada`) VALUES
 (1, 119, 1, 'POTONG SALDO ANGGOTA', '2021-11-25', '28000.00', '0.00', '0.00', '2021-11-25 09:57:49', '2021-11-25 09:57:49'),
 (2, 117, 1, 'POTONG SALDO ANGGOTA', '2021-11-27', '93000.00', '0.00', '0.00', '2021-11-27 17:51:21', '2021-11-27 17:51:21'),
-(3, 46, 1, 'KAS', '2021-11-27', '36000.00', '0.00', '0.00', '2021-11-27 17:52:00', '2021-11-27 17:52:00'),
-(4, 268, 1, 'POTONG SALDO ANGGOTA', '2021-11-28', '12500.00', '0.00', '0.00', '2021-11-28 09:57:41', '2021-11-28 09:57:41'),
-(5, 0, 1, 'KAS', '2021-11-28', '36000.00', '0.00', '0.00', '2021-11-28 09:58:43', '2021-11-28 09:58:43');
+(3, 46, 1, 'KAS', '2021-11-27', '36000.00', '0.00', '0.00', '2021-11-27 17:52:00', '2021-11-27 17:52:00');
 
 -- --------------------------------------------------------
 
@@ -439,10 +435,7 @@ INSERT INTO `jual_detail` (`id_jual_detail`, `id_jual`, `id_produk`, `hpp`, `har
 (2, 2, 433, '23275.86', '28000.00', '2.00', '2021-11-27 17:51:21', '2021-11-27 17:51:21'),
 (3, 2, 405, '33000.00', '37000.00', '1.00', '2021-11-27 17:51:22', '2021-11-27 17:51:22'),
 (4, 3, 433, '23275.86', '28000.00', '1.00', '2021-11-27 17:52:00', '2021-11-27 17:52:00'),
-(5, 3, 282, '6000.00', '8000.00', '1.00', '2021-11-27 17:52:01', '2021-11-27 17:52:01'),
-(6, 4, 481, '0.00', '250.00', '50.00', '2021-11-28 09:57:41', '2021-11-28 09:57:41'),
-(7, 5, 282, '6000.00', '8000.00', '1.00', '2021-11-28 09:58:43', '2021-11-28 09:58:43'),
-(8, 5, 433, '21851.57', '28000.00', '1.00', '2021-11-28 09:58:43', '2021-11-28 09:58:43');
+(5, 3, 282, '6000.00', '8000.00', '1.00', '2021-11-27 17:52:01', '2021-11-27 17:52:01');
 
 -- --------------------------------------------------------
 
@@ -469,9 +462,7 @@ INSERT INTO `keranjang` (`id_keranjang`, `id_user`, `id_produk`, `hpp`, `harga`,
 (68, 2, 176, '0.00', '26000.00', '1', '2021-11-23 19:17:12', '2021-11-23 19:17:12'),
 (73, 4, 433, '0.00', '28000.00', '1', '2021-11-24 00:16:06', '2021-11-24 00:16:06'),
 (74, 4, 405, '0.00', '37000.00', '1', '2021-11-24 00:17:34', '2021-11-24 00:17:34'),
-(75, 4, 176, '0.00', '26000.00', '1', '2021-11-24 00:17:41', '2021-11-24 00:17:41'),
-(86, 1, 433, '21851.57', '28000.00', '1', '2021-11-28 10:51:29', '2021-11-28 10:51:29'),
-(87, 1, 282, '6000.00', '8000.00', '1', '2021-11-28 10:52:04', '2021-11-28 10:52:04');
+(75, 4, 176, '0.00', '26000.00', '1', '2021-11-24 00:17:41', '2021-11-24 00:17:41');
 
 -- --------------------------------------------------------
 
@@ -519,43 +510,9 @@ CREATE TABLE `pemasok` (
 --
 
 INSERT INTO `pemasok` (`id_pemasok`, `nama`, `alamat`, `telepon`, `email`, `dibuat_pada`, `diubah_pada`) VALUES
-(1, 'PT. INDO MARCOX', 'Denpasar', '087860265451', 'agus.arianto21@gmail.com', '2021-11-23 23:32:54', '2021-11-28 10:07:51'),
-(3, 'PT. LOTTE MART', 'Denpasar', '-', '', '2021-11-24 08:22:39', '2021-11-28 10:08:11'),
-(4, 'PT. Maju Muncur ', 'Denpasar', '-', '', '2021-11-24 08:22:55', '2021-11-28 10:08:19');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `periode_pembukuan`
---
-
-CREATE TABLE `periode_pembukuan` (
-  `id_periode` int(10) NOT NULL,
-  `kode` varchar(7) NOT NULL,
-  `tahun` int(4) NOT NULL,
-  `bulan` varchar(20) NOT NULL,
-  `tanggal_mulai` date NOT NULL,
-  `tanggal_selesai` date NOT NULL,
-  `is_locked` int(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `periode_pembukuan`
---
-
-INSERT INTO `periode_pembukuan` (`id_periode`, `kode`, `tahun`, `bulan`, `tanggal_mulai`, `tanggal_selesai`, `is_locked`) VALUES
-(1, '2021.01', 2021, 'Januari', '2021-01-01', '2021-01-01', 0),
-(2, '2021.02', 2021, 'Februari', '2021-02-01', '2021-02-01', 0),
-(3, '2021.03', 2021, 'Maret', '2021-03-01', '2021-03-01', 0),
-(4, '2021.04', 2021, 'April', '2021-04-01', '2021-04-01', 0),
-(5, '2021.05', 2021, 'Mei', '2021-05-01', '2021-05-01', 0),
-(6, '2021.06', 2021, 'Juni', '2021-06-01', '2021-06-01', 0),
-(7, '2021.07', 2021, 'Juli', '2021-07-01', '2021-07-01', 0),
-(8, '2021.08', 2021, 'Agustus', '2021-08-01', '2021-08-01', 0),
-(9, '2021.09', 2021, 'September', '2021-09-01', '2021-09-01', 0),
-(10, '2021.10', 2021, 'Oktober', '2021-10-01', '2021-10-01', 0),
-(11, '2021.11', 2021, 'November', '2021-11-01', '2021-11-01', 0),
-(12, '2021.12', 2021, 'Desember', '2021-12-01', '2021-12-01', 0);
+(1, 'PT. INDO MARCOX', '-x', '08180808x', 'agus.arianto21@gmail.comx', '2021-11-23 23:32:54', '2021-11-23 23:34:24'),
+(3, 'PT. LOTTE MART', '-', '-', '', '2021-11-24 08:22:39', '2021-11-24 08:22:39'),
+(4, 'PT. Maju Muncur ', '-', '-', '', '2021-11-24 08:22:55', '2021-11-24 08:22:55');
 
 -- --------------------------------------------------------
 
@@ -868,7 +825,7 @@ INSERT INTO `produk` (`id_produk`, `barcode`, `id_produk_kategori`, `nama`, `sat
 (279, '', 13, 'SASA SAUS TOMAT 135 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '5000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (280, '', 13, 'BANGO KECAP MANIS 135 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '10500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (281, '', 13, 'KECAP MANIS INDOFOOD 135 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '7000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
-(282, '', 13, 'ABC KECAP PEDAS 135 ML', 'PCS', '-', '', '6000.00', '6000.00', '8', '0', '8000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
+(282, '', 13, 'ABC KECAP PEDAS 135 ML', 'PCS', '-', '', '6000.00', '6000.00', '9', '0', '8000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (283, '', 13, 'SEDAP KECAP MANIS 135 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '8500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (284, '', 13, 'SAORI SAUS TIRAM 133 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '11500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (285, '', 13, 'INDOFOOD SAUS PEDAS MANIS 135 ML', 'PCS', '-', '', '0.00', '0.00', '0', '0', '8500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
@@ -1020,7 +977,7 @@ INSERT INTO `produk` (`id_produk`, `barcode`, `id_produk_kategori`, `nama`, `sat
 (430, '', 23, 'BURGER PAKET BERNARDI 6 BIJI', 'PCS', '-', '', '0.00', '0.00', '0', '0', '27000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (431, '', 23, 'SPICY CHIKEN WING BERNARDI 380 GR', 'PCS', '-', '', '0.00', '0.00', '0', '0', '37800.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (432, '', 23, 'SCALLOP BERNARDI 500 GR', 'PCS', '-', '', '0.00', '0.00', '0', '0', '25000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
-(433, '', 23, 'ABBY SOSIS BAKAR JUMBO (AYAM) BERNARDI 500 GR', 'PCS', '-', '', '21851.57', '20000.00', '45', '0', '28000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
+(433, '', 23, 'ABBY SOSIS BAKAR JUMBO (AYAM) BERNARDI 500 GR', 'PCS', '-', '', '23275.86', '20000.00', '26', '0', '28000.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (434, '', 23, 'SMOKED BEEF BERNARDI -', 'PCS', '-', '', '0.00', '0.00', '0', '0', '43500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (435, '', 23, 'SOSIS BAKAR RASA KEJU /JOFRAN 500 GR', 'PCS', '-', '', '0.00', '0.00', '0', '0', '32500.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
 (436, '', 23, 'BASO JOFRAN SAPI 500 GR', 'PCS', '-', '', '0.00', '0.00', '0', '0', '37800.00', '1.00', 0, '2021-11-08 16:32:00', '2021-11-08 16:32:00'),
@@ -1138,8 +1095,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `password`, `dibuat_pada`, `diubah_pada`, `terakhir_login`, `akses`, `status`) VALUES
-(1, 'I KETUT ELI SUMERTA', 'admin', 'admin', '2021-11-11 07:49:25', '2021-11-11 07:49:25', '2021-11-29 15:43:56', 'Administrator', 'ONLINE'),
-(2, 'NI KETUT CATUR BUDIASIH', 'catur', 'catur', '2021-11-11 08:04:45', '2021-11-11 08:13:04', '2021-11-28 09:56:40', 'Simpan Pinjam', 'OFFLINE'),
+(1, 'I KETUT ELI SUMERTA', 'admin', 'admin', '2021-11-11 07:49:25', '2021-11-11 07:49:25', '2021-11-27 16:56:04', 'Administrator', 'ONLINE'),
+(2, 'NI KETUT CATUR BUDIASIH', 'catur', 'catur', '2021-11-11 08:04:45', '2021-11-11 08:13:04', '2021-11-24 00:25:52', 'Simpan Pinjam', 'OFFLINE'),
 (4, 'NI LUH GITA MAHARANI', 'gita', 'gita', '2021-11-11 08:17:19', '2021-11-11 08:17:19', '2021-11-24 00:25:04', 'Toko', 'OFFLINE');
 
 --
@@ -1195,12 +1152,6 @@ ALTER TABLE `pemasok`
   ADD PRIMARY KEY (`id_pemasok`);
 
 --
--- Indexes for table `periode_pembukuan`
---
-ALTER TABLE `periode_pembukuan`
-  ADD PRIMARY KEY (`id_periode`);
-
---
 -- Indexes for table `produk`
 --
 ALTER TABLE `produk`
@@ -1232,49 +1183,43 @@ ALTER TABLE `anggota`
 -- AUTO_INCREMENT for table `beli`
 --
 ALTER TABLE `beli`
-  MODIFY `id_beli` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_beli` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `beli_detail`
 --
 ALTER TABLE `beli_detail`
-  MODIFY `id_beli_detail` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_beli_detail` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `jual`
 --
 ALTER TABLE `jual`
-  MODIFY `id_jual` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_jual` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `jual_detail`
 --
 ALTER TABLE `jual_detail`
-  MODIFY `id_jual_detail` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_jual_detail` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id_keranjang` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `keranjang_beli`
 --
 ALTER TABLE `keranjang_beli`
-  MODIFY `id_keranjang_beli` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_keranjang_beli` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `pemasok`
 --
 ALTER TABLE `pemasok`
   MODIFY `id_pemasok` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `periode_pembukuan`
---
-ALTER TABLE `periode_pembukuan`
-  MODIFY `id_periode` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `produk`
