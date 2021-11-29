@@ -12,6 +12,8 @@ Kamis 11 November 2021
 07:00 S/D 08:00--> Create Modul User
 Sabtu 25 November 2021
 08:00 S/d 10:00--> Buat Modul Laporan Beli & Jual
+Senin 29 November 2021
+22:00 S/D 23:00 --> Modul Setup Periode Keuangan + Edit
 
 ## ON Plan ##
 Setup Periode Tutup Buku Bulanan

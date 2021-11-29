@@ -56,10 +56,53 @@
                   <td><?= $kolom['tanggal_mulai']; ?></td>                 
                   <td><?= $kolom['tanggal_selesai']; ?></td>                  
                   <td>
-                    <a href=""><i class="fas fa-chart-line"></i></a>
+                  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_periode']; ?>"><i class="fas fa-edit"></i></button>
                   </td>
                 </tr>
-              
+<!-- Modal Edit -->
+<div class="modal fade" id="editModal<?= $kolom['id_periode']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Ubah Periode Pembukuan</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form method="post" enctype="multipart/form-data" action="aksi/periode.php">
+        <input type="hidden" name="aksi" value="ubah">
+        <div>
+          <label for="id_periode">ID Periode</label>  
+          <input type="text" class="form-control" readonly name="id_periode" value="<?= $kolom['id_periode']; ?>">
+        </div>
+        <div>
+          <label for="kode">Kode</label>
+          <input type="text" name="kode" readonly class="form-control" value="<?= $kolom['kode']; ?>">
+        </div>
+        <div>
+          <label for="tahun">Tahun</label>
+          <input type="text" name="tahun" readonly class="form-control" value="<?= $kolom['tahun']; ?>">
+        </div>
+        <div>
+          <label for="bulan">Bulan</label>
+          <input type="text" name="bulan" readonly class="form-control" value="<?= $kolom['bulan']; ?>">
+        </div>
+        <div>
+          <label for="tanggal_mulai">Tanggal Mulai</label>
+          <input type="date" name="tanggal_mulai" class="form-control" value="<?= $kolom['tanggal_mulai']; ?>">
+        </div>
+        <div>
+          <label for="tanggal_selesai">Tanggal Selesai</label>
+          <input type="date" name="tanggal_selesai" class="form-control" value="<?= $kolom['tanggal_selesai']; ?>">
+        </div>               
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Ubah</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>                
 <?php
   }
 ?>                
