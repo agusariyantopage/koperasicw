@@ -273,6 +273,14 @@
         dropdownParent: $('#simpanJualModal'),
         theme: 'bootstrap4'        
     });
+    $('#id_anggota').select2({
+        dropdownParent: $('#simpanJualModalKas'),
+        theme: 'bootstrap4'        
+    });
+    $('#id_anggota').select2({
+        dropdownParent: $('#simpanJualModalCicil'),
+        theme: 'bootstrap4'        
+    });
     $('#id_pemasok').select2({
         dropdownParent: $('#simpanJualModal'),
         theme: 'bootstrap4'        
@@ -282,7 +290,48 @@
 </script>
 
 <script> 
+    // Modul Kembalian Pembayaran Kas
+    function hitung_kembalian(evt){
+      var total=document.getElementById("grandtotal").value;
+      var bayar=document.getElementById("bayar").value;
+      var kembali=bayar-total;
+      document.getElementById("kembali").innerHTML="Rp. "+kembali;
+    }
+    
+    document.getElementById('bayar').addEventListener("mouseup", function (evt) {
+      hitung_kembalian();      
+    }, false);
+    document.getElementById('bayar').addEventListener("keyup", function (evt) {
+      hitung_kembalian();      
+    }, false);
 
+    // Modul Pembayaran Cicilan
+    function tampilkan_cicilan(evt){
+      var jumlahCicil=document.getElementById("jumlah_cicil").value;   
+      //alert(jumlahCicil);  
+      var x = document.getElementById('tabel_cicil');
+      var new_row = x.rows[1].cloneNode(true);
+      var len = x.rows.length;
+      new_row.cells[0].innerHTML = len;
+
+      var inp1 = new_row.cells[1].getElementsByTagName('input')[0];
+      inp1.id += len;
+      inp1.value = '';
+      var inp2 = new_row.cells[2].getElementsByTagName('input')[0];
+      inp2.id += len;
+      inp2.value = '';
+      x.appendChild(new_row);
+      
+    }
+    
+    document.getElementById('jumlah_cicil').addEventListener("mouseup", function (evt) {
+      tampilkan_cicilan();      
+    }, false);
+    document.getElementById('jumlah_cicil').addEventListener("keyup", function (evt) {
+      tampilkan_cicilan();      
+    }, false);
+
+    // Modul Sweet Alert
     var statusProses = '<?= $status_proses; ?>';
     
     if(statusProses==='SUKSES SIMPAN JUAL'){

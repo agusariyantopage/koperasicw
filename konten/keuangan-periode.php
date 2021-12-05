@@ -57,6 +57,7 @@
                   <td><?= $kolom['tanggal_selesai']; ?></td>                  
                   <td>
                   <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_periode']; ?>"><i class="fas fa-edit"></i></button>
+                  <a href="index.php?p=keuangan-periode-prosesbulanan"><button type="button" class="btn btn-link"><i class="fas fa-calculator"></i></button></a>
                   </td>
                 </tr>
 <!-- Modal Edit -->

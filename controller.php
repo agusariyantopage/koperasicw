@@ -73,6 +73,10 @@
         $title  ="App Koperasi V 1.0 | Periode Pembukuan";
         $konten="konten/keuangan-periode.php";
     }
+    else if($_GET['p']=='keuangan-periode-prosesbulanan'){
+        $title  ="App Koperasi V 1.0 | Proses Perhitungan Bulanan";
+        $konten="konten/keuangan-periode-prosesbulanan.php";
+    }
     else if($_GET['p']=='anggota-saldo'){
         $title  ="App Koperasi V 1.0 | Saldo Anggota";
         $konten="konten/anggota-saldo.php";

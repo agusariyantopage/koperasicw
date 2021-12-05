@@ -101,7 +101,7 @@ $html = '<p style="text-align: center;"><strong>Laporan Kontribusi Belanja Toko 
 
 <tbody>';
 
-$sql1="select nama,alamat,is_individual,sum(total) as kontribusi from jual,anggota where jual.id_anggota=anggota.id_anggota group by jual.id_anggota ";
+$sql1="select nama,alamat,is_individual,sum(total) as kontribusi from jual,anggota where jual.id_anggota=anggota.id_anggota group by jual.id_anggota";
 $query1=mysqli_query($koneksi,$sql1);
 
 $no=0;

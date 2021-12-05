@@ -113,7 +113,7 @@
                   </tbody>
                   <tfoot>
                     <td align='center' colspan="5">GRANDTOTAL</td>
-                    <td align='right'><?= number_format($grandtotal); ?></td>
+                    <td align='right'><p><?= number_format($grandtotal); ?></p></td>
                   </tfoot>
                   </table>                
 
@@ -121,7 +121,18 @@
           </div>
           <?php
             if($grandtotal>0){
-              echo "<button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModal'><i class='fas fa-save'></i> Simpan</button>";   
+              echo "Pilih Metode Pembayaran : ";
+              echo "<div class='row'>";
+              echo "<div class='col-sm-4 mb-1'>";
+              echo "<button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModalKas'><i class='fas fa-money-bill-alt'></i> Pembayaran Kas </button>";
+              echo "</div>";
+              echo "<div class='col-sm-4 mb-1'>";              
+              echo "<button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModal'><i class='fas fa-address-book'></i> Potong Saldo Anggota </button>"; 
+              echo "</div>";
+              echo "<div class='col-sm-4 mb-1'>";  
+              echo "<button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModalCicil'><i class='fas fa-credit-card'></i> Cicil Bayar </button>";   
+              echo "</div>";
+              echo "</div>";
             }
           ?>
         </div>
@@ -187,27 +198,79 @@
   </div>
 </div>
 
- <!-- Modal Simpan Jual -->
-<div class="modal fade" id="simpanJualModal" tabindex="-1" aria-labelledby="simpanJualModalLabel" aria-hidden="true">
+ <!-- Modal Simpan Jual Kas -->
+<div class="modal fade" id="simpanJualModalKas" tabindex="-1" aria-labelledby="simpanJualModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="simpanJualModalLabel">Simpan Transaksi Penjualan</h5>
+        <h5 class="modal-title" id="simpanJualModalLabel">Simpan Transaksi Penjualan (Pembayaran Kas)</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form action="aksi/penjualan.php" method="post">
           <input type="hidden" name="aksi" value="simpan-penjualan">
-          <input type="hidden" name="total" value="<?= $grandtotal; ?>">
-          <div class="form-row">
-            <div class="form-group col-sm-4">
-              <label for="metode_bayar">Metode Pembayaran</label>
-              <select name="metode_bayar" class="form-control" required>
-                <option value="">-- Pilih Metode Pembayaran --</option>
-                <option>KAS</option>
-                <option>POTONG SALDO ANGGOTA</option>
+          <input type="hidden" id="grandtotal" name="total" value="<?= $grandtotal; ?>">
+          <input type="hidden" name="metode_bayar" value="KAS">
+          <div class="form-row">            
+            <div class="form-group col-sm-6">
+              <label for="id_anggota">Anggota</label>
+              <select name="id_anggota" id="id_anggota" class="form-control" required>
+                <option value="">-- Pilih Anggota Koperasi --</option>
+                <?php
+                  $sql1="select * from anggota order by nama";
+                  $query1=mysqli_query($koneksi,$sql1);
+                  while($kolom1=mysqli_fetch_array($query1)){
+                    echo "<option value='$kolom1[id_anggota]'>$kolom1[nama]</option>";
+                  }
+
+                ?>
               </select>
             </div>
+            <div class="form-group col-sm-6">
+              <label for="tanggal_transaksi">Tanggal Transaksi</label>
+              <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
+            </div>            
+          </div>
+          <table class="table">
+            <tr>
+              <td>GRANDTOTAL</td>
+              <td>:</td>
+              <td align="right">Rp. <?= $grandtotal; ?></td>
+            </tr>
+            <tr>
+              <td>PEMBAYARAN</td>
+              <td>:</td>
+              <td align="right"><input id="bayar" type="number" class="form-control text-right"></td>
+            </tr>
+            <tr>
+              <td>KEMBALI</td>
+              <td>:</td>
+              <td align="right"><p id="kembali"></p></td>
+            </tr>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal Simpan Jual Cicil -->
+<div class="modal fade" id="simpanJualModalCicil" tabindex="-1" aria-labelledby="simpanJualModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="simpanJualModalLabel">Simpan Transaksi Penjualan (Pembayaran Mencicil)</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="aksi/penjualan.php" method="post">
+          <input type="hidden" name="aksi" value="simpan-penjualan">
+          <input type="hidden" id="grandtotal" name="total" value="<?= $grandtotal; ?>">
+          <input type="hidden" name="metode_bayar" value="KAS">
+          <div class="form-row">            
             <div class="form-group col-sm-4">
               <label for="id_anggota">Anggota</label>
               <select name="id_anggota" id="id_anggota" class="form-control" required>
@@ -223,6 +286,72 @@
               </select>
             </div>
             <div class="form-group col-sm-4">
+              <label for="tanggal_transaksi">Tanggal Transaksi</label>
+              <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
+            </div>            
+            <div class="form-group col-sm-4">
+              <label for="jumlah_cicil">Jumlah Cicilan (Max 5 Bulan)</label>
+              <input type="number" id="jumlah_cicil" name="jumlah_cicil" value="1" class="form-control" >
+            </div>            
+          </div>
+          <table class="table" id="tabel_cicil">
+            <tbody>
+              <tr>
+                <td>GRANDTOTAL</td>
+                <td>:</td>
+                <td align="right">Rp. <?= $grandtotal; ?></td>
+              </tr>            
+              <tr>
+                <td>Pembayaran ke - 1</td>
+                <td>:</td>
+                <td align="right"><input type="number" class="form-control text-right"></td>
+              </tr>
+              <tr>
+                <td>Pembayaran ke - 2</td>
+                <td>:</td>
+                <td align="right"></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ <!-- Modal Simpan Jual -->
+<div class="modal fade" id="simpanJualModal" tabindex="-1" aria-labelledby="simpanJualModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="simpanJualModalLabel">Simpan Transaksi Penjualan</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="aksi/penjualan.php" method="post">
+          <input type="hidden" name="aksi" value="simpan-penjualan">
+          <input type="hidden" name="total" value="<?= $grandtotal; ?>">
+          <input type="hidden" name="metode_bayar" value="POTONG SALDO ANGGOTA">
+          <div class="form-row">
+            
+            <div class="form-group col-sm-6">
+              <label for="id_anggota">Anggota</label>
+              <select name="id_anggota" id="id_anggota" class="form-control" required>
+                <option value="">-- Pilih Anggota Koperasi --</option>
+                <?php
+                  $sql1="select * from anggota where id_anggota!=0 order by nama";
+                  $query1=mysqli_query($koneksi,$sql1);
+                  while($kolom1=mysqli_fetch_array($query1)){
+                    echo "<option value='$kolom1[id_anggota]'>$kolom1[nama]</option>";
+                  }
+
+                ?>
+              </select>
+            </div>
+            <div class="form-group col-sm-6">
               <label for="tanggal_transaksi">Tanggal Transaksi</label>
               <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
             </div>
