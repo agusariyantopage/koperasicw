@@ -214,7 +214,7 @@
           <div class="form-row">            
             <div class="form-group col-sm-6">
               <label for="id_anggota">Anggota</label>
-              <select name="id_anggota" id="id_anggota" class="form-control" required>
+              <select name="id_anggota" id="id_anggota1" class="select2bs4 form-control" required>
                 <option value="">-- Pilih Anggota Koperasi --</option>
                 <?php
                   $sql1="select * from anggota order by nama";
@@ -269,14 +269,14 @@
         <form action="aksi/penjualan.php" method="post">
           <input type="hidden" name="aksi" value="simpan-penjualan">
           <input type="hidden" id="grandtotal" name="total" value="<?= $grandtotal; ?>">
-          <input type="hidden" name="metode_bayar" value="KAS">
+          <input type="hidden" name="metode_bayar" value="CICIL BAYAR">
           <div class="form-row">            
             <div class="form-group col-sm-4">
               <label for="id_anggota">Anggota</label>
-              <select name="id_anggota" id="id_anggota" class="form-control" required>
+              <select name="id_anggota" id="id_anggota" class="select2bs4 form-control" required>
                 <option value="">-- Pilih Anggota Koperasi --</option>
                 <?php
-                  $sql1="select * from anggota order by nama";
+                  $sql1="select * from anggota where id_anggota!=0 order by nama";
                   $query1=mysqli_query($koneksi,$sql1);
                   while($kolom1=mysqli_fetch_array($query1)){
                     echo "<option value='$kolom1[id_anggota]'>$kolom1[nama]</option>";
@@ -287,11 +287,11 @@
             </div>
             <div class="form-group col-sm-4">
               <label for="tanggal_transaksi">Tanggal Transaksi</label>
-              <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
+              <input type="date" id="tanggal_transaksi" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
             </div>            
             <div class="form-group col-sm-4">
               <label for="jumlah_cicil">Jumlah Cicilan (Max 5 Bulan)</label>
-              <input type="number" id="jumlah_cicil" name="jumlah_cicil" value="1" class="form-control" >
+              <input type="number" id="jumlah_cicil" name="jumlah_cicil" value="0" min="2" max="5" class="form-control" >
             </div>            
           </div>
           <table class="table" id="tabel_cicil">
@@ -302,14 +302,29 @@
                 <td align="right">Rp. <?= $grandtotal; ?></td>
               </tr>            
               <tr>
-                <td>Pembayaran ke - 1</td>
+                <td id="tanggal_bayar1">Pembayaran ke - 1 (2021-12-22)</td>
                 <td>:</td>
-                <td align="right"><input type="number" class="form-control text-right"></td>
+                <td align="right"><input id="jumlah_bayar1" name="jumlah_bayar1" type="number" class="form-control text-right"></td>
               </tr>
               <tr>
-                <td>Pembayaran ke - 2</td>
+                <td id="tanggal_bayar2">Pembayaran ke - 2 (2021-12-22)</td>
                 <td>:</td>
-                <td align="right"></td>
+                <td align="right"><input id="jumlah_bayar2"  name="jumlah_bayar2" type="number" class="form-control text-right"></td>
+              </tr>
+              <tr>
+                <td id="tanggal_bayar3">Pembayaran ke - 3 (2021-12-22)</td>
+                <td>:</td>
+                <td align="right"><input id="jumlah_bayar3"  name="jumlah_bayar3" type="number" class="form-control text-right"></td>
+              </tr>
+              <tr>
+                <td id="tanggal_bayar4">Pembayaran ke - 4 (2021-12-22)</td>
+                <td>:</td>
+                <td align="right"><input id="jumlah_bayar4"  name="jumlah_bayar4" type="number" class="form-control text-right"></td>
+              </tr>
+              <tr>
+                <td id="tanggal_bayar5">Pembayaran ke - 5 (2021-12-22)</td>
+                <td>:</td>
+                <td align="right"><input id="jumlah_bayar5"  name="jumlah_bayar5" type="number" class="form-control text-right"></td>
               </tr>
             </tbody>
           </table>
@@ -322,7 +337,7 @@
     </div>
   </div>
 </div>
- <!-- Modal Simpan Jual -->
+ <!-- Modal Simpan Jual Potong Saldo Anggota -->
 <div class="modal fade" id="simpanJualModal" tabindex="-1" aria-labelledby="simpanJualModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -339,7 +354,7 @@
             
             <div class="form-group col-sm-6">
               <label for="id_anggota">Anggota</label>
-              <select name="id_anggota" id="id_anggota" class="form-control" required>
+              <select name="id_anggota" id="id_anggota" class="select2bs4 form-control" required>
                 <option value="">-- Pilih Anggota Koperasi --</option>
                 <?php
                   $sql1="select * from anggota where id_anggota!=0 order by nama";
