@@ -6,7 +6,7 @@
         $konten="konten/home.php";    
     }
 
-    // Awal Menu Master Data
+    // (START) Menu Master Data
     else if($_GET['p']=='kategori'){
         $title  ="App Koperasi V 1.0 | Kategori Produk";
         $konten="konten/produk_kategori.php";
@@ -31,7 +31,7 @@
         $title  ="App Koperasi V 1.0 | Pemasok";
         $konten="konten/pemasok.php";
     }
-    // Akhir Menu Master Data
+    // (END) Menu Master Data
 
     else if($_GET['p']=='user'){
         $title  ="App Koperasi V 1.0 | User";
@@ -61,10 +61,22 @@
         $title  ="App Koperasi V 1.0 | Kartu Stok Individu";
         $konten="konten/kartu_stok_individu.php";
     }
-    else if($_GET['p']=='pesanan-edit'){
-        $title  ="App Koperasi V 1.0";
-        $konten="konten/pesanan-edit.php";
+
+    // (START)  Menu Simpan Pinjam
+    else if($_GET['p']=='simpanan'){
+        $title  ="App Koperasi V 1.0 | Daftar Simpanan";
+        $konten="konten/simpanan.php";
     }
+    else if($_GET['p']=='simpanan-tambah'){
+        $title  ="App Koperasi V 1.0 | Tambah Transaksi Simpanan";
+        $konten="konten/simpanan-tambah.php";
+    }
+    else if($_GET['p']=='pinjaman'){
+        $title  ="App Koperasi V 1.0 | Daftar Pinjaman";
+        $konten="konten/pinjaman.php";
+    }
+    // (END)    Menu Simpan Pinjam
+
     else if($_GET['p']=='laporan'){
         $title  ="App Koperasi V 1.0 | Laporan";
         $konten="konten/laporan.php";

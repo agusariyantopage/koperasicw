@@ -397,10 +397,13 @@
       for (i = 0; i < jumlahCicil; i++) {
         elemenJumlah="jumlah_bayar"+(i+1);
         elemenTanggal="tanggal_bayar"+(i+1);
+        var inputElemenTanggal="tanggal_jatuh_tempo["+i+"]";
         document.getElementById(elemenJumlah).value=cicilan;
         var curtgl=tanggalCicilan[i];
         document.getElementById(elemenTanggal).innerHTML="Pembayaran ke - "+(i+1)+"("+curtgl+")";
+        //document.getElementById(elemenTanggal).innerHTML=inputElemenTanggal;
         document.getElementById(elemenJumlah).readOnly = false;
+        document.getElementById(inputElemenTanggal).value=curtgl;
       }
       
       

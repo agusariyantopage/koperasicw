@@ -305,11 +305,17 @@
                 <td id="tanggal_bayar1">Pembayaran ke - 1 (2021-12-22)</td>
                 <td>:</td>
                 <td align="right"><input id="jumlah_bayar1" name="jumlah_bayar1" type="number" class="form-control text-right"></td>
+                <input type="hidden" id="tanggal_jatuh_tempo[0]" name="tanggal_jatuh_tempo[0]">
+                <input type="hidden" id="tanggal_jatuh_tempo[1]" name="tanggal_jatuh_tempo[1]">
+                <input type="hidden" id="tanggal_jatuh_tempo[2]" name="tanggal_jatuh_tempo[2]">
+                <input type="hidden" id="tanggal_jatuh_tempo[3]" name="tanggal_jatuh_tempo[3]">
+                <input type="hidden" id="tanggal_jatuh_tempo[4]" name="tanggal_jatuh_tempo[4]">
               </tr>
               <tr>
                 <td id="tanggal_bayar2">Pembayaran ke - 2 (2021-12-22)</td>
                 <td>:</td>
                 <td align="right"><input id="jumlah_bayar2"  name="jumlah_bayar2" type="number" class="form-control text-right"></td>
+                
               </tr>
               <tr>
                 <td id="tanggal_bayar3">Pembayaran ke - 3 (2021-12-22)</td>

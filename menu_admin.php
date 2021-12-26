@@ -76,14 +76,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?p=simpanan" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Simpanan</p>
                   
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="index.php?p=pinjaman" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pinjaman</p>
                 </a>

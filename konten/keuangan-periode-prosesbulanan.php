@@ -1,3 +1,15 @@
+ <?php
+  $token_id=$_GET['token'];
+  $sql1="select * from periode_pembukuan where md5(id_periode)='$token_id'";
+  $query1=mysqli_query($koneksi,$sql1);
+  $kolom1=mysqli_fetch_array($query1);
+  $tahun=$kolom1['tahun'];
+  $bulan=$kolom1['bulan'];
+  $kode=$kolom1['kode'];
+  $tanggal_mulai=$kolom1['tanggal_mulai'];
+  $tanggal_selesai=$kolom1['tanggal_selesai'];
+
+ ?>
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -5,7 +17,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Proses Keuangan Bulanan</h1>
+            <h1 class="m-0">Proses Keuangan Bulanan (Tahun : <?= $tahun; ?> Bulan : <?= $bulan; ?>)</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -50,15 +62,17 @@
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-  $sql="select id_anggota as ida,nama,alamat,is_individual,(select sum(total) from jual where id_anggota=ida and metode_bayar='POTONG SALDO ANGGOTA') as total_belanja from anggota where is_individual=1 order by nama";
+  $sql="select id_anggota as ida,nama,alamat,is_individual,(select sum(total) from jual where id_anggota=ida and metode_bayar='POTONG SALDO ANGGOTA' and (tanggal_transaksi>='$tanggal_mulai' and tanggal_transaksi<='$tanggal_selesai')) as total_belanja,(select SUM(jual_cicil.jumlah_tagihan) from jual_cicil,jual where jual_cicil.id_jual=jual.id_jual and jual.id_anggota=ida and (tanggal_jatuh_tempo>='$tanggal_mulai' and tanggal_jatuh_tempo<='$tanggal_selesai')) as total_belanja_cicil from anggota where is_individual=1 order by nama";
+  echo $sql;
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
     $belanja_wajib=50000;
     $simpanan_wajib=15000;
-    $total_belanja=$kolom['total_belanja'];
+    $total_belanja=$kolom['total_belanja']+$kolom['total_belanja_cicil'];
+    $sisa_saldo_belanja=$belanja_wajib-$total_belanja;
     $potongan_simpan_pinjam=0;
     if($belanja_wajib>$total_belanja){
-      $potongan_toko=$belanja_wajib-$total_belanja;
+      $potongan_toko=$belanja_wajib;
     } else {
       $potongan_toko=$belanja_wajib+($total_belanja-$belanja_wajib);
     }
@@ -72,8 +86,8 @@
                   <td><?= $kolom['is_individual']; ?></td>
                   <td align="right">0</td>                 
                   <td align="right">50,000</td>                 
-                  <td align="right"><?= number_format($kolom['total_belanja']); ?></td>
-                  <td align="right">0</td>                 
+                  <td align="right"><?= number_format($total_belanja); ?></td>
+                  <td align="right"><?= number_format($sisa_saldo_belanja); ?></td>                 
                   <td align="right">15,000</td>                 
                   <td align="right">0</td>                  
                   <td align="right"><?= number_format($total_potongan); ?></td>

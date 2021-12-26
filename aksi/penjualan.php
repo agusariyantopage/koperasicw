@@ -76,6 +76,26 @@
                 $_SESSION['status_proses'] ='SUKSES SIMPAN JUAL';                    
             }
 
+            // Simpan Jadwal Pembayaran Jika Metode Bayar Adalah Cicilan
+            if($metode_bayar=="CICIL BAYAR"){
+                $jumlah_cicil=$_POST['jumlah_cicil'];
+                $cicil[0]=$_POST['jumlah_bayar1'];                
+                $cicil[1]=$_POST['jumlah_bayar2'];                
+                $cicil[2]=$_POST['jumlah_bayar3'];                
+                $cicil[3]=$_POST['jumlah_bayar4'];                
+                $cicil[4]=$_POST['jumlah_bayar5'];                
+
+                for($i=0;$i<$jumlah_cicil;$i++){
+                    $keterangan="Pembayaran ke -".($i+1);
+                    $tanggal_jatuh_tempo=$_POST['tanggal_jatuh_tempo'][$i];
+                    $jumlah_tagihan=$cicil[$i];
+                    $is_terbayar=0;
+
+                    $sql5="insert into jual_cicil(id_jual, keterangan, tanggal_jatuh_tempo, jumlah_tagihan, is_terbayar, dibuat_pada, diubah_pada) values($id_jual,'$keterangan','$tanggal_jatuh_tempo',$jumlah_tagihan,$is_terbayar,DEFAULT,DEFAULT)";
+                    mysqli_query($koneksi,$sql5);
+                }
+            }
+
             // Kosongkan Keranjang
             $sql4="delete from keranjang where id_user=$id_user";
             mysqli_query($koneksi,$sql4);

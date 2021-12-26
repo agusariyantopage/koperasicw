@@ -19,9 +19,19 @@ Jumat 03 Desember 2021
 23:00 S/D 24:00 --> Proses Hitung Belanja (Layout Lanjut) --> 15
 Minggu 05 Desember 2021
 11:00 S/D 12:00 --> Modul Penjual Pisah Bayar Kas,Potong Saldo dan Cicilan --> 16
-20:00 S/D 21:00 --> Mpdul Penjualan dengan metode cicilan
-??????????????? --> Update Data Anggota Tambah Data Lembaga & Keterangan Potong Otomatis (PENDING)
+20:00 S/D 21:00 --> Modul Penjualan dengan metode cicilan
+Rabo 22 Desember 2021
+11:00 S/D 14:00 --> Menyelesaikan Tampilan Penjualan Dengan Metode Cicilan --> 19
+Kamis 23 Desember 2021
+10:00 S/D 12:00 --> Menyelesaikan Aksi Penjualan Dengan Metode Cicilan dan Menambahkan Tabel Cicilan Penjualan --> 21
+Sabtu 25 Desember 2021
+11:00 S/D 13:00 --> Proses Keuangan Untuk Membedakan Penjualan Umum dengan Penjualan Cicilan --> 23
+Minggu 26 Desember 2021
+14:00 S/D 16:00 --> Buat Tabel Simpanan , Rancang UI Menu Simpanan --> 25
+22:00 S/D 24:00 --> Rancang UI Menu Simpanan --> 27
 
+??????????????? --> Update Data Anggota Tambah Data Lembaga & Keterangan Potong Otomatis (PENDING)
+Ask :: Pastikan ke pihak koperasi mengenai metode potong saldo belanja , apakah dipotong langsung atau saat proses tutup buku bulanan
 
 ## ON Plan ##
 Setup Periode Tutup Buku Bulanan
