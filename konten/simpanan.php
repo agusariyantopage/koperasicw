@@ -23,12 +23,7 @@
       <div class="container-fluid">
       <row>
         <div class="col-12">
-          <div class="btn-group mb-3" role="group" aria-label="Basic example">
-            <a href="index.php?p=simpanan&filter=hari"><button type="button" class="btn btn-secondary mr-1">Hari Ini</button></a>
-            <a href="index.php?p=simpanan&filter=bulan"><button type="button" class="btn btn-secondary mr-1">Bulan Ini</button></a>
-            <a href="index.php?p=simpanan&filter=tahun"><button type="button" class="btn btn-secondary mr-1">Tahun Ini</button></a>
-            <a href="index.php?p=simpanan&filter=semua"><button type="button" class="btn btn-secondary mr-1">Semua Transaksi</button></a>
-          </div>
+         
           
           <div class="card">
             <div class="card-header">
@@ -54,36 +49,20 @@
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-  if(empty($_GET['filter'])){
-    $sql="select jual.*,anggota.nama as napel,user.nama as petugas from jual,anggota,user where jual.id_anggota=anggota.id_anggota and jual.id_user=user.id_user and tanggal_transaksi=DATE(NOW()) order by jual.id_jual desc";
-  } else {
-    if($_GET['filter']=='hari'){      
-      $sql="select jual.*,anggota.nama as napel,user.nama as petugas from jual,anggota,user where jual.id_anggota=anggota.id_anggota and jual.id_user=user.id_user and tanggal_transaksi=DATE(NOW()) order by jual.id_jual desc";
-    }
-    if($_GET['filter']=='bulan'){      
-      $sql="select jual.*,anggota.nama as napel,user.nama as petugas from jual,anggota,user where jual.id_anggota=anggota.id_anggota and jual.id_user=user.id_user and MONTH(tanggal_transaksi)=MONTH(NOW()) order by jual.id_jual desc";
-    }
-    if($_GET['filter']=='tahun'){      
-      $sql="select jual.*,anggota.nama as napel,user.nama as petugas from jual,anggota,user where jual.id_anggota=anggota.id_anggota and jual.id_user=user.id_user and YEAR(tanggal_transaksi)=YEAR(NOW()) order by jual.id_jual desc";
-    }
-    if($_GET['filter']=='semua'){      
-      $sql="select jual.*,anggota.nama as napel,user.nama as petugas from jual,anggota,user where jual.id_anggota=anggota.id_anggota and jual.id_user=user.id_user order by jual.id_jual desc";
-    }
-  }
-  
+  $sql="select simpanan.*,anggota.nama as napel,user.nama as petugas from simpanan,anggota,user where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user  order by simpanan.id_simpanan desc";  
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
 ?>                
                 <tr>
-                  <td><?= $kolom['id_jual']; ?></td>
+                  <td><?= $kolom['id_simpanan']; ?></td>
                   <td><?= $kolom['napel']; ?></td>
-                  <td><?= $kolom['tanggal_transaksi']; ?></td>
-                  <td><?= $kolom['metode_bayar']; ?></td>
-                  <td><?= number_format($kolom['total']); ?></td>
-                  <td><?= $kolom['petugas']; ?></td>                  
-                  <td><?= $kolom['dibuat_pada']; ?></td>
+                  <td><?= $kolom['jenis_simpanan']; ?></td>
+                  <td><?= $kolom['tanggal_awal_kontrak']; ?> (<?= $kolom['durasi_kontrak_bulan']; ?> Bulan)</td>
+                  <td><?= number_format($kolom['bunga_tahunan']); ?> %</td>
+                  <td><?= number_format($kolom['jumlah_simpanan']); ?></td>                  
+                  <td><?= $kolom['status_simpanan']; ?></td>
                   <td>
-                    <a target="blank" href="pdf/output/struk.php?token=<?= md5($kolom['id_jual']); ?>">
+                    <a target="blank" href="pdf/output/struk.php?token=<?= md5($kolom['id_simpanan']); ?>">
                     <button type="button" class="btn btn-link"><i class="fas fa-print"></i></button>                    
                     </a>                    
                   </td>

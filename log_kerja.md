@@ -29,6 +29,8 @@ Sabtu 25 Desember 2021
 Minggu 26 Desember 2021
 14:00 S/D 16:00 --> Buat Tabel Simpanan , Rancang UI Menu Simpanan --> 25
 22:00 S/D 24:00 --> Rancang UI Menu Simpanan --> 27
+Kamis 30 Desember 2021
+14:00 S/D 16:00 --> Simpan transaksi simpanan ke database
 
 ??????????????? --> Update Data Anggota Tambah Data Lembaga & Keterangan Potong Otomatis (PENDING)
 Ask :: Pastikan ke pihak koperasi mengenai metode potong saldo belanja , apakah dipotong langsung atau saat proses tutup buku bulanan
