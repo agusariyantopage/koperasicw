@@ -57,7 +57,7 @@
                   <td><?= number_format($kolom['produk_in']); ?></td>
                   <td><?= number_format($kolom['produk_out']); ?></td>
                   <td><?= number_format($kolom['qty']); ?></td>
-                  <td><a href="index.php?p=kartu-stok-individu&id=<?= $kolom['id_produk']; ?>"><i class="fas fa-chart-line"></i></a>
+                  <td><a target="_blank" href="index.php?p=kartu-stok-individu&id=<?= $kolom['id_produk']; ?>"><i class="fas fa-chart-line"></i></a>
                     
                   </td>
                 </tr>

@@ -164,7 +164,8 @@
                       <td>Nama Produk</td>
                       <td>Barcode</td>
                       <td>Harga Jual</td>
-                      <td>Satuan</td>                    
+                      <td>Satuan</td>
+                      <td>Stok</td>                    
                       <td>Aksi</td>
                     </tr>
                   </thead>
@@ -179,6 +180,7 @@
                     <td><?= $kolom['barcode']; ?></td>                    
                     <td><?= number_format($kolom['harga_jual']); ?></td>
                     <td><?= $kolom['satuan']; ?></td>
+                    <td><?= $kolom['qty']; ?></td>
                     <td>
                       <button type="button" class="btn btn-link"><a href="aksi/penjualan.php?aksi=keranjang-tambah&token=<?= md5($kolom['id_produk']); ?>"><i class="fas fa-check"></i></a></button>                      
                     </td>
@@ -360,7 +362,7 @@
             
             <div class="form-group col-sm-6">
               <label for="id_anggota">Anggota</label>
-              <select name="id_anggota" id="id_anggota" class="select2bs4 form-control" required>
+              <select name="id_anggota" id="id_anggota2" class="select2bs4 form-control" required>
                 <option value="">-- Pilih Anggota Koperasi --</option>
                 <?php
                   $sql1="select * from anggota where id_anggota!=0 order by nama";

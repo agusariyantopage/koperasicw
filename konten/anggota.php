@@ -49,8 +49,7 @@
                     <td>Alamat</td>
                     <td>No Telepon</td>
                     <td>Tipe</td>
-                    <td>Saldo</td>
-                    <td>Poin</td>
+                    
                     <td>Aksi</td>
                   </tr>
                 </thead>
@@ -75,8 +74,8 @@
                       }
                     ?>
                   </td>
-                  <td><?= $kolom['saldo']; ?></td>
-                  <td><?= $kolom['poin']; ?></td>
+                  
+                  
                   <td>
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_anggota']; ?>"><i class="fas fa-edit"></i></button>
                     <button type="button" class="btn btn-link"><a onclick="return confirm('Data yang dapat dihapus adalah data yang tidak tercatat pada transaksi toko ataupun simpan pinjam,Apakah anda yakin data ini dihapus??')" href="aksi/anggota.php?aksi=hapus&token=<?= md5($kolom['id_anggota']); ?>"><i class="fas fa-trash"></i></a></button>

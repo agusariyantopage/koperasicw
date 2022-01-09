@@ -7,6 +7,15 @@
     include "koneksi.php";
     include "controller.php";
     $status_proses=$_SESSION['status_proses'];
+
+    // Cek Periode Pembukuan
+    $tgl=date("Y-m-d");
+    $sql1="select * from periode_pembukuan where tanggal_mulai<='$tgl' and tanggal_selesai>='$tgl'";
+    
+    $query1=mysqli_query($koneksi,$sql1);
+    $data1=mysqli_fetch_array($query1);
+
+    $periode=$data1['kode'];
     
     
 ?>
@@ -113,7 +122,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-header">Periode Pembukuan : 2021.11</li>
+          <li class="nav-header">Periode Pembukuan : <b><?= $periode; ?></b></li>
 
           <li class="nav-item">
             <a href="index.php" class="nav-link">
@@ -269,7 +278,7 @@
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     });
-    $('#id_anggota').select2({
+    $('#id_anggota2').select2({
         dropdownParent: $('#simpanJualModal'),
         theme: 'bootstrap4'        
     });

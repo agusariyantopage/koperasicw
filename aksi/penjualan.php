@@ -85,6 +85,9 @@
                 $cicil[3]=$_POST['jumlah_bayar4'];                
                 $cicil[4]=$_POST['jumlah_bayar5'];                
 
+                $sql6="update anggota set saldo=saldo-$cicil[0] where id_anggota=$id_anggota";
+                mysqli_query($koneksi,$sql6);
+
                 for($i=0;$i<$jumlah_cicil;$i++){
                     $keterangan="Pembayaran ke -".($i+1);
                     $tanggal_jatuh_tempo=$_POST['tanggal_jatuh_tempo'][$i];
@@ -94,6 +97,11 @@
                     $sql5="insert into jual_cicil(id_jual, keterangan, tanggal_jatuh_tempo, jumlah_tagihan, is_terbayar, dibuat_pada, diubah_pada) values($id_jual,'$keterangan','$tanggal_jatuh_tempo',$jumlah_tagihan,$is_terbayar,DEFAULT,DEFAULT)";
                     mysqli_query($koneksi,$sql5);
                 }
+            }
+
+            if($metode_bayar=="POTONG SALDO ANGGOTA"){
+                $sql6="update anggota set saldo=saldo-$total where id_anggota=$id_anggota";
+                mysqli_query($koneksi,$sql6);
             }
 
             // Kosongkan Keranjang

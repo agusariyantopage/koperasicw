@@ -48,6 +48,8 @@
                 header("location:../index.php");
                 
             } else {
+                $sql2="update user set status='OFFLINE' where username='$username' and password='$password'";
+                mysqli_query($koneksi,$sql2);        
                 header("location:../index.php?page=login&msg=gagal-login");                
             }
         

@@ -29,7 +29,7 @@
               <h3>Data Saldo Anggota</h3>
             </div> 
             <div class="card-body">
-              <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
+              <!-- <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
               <i class="fas fa-plus"></i> Tambah Saldo Bulanan</button>
               <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#exampleModal">
               <i class="fas fa-file-excel"></i> Impor</button>
@@ -38,7 +38,7 @@
               <a href="aksi/anggota.php?aksi=set-kapital"><button type="button" class="btn btn-info mb-2">
               <i class="fas fa-font"></i> Kapital</button></a>
               <a href="aksi/anggota.php?aksi=set-proper"><button type="button" class="btn btn-danger mb-2">
-              <i class="fas fa-text-height"></i> Proper</button></a> 
+              <i class="fas fa-text-height"></i> Proper</button></a> -->
               
               <table id="finditem" class="table table-bordered table-striped">
                 <!-- Kepala Tabel -->
@@ -63,9 +63,9 @@
                   <td><?= $kolom['nama']; ?></td>
                   <td><?= $kolom['alamat']; ?></td>
                   <td><?= $kolom['telepon']; ?></td>                 
-                  <td><?= $kolom['saldo']; ?></td>                  
+                  <td><?= number_format($kolom['saldo']); ?></td>                  
                   <td>
-                    <a href=""><i class="fas fa-chart-line"></i></a>
+                    <a href="index.php?p=anggota-saldo-individu&token=<?= md5($kolom['id_anggota']); ?>"><i class="fas fa-chart-line"></i></a>
                   </td>
                 </tr>
               

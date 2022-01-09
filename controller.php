@@ -93,4 +93,8 @@
         $title  ="App Koperasi V 1.0 | Saldo Anggota";
         $konten="konten/anggota-saldo.php";
     }
+    else if($_GET['p']=='anggota-saldo-individu'){
+        $title  ="App Koperasi V 1.0 | Saldo Anggota Individu";
+        $konten="konten/anggota-saldo-individu.php";
+    }
 ?>
