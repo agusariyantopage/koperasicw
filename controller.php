@@ -45,6 +45,10 @@
         $title  ="App Koperasi V 1.0 | Point Of Sales";
         $konten="konten/penjualan.php";
     }
+    else if($_GET['p']=='penjualan-info'){
+        $title  ="App Koperasi V 1.0 | Informasi Penjualan";
+        $konten="konten/penjualan-info.php";
+    }
     else if($_GET['p']=='daftar-pembelian'){
         $title  ="App Koperasi V 1.0 | Daftar Pembelian";
         $konten="konten/pembelian-daftar.php";
@@ -52,6 +56,10 @@
     else if($_GET['p']=='pembelian'){
         $title  ="App Koperasi V 1.0 | Pembelian";
         $konten="konten/pembelian.php";
+    }
+    else if($_GET['p']=='pembelian-info'){
+        $title  ="App Koperasi V 1.0 | Informasi Pembelian";
+        $konten="konten/pembelian-info.php";
     }
     else if($_GET['p']=='kartu-stok'){
         $title  ="App Koperasi V 1.0 | Kartu Stok";

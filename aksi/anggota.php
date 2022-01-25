@@ -12,8 +12,9 @@
             $email=$_POST['email'];
             $saldo=0;
             $poin=0;
+            $is_individual=$_POST['is_individual'];
             
-            $sql="insert into anggota (no_identitas, tanggal_bergabung, nama, alamat, telepon, email, saldo, poin, dibuat_pada, diubah_pada) values('$no_identitas', '$tanggal_bergabung', '$nama', '$alamat', '$telepon', '$email', $saldo, $poin, DEFAULT, DEFAULT)";
+            $sql="insert into anggota (no_identitas, tanggal_bergabung, nama, alamat, telepon, email, saldo, poin, is_individual, dibuat_pada, diubah_pada) values('$no_identitas', '$tanggal_bergabung', '$nama', '$alamat', '$telepon', '$email', $saldo, $poin, $is_individual, DEFAULT, DEFAULT)";
             mysqli_query($koneksi,$sql);
             //echo $sql;
             header('location:../index.php?p=anggota');
@@ -28,9 +29,10 @@
             $email=$_POST['email'];
             $saldo=0;
             $poin=0;
+            $is_individual=$_POST['is_individual'];
             
 
-            $sql="update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
+            $sql="update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, is_individual=$is_individual, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
             mysqli_query($koneksi,$sql);
             header('location:../index.php?p=anggota');
         }

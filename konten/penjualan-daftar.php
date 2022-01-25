@@ -83,8 +83,11 @@
                   <td><?= $kolom['petugas']; ?></td>                  
                   <td><?= $kolom['dibuat_pada']; ?></td>
                   <td>
+                    <div class="row">
                     <a target="blank" href="pdf/output/struk.php?token=<?= md5($kolom['id_jual']); ?>">
-                    <button type="button" class="btn btn-link"><i class="fas fa-print"></i></button>                    
+                    <button type="button" class="btn btn-link"><i class="fas fa-print"></i></button>
+                    <a target="blank" href="index.php?p=penjualan-info&token=<?= md5($kolom['id_jual']); ?>"><button type="button" class="btn btn-link"><i class="fas fa-info"></i></button>                     
+                    </div>
                     </a>                    
                   </td>
                 </tr>

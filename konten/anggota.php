@@ -119,7 +119,28 @@
         <div>
           <label for="email">Email</label>
           <input type="email" name="email" class="form-control" value="<?= $kolom['email']; ?>">
-        </div>        
+        </div> 
+        <div>
+          <label for="is_individual">Tipe Keanggotaan</label>
+          <select name="is_individual" class="form-control" required>
+            <?php
+              if($kolom['is_individual']==1){
+                echo "
+                  <option value='1'>Individual</option>
+                  <option value='0'>Lembaga / Unit Kerja</option>
+                ";
+              } else {
+                echo "
+                  <option value='0'>Lembaga / Unit Kerja</option>
+                  <option value='1'>Individual</option>
+                 "; 
+              }
+
+            ?>
+            
+
+          </select>
+        </div>       
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
@@ -182,7 +203,15 @@
         <div>
           <label for="email">Email</label>
           <input type="email" name="email" class="form-control">
-        </div>        
+        </div>    
+        <div>
+          <label for="is_individual">Tipe Keanggotaan</label>
+          <select name="is_individual" class="form-control" required>
+            <option value="1">Individual</option>
+            <option value="0">Lembaga / Unit Kerja</option>
+
+          </select>
+        </div>         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

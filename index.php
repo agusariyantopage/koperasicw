@@ -7,6 +7,7 @@
     include "koneksi.php";
     include "controller.php";
     $status_proses=$_SESSION['status_proses'];
+    date_default_timezone_set('Asia/Singapore');
 
     // Cek Periode Pembukuan
     $tgl=date("Y-m-d");

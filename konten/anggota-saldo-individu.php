@@ -4,6 +4,7 @@
     $query1=mysqli_query($koneksi,$sql1);
     $kolom1=mysqli_fetch_array($query1);
     $nama=$kolom1['nama']." (".$kolom1['alamat'].")";
+    $saldo_real=$kolom1['saldo'];
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -67,8 +68,52 @@
               <i class="fas fa-font"></i> Kapital</button></a>
               <a href="aksi/anggota.php?aksi=set-proper"><button type="button" class="btn btn-danger mb-2">
               <i class="fas fa-text-height"></i> Proper</button></a> -->
+              <b>Mutasi Saldo</b>
+              <table class="table table-bordered table-striped mb-2">
+               <thead>
+                  <tr>
+                    <td>#</td>                    
+                    <td>Tanggal Transaksi</td>
+                    <td>Keterangan</td>
+                    <td>Total Transaksi</td>
+                  </tr>
+                </thead>
+                <!-- Isi Tabel -->
+<?php
+  if(empty($_GET['mulai'])){
+    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id'";
+  } else {
+    $mulai=$_GET['mulai'];
+    $selesai=$_GET['selesai'];
+    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id' and (tanggal>='$mulai' and tanggal<='$selesai')";
+  }  
+  
+  $query=mysqli_query($koneksi,$sql);
+  $total_saldo=0;
+  $no=0;
+  while($kolom=mysqli_fetch_array($query)){  
+      $total_saldo=$total_saldo+$kolom['jumlah'];
+      $no++;
+?>                
+                <tr>
+                  <td><?= $no; ?></td>                  
+                  <td><?= $kolom['tanggal']; ?></td>
+                  <td><?= $kolom['keterangan']; ?></td>                                  
+                  <td align="right"><?= number_format($kolom['jumlah']); ?></td>  
+                </tr>
               
-              <table class="table table-bordered table-striped">
+<?php
+  }
+?>                
+                <tr>
+                    <td colspan="3"><b>TOTAL</b></td>
+                    <td align="right"><b>Rp. <?= number_format($total_saldo); ?></b></td>
+                </tr>
+                </table>
+              </table>
+
+              <b>Mutasi Belanja</b>
+              <table class="table table-bordered table-striped mb-3">
                 <!-- Kepala Tabel -->
                 <thead>
                   <tr>
@@ -94,7 +139,7 @@
       $total=$total+$kolom['total'];
 ?>                
                 <tr>
-                  <td><?= $kolom['id_jual']; ?></td>                  
+                  <td><a target="blank" href="index.php?p=penjualan-info&token=<?= md5($kolom['id_jual']); ?>"><?= $kolom['id_jual']; ?></a></td>                  
                   <td><?= $kolom['tanggal_transaksi']; ?></td>
                   <td><?= $kolom['metode_bayar']; ?></td>                                  
                   <td align="right"><?= number_format($kolom['total']); ?></td>  
@@ -108,11 +153,38 @@
                     <td align="right"><b>Rp. <?= number_format($total); ?></b></td>
                 </tr>
                 </table>
+                <i>Catatan : Transaksi Kas Tidak Mempengaruhi Saldo Belanja</i>
+
+                <?php if(empty($_GET['mulai'])){ ?>
+                <table class="table table-bordered table-striped mb-2 mt-2">
+                  <thead>
+                      <tr>
+                        <th>Sisa Saldo Akumulatif</th>                    
+                        <th>Sisa Saldo Real</th>
+                        <th>Keterangan</th>                        
+                      </tr>
+                      <tr>
+                        <th>Rp. <?= number_format($total_saldo-$total); ?></th>
+                        <th>Rp. <?= number_format($saldo_real); ?></th>
+                        <th>
+                          <?php
+                            if(($total_saldo-$total)==$saldo_real){
+                              echo "<font class='text-success'>BALANCE</font>";
+                            } else {
+                              echo "<font class='text-danger'>UNBALANCE</font>";
+                            }
+                          ?>
+                        </th>
+                      </tr>
+                    </thead>
+                </table>
+                <?php } ?>
+                
             </div> 
           </div>
         </div>
       </row>
-      <i>Catatan : Transaksi Kas Tidak Mempengaruhi Saldo Belanja</i>       
+             
         
       </div><!-- /.container-fluid -->
       

@@ -172,7 +172,7 @@
                   <!-- Isi Tabel -->
   <?php
     $sql="select produk.*,produk_kategori from produk,produk_kategori where produk.id_produk_kategori=produk_kategori.id_produk_kategori order by nama limit 1000";
-    $query=mysqli_query($koneksi,$sql);
+    $query=mysqli_query($koneksi,$sql);    
     while($kolom=mysqli_fetch_array($query)){
   ?>                
                   <tr>
@@ -230,7 +230,7 @@
             </div>
             <div class="form-group col-sm-6">
               <label for="tanggal_transaksi">Tanggal Transaksi</label>
-              <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" >
+              <input type="date" name="tanggal_transaksi" value="<?php echo date('Y-m-d'); ?>" class="form-control" required>
             </div>            
           </div>
           <table class="table">
