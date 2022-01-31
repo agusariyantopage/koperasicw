@@ -273,6 +273,26 @@
       "responsive": true,
     });
     
+    $(document).on('click','.infopenjualan',function(){
+    //$('.infopenjualan').click(function(){
+   
+      var idjual = $(this).data('id');
+      //alert(idjual);
+      
+      // AJAX request
+      $.ajax({
+        url: 'server-side/infojual.php',
+        type: 'post',
+        data: {idjual: idjual},
+        success: function(response){ 
+          // Add response in Modal body
+          $('.modal-body').html(response);
+
+          // Display Modal
+          //$('#empModal').modal('show'); 
+        }
+      });
+    });
 
     //$('.select2').select2();
     //Initialize Select2 Elements

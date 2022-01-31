@@ -69,6 +69,10 @@
         $title  ="App Koperasi V 1.0 | Kartu Stok Individu";
         $konten="konten/kartu_stok_individu.php";
     }
+    else if($_GET['p']=='penjualan-info-kas'){
+        $title  ="App Koperasi V 1.0 | Informasi Kas Toko";
+        $konten="konten/penjualan-info-kas.php";
+    }
 
     // (START)  Menu Simpan Pinjam
     else if($_GET['p']=='simpanan'){

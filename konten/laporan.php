@@ -73,12 +73,12 @@
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <a target="blank" href="pdf/output/lap_penjualan_umum.php">
+            <a target="blank" href="pdf/output/lap_laba_rugi.php">
                 <div class="small-box bg-success">
                 <div class="inner">
                     <h3>Cetak</h3>
 
-                    <p>Laporan Penjualan</p>
+                    <p>Laporan Laba Rugi</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-clipboard"></i>

@@ -63,6 +63,12 @@
                   <p>Stok</p>
                 </a>
               </li>              
+              <li class="nav-item">
+                <a href="index.php?p=penjualan-info-kas" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kas Toko</p>
+                </a>
+              </li>              
             </ul>
           </li>
 
