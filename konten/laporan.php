@@ -89,6 +89,73 @@
           <!-- ./col -->
         </div>
         <!-- /.row -->        
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <a target="blank" href="pdf/output/lap_penjualan_per_lembaga.php">
+                <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>Cetak</h3>
+
+                    <p>Laporan Penjualan Per Lembaga</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clipboard"></i>
+                </div>
+                </div>
+            </a>  
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <a target="blank" href="pdf/output/lap_penjualan_umum.php">
+                <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>Cetak</h3>
+
+                    <p>Laporan Penjualan</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clipboard"></i>
+                </div>
+                </div>
+            </a>  
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <a target="blank" href="pdf/output/lap_kontribusi_belanja.php">
+                <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>Cetak</h3>
+
+                    <p>Laporan Kontribusi Belanja</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clipboard"></i>
+                </div>
+                </div>
+            </a> 
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <a target="blank" href="pdf/output/lap_laba_rugi.php">
+                <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>Cetak</h3>
+
+                    <p>Laporan Laba Rugi</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-clipboard"></i>
+                </div>
+                </div>
+            </a> 
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->        
         
       </div><!-- /.container-fluid -->
     </section>

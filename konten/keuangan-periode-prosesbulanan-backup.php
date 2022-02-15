@@ -44,7 +44,7 @@
             <div class="card-body">
               
               
-              <table id="example1" class="table table-bordered table-striped table-sm">
+              <table id="finditem" class="table table-bordered table-striped table-sm">
                 <!-- Kepala Tabel -->
                 <thead>
                   <tr>
@@ -54,7 +54,9 @@
                     <td>Saldo Awal Belanja</td>                    
                     <td>Belanja Wajib Bulanan</td>                    
                     <td>Belanja Toko</td>
-                    <td>Sisa Saldo Belanja</td>                    
+                    <td>Sisa Saldo Belanja</td>
+                    <td>Simpanan Wajib Bulanan</td>                    
+                    <td>Potongan Simpanan / Pinjaman</td>                    
                     <td>Total Potongan Koperasi</td>
                   </tr>
                 </thead>
@@ -64,17 +66,19 @@
   //echo $sql;
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
-    $belanja_wajib=50000;    
+    $belanja_wajib=50000;
+    $simpanan_wajib=0;
     $total_belanja=$kolom['total_belanja']+$kolom['total_belanja_cicil'];
     $saldo_awal=$kolom['saldo']+$total_belanja;
-    $sisa_saldo_belanja=$saldo_awal+$belanja_wajib-$total_belanja;    
-    if($sisa_saldo_belanja>=0){
-      $potongan_toko=50000;
+    $sisa_saldo_belanja=$saldo_awal+$belanja_wajib-$total_belanja;
+    $potongan_simpan_pinjam=0;
+    if($belanja_wajib>$total_belanja){
+      $potongan_toko=$belanja_wajib;
     } else {
-      $potongan_toko=(-1*$sisa_saldo_belanja)+50000;
+      $potongan_toko=$belanja_wajib+($total_belanja-$belanja_wajib);
     }
     
-    $total_potongan=$potongan_toko;
+    $total_potongan=$simpanan_wajib+$potongan_simpan_pinjam+$potongan_toko;
 
 ?>                
                 <tr>
@@ -85,6 +89,8 @@
                   <td align="right">50,000</td>                 
                   <td align="right"><?= number_format($total_belanja); ?></td>
                   <td align="right"><?= number_format($sisa_saldo_belanja); ?></td>                 
+                  <td align="right">15,000</td>                 
+                  <td align="right">0</td>                  
                   <td align="right"><?= number_format($total_potongan); ?></td>
                 </tr>
             
@@ -92,19 +98,11 @@
   }
 ?>                
               </table>
-              <form method='post' action="aksi/periode.php">
-                <input type="hidden" name="aksi" value="proses-keuangan-bulanan">  
-                <input type="hidden" name="tanggal_mulai" value="<?= $tanggal_mulai; ?>">  
-                <input type="hidden" name="tanggal_selesai" value="<?= $tanggal_selesai; ?>">  
-                <input type="hidden" name="kode" value="<?= $kode; ?>">
-                <button type="submit" class="btn btn-warning"><i class="fas fa-save"></i> Proses Data</button>   
-              </form>
             </div> 
           </div>
         </div>
-        
       </row>
-          
+             
         
       </div><!-- /.container-fluid -->
       

@@ -56,9 +56,16 @@
                   <td><?= $kolom['tanggal_mulai']; ?></td>                 
                   <td><?= $kolom['tanggal_selesai']; ?></td>                  
                   <td>
+                    <?php if ($kolom['is_locked']==0) { ?>
                   <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_periode']; ?>"><i class="fas fa-edit"></i></button>
                   <a href="index.php?p=keuangan-periode-prosesbulanan&token=<?= md5($kolom['id_periode']); ?>"><button type="button" class="btn btn-link"><i class="fas fa-calculator"></i></button></a>
                   </td>
+                  <?php 
+                    } else {
+                      echo "<div class='text-info'><i class='fas fa-lock'></i></div>";
+                    }
+                  
+                  ?>
                 </tr>
 <!-- Modal Edit -->
 <div class="modal fade" id="editModal<?= $kolom['id_periode']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -112,7 +119,7 @@
           </div>
         </div>
       </row>
-             
+          
         
       </div><!-- /.container-fluid -->
       

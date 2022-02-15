@@ -55,7 +55,7 @@
 ?>                
                 <tr>
                   <td>
-                    <button type="button" data-id="1" class="btn btn-link infopenjualan" data-toggle="modal" data-target="#exampleModal9"><?= $kolom['id_jual']; ?></button>
+                    <button type="button" data-id="<?= $kolom['id_jual']; ?>" class="btn btn-link infopenjualan" data-toggle="modal" data-target="#exampleModal9"><?= $kolom['id_jual']; ?></button>
                   </td>
                   <td><?= $kolom['napel']; ?></td>
                   <td><?= $kolom['tanggal_transaksi']; ?></td>
