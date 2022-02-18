@@ -105,7 +105,26 @@
           </div>         
         </div>
         <br><br>
-           
+        <?php
+          if($kolom1['metode_bayar']=='CICIL BAYAR'){
+        ?>
+        <table class="table table-bordered table-striped" style="width:100%;">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Keterangan</th>
+              <th scope="col">Tanggal Jatuh Tempo</th>
+              <th scope="col">Nominal Bayar</th>
+              <th scope="col">Lunas</th>              
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          </table>            
+        <?php
+          }
+        ?>
       </row>
       
         

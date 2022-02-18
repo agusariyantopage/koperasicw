@@ -80,7 +80,44 @@
             $link='location:../index.php?p=pembelian';
             header($link);
         }
+        else if($_POST['aksi']=='ubah-pembelian'){
+            $id_beli=$_POST['id_beli'];
+            $id_pemasok=$_POST['id_pemasok'];
+            $id_user=$_SESSION['backend_user_id'];
+            $metode_bayar=$_POST['metode_bayar'];
+            $tanggal_transaksi=$_POST['tanggal_transaksi'];
+            $jumlah_data=$_POST['jumlah_data'];
+
+            $sql="update beli set id_pemasok=$id_pemasok, id_user=$id_user, metode_bayar='$metode_bayar', tanggal_transaksi='$tanggal_transaksi', diubah_pada=DEFAULT where id_beli=$id_beli";
+            
+            mysqli_query($koneksi,$sql);
+            $sukses=mysqli_affected_rows($koneksi);
+            if($sukses>=1){
+                $_SESSION['status_proses'] ='SUKSES SIMPAN BELI';                    
+            }
+            
+            for($i=0;$i<$jumlah_data;$i++){
+                $id_produk=$_POST['id_produk'][$i];
+                $harga=$_POST['harga'][$i];
+                $qty=$_POST['qty'][$i];
+                $qty_awal=$_POST['qty_awal'][$i];
+                $sql1="update beli_detail set harga_beli=$harga,jumlah=$qty,diubah_pada=DEFAULT where id_produk=$id_produk and id_beli=$id_beli";
+                //echo $sql1."<br>";
+                mysqli_query($koneksi,$sql1);
+                
+                $sql2="update produk set qty=qty-$qty_awal+$qty,diubah_pada=DEFAULT where id_produk=$id_produk";                
+                mysqli_query($koneksi,$sql2);
+            }
+
+            $link="location:../index.php?p=pembelian-edit&token=$id_beli";
+            header($link);
+
+            
+            
+
+        }
     }
+
 
     if(!empty($_GET['aksi'])){
         if($_GET['aksi']=='keranjang-hapus'){

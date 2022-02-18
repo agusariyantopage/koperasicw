@@ -1,4 +1,5 @@
 <?php
+    session_start();
     include "../koneksi.php";
 
     if(!empty($_POST)){
@@ -39,14 +40,42 @@
             mysqli_query($koneksi,$sql);
             header('location:../index.php?p=produk');
         }
+        else if($_POST['aksi']=='penyesuaian-stok'){
+            $id_produk=$_POST['id_produk'];
+            $qty=$_POST['qty'];
+            $sql="update produk set qty=$qty, diubah_pada=DEFAULT where id_produk=$id_produk";
+            mysqli_query($koneksi,$sql);
+
+            $sukses=mysqli_affected_rows($koneksi);
+            if($sukses>=1){
+                $_SESSION['status_proses'] ='SUKSES SIMPAN BELI';                    
+            }
+            //echo $sukses;
+            $link="location:../index.php?p=kartu-stok-individu&id=$id_produk";
+            header($link);
+            
+
+        }
     }
 
     if(!empty($_GET['aksi'])){
         if($_GET['aksi']=='hapus'){
             $x0=$_GET['token'];
             // Jalankan Prosedur Cek Data
-            $sql="delete from produk where md5(id_produk)='$x0'";
-            mysqli_query($koneksi,$sql);
+            $cek1="select * from beli_detail where md5(id_produk)='$x0'";
+            $query1=mysqli_query($koneksi,$cek1);
+            $ketemu1=mysqli_num_rows($query1);
+            if($ketemu1==0){
+                $cek2="select * from jual_detail where md5(id_produk)='$x0'";
+                $query2=mysqli_query($koneksi,$cek2);
+                $ketemu2=mysqli_num_rows($query2);
+                if($ketemu2==0){
+                    $sql="delete from produk where md5(id_produk)='$x0'";
+                    mysqli_query($koneksi,$sql);
+                    //echo $sql;
+                }
+            }
+            
             //echo $sql;
             header('location:../index.php?p=produk');
         }

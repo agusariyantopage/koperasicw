@@ -51,6 +51,7 @@
                 <!-- Isi Tabel -->
 <?php
    $no=0; 
+   $saldo=0;
    $sql="select *, @saldo := @saldo+jumlah as saldo from (SELECT id_beli,id_produk,'Masuk' trans_type, harga_beli, jumlah, dibuat_pada, diubah_pada FROM beli_detail where id_produk=$id UNION SELECT id_jual,id_produk,'Keluar' trans_type, hpp, -jumlah, dibuat_pada, diubah_pada FROM jual_detail where id_produk=$id) tx join ( select @saldo:=0 ) sx on 1=1 order by dibuat_pada";
    $query=mysqli_query($koneksi,$sql);
    while($kolom=mysqli_fetch_array($query)){
@@ -67,9 +68,22 @@
                 </tr>
        
 <?php
+  $saldo=$kolom['saldo'];
   }
 ?>                
               </table>
+              <label for=""><?= "Data Sistem Stok :".$data['qty']." | Data Historis :".$saldo;?></label>
+              <br>
+              <?php if($data['qty']!=$saldo && $data['servis']==0)
+                {
+              ?>  
+              <form action="aksi/produk.php" method="post">
+                <input type="hidden" name="aksi" value='penyesuaian-stok'>
+                <input type="hidden" name="qty" value='<?= $saldo; ?>'>                
+                <input type="hidden" name="id_produk" value='<?= $id; ?>'>                
+                <button type="submit" class="btn btn-info"><i class="fas fa-calculator"></i> Proses Adjustment</button>
+              </form>
+              <?php } ?>
             </div> 
           </div>
         </div>

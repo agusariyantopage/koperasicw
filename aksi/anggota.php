@@ -27,12 +27,13 @@
             $alamat=$_POST['alamat'];
             $telepon=$_POST['telepon'];
             $email=$_POST['email'];
+            $belanja_wajib=$_POST['belanja_wajib'];
             $saldo=0;
             $poin=0;
             $is_individual=$_POST['is_individual'];
             
 
-            $sql="update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, is_individual=$is_individual, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
+            $sql="update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, belanja_wajib=$belanja_wajib, is_individual=$is_individual, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
             mysqli_query($koneksi,$sql);
             header('location:../index.php?p=anggota');
         }
@@ -43,7 +44,7 @@
             $x0=$_GET['token'];
             // Jalankan Prosedur Cek Data
             $sql="delete from anggota where md5(id_anggota)='$x0'";
-            mysqli_query($koneksi,$sql);
+            //mysqli_query($koneksi,$sql);
             //echo $sql;
             header('location:../index.php?p=anggota');
         }

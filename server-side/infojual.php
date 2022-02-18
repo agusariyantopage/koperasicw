@@ -64,3 +64,45 @@ echo '
 		<td align='right'><p><?= number_format($grandtotal); ?></p></td>
 	</tfoot>
 </table> 
+<?php
+	if($kolom1['metode_bayar']=='CICIL BAYAR'){
+?>
+<table class="table table-bordered table-striped" style="width:100%;">
+	<thead class="thead-dark">
+	<tr>
+		<th scope="col">#</th>
+		<th scope="col">Keterangan</th>
+		<th scope="col">Tanggal Jatuh Tempo</th>
+		<th scope="col">Lunas</th>              
+		<th scope="col">Nominal Bayar</th>
+	</tr>
+	</thead>
+	<tbody>
+	<?php
+                  
+				  $sql3="select * from jual_cicil where id_jual='$id_jual'";
+				  $query3=mysqli_query($koneksi,$sql3);                  
+				  $no=0;				 
+				  while($kolom3=mysqli_fetch_array($query3)){
+				  $no++;
+				  if($kolom3['is_terbayar']==1){
+					$status_lunas="Ya";
+				  }	else {
+					$status_lunas="Belum";
+				  }
+				  echo "
+				  <tr>
+					  <td>$no</td>
+					  <td>$kolom3[keterangan]</td>
+					  <td>$kolom3[tanggal_jatuh_tempo]</td>
+					  <td align=right>$status_lunas</td>					  
+					  <td align=right>".number_format($kolom3['jumlah_tagihan'])."</td>					  
+				  </tr>
+				  ";
+				  }
+		  ?>
+	</tbody>
+	</table>            
+<?php
+	}
+?>

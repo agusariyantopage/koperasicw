@@ -61,6 +61,10 @@
         $title  ="App Koperasi V 1.0 | Informasi Pembelian";
         $konten="konten/pembelian-info.php";
     }
+    else if($_GET['p']=='pembelian-edit'){
+        $title  ="App Koperasi V 1.0 | Ubah Pembelian";
+        $konten="konten/pembelian-edit.php";
+    }
     else if($_GET['p']=='kartu-stok'){
         $title  ="App Koperasi V 1.0 | Kartu Stok";
         $konten="konten/kartu_stok.php";

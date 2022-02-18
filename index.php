@@ -273,6 +273,30 @@
       "responsive": true,
     });
     
+    // Modul Sweet Alert
+    var statusProses = '<?= $status_proses; ?>';
+    //alert('statusProses');
+    if(statusProses==='SUKSES SIMPAN JUAL'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'success',
+        title: 'Berhasil Memproses Transaksi',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }    
+    if(statusProses==='SUKSES SIMPAN BELI'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'success',
+        title: 'Berhasil Memproses Transaksi',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }  
+
     $(document).on('click','.infopenjualan',function(){
     //$('.infopenjualan').click(function(){
    
@@ -284,6 +308,27 @@
         url: 'server-side/infojual.php',
         type: 'post',
         data: {idjual: idjual},
+        success: function(response){ 
+          // Add response in Modal body
+          $('.modal-body').html(response);
+
+          // Display Modal
+          //$('#empModal').modal('show'); 
+        }
+      });
+    });
+
+    $(document).on('click','.infopembelian',function(){
+    //$('.infopembelian').click(function(){
+   
+      var idbeli = $(this).data('id');
+      //alert(idbeli);
+      
+      // AJAX request
+      $.ajax({
+        url: 'server-side/infobeli.php',
+        type: 'post',
+        data: {idbeli: idbeli},
         success: function(response){ 
           // Add response in Modal body
           $('.modal-body').html(response);
@@ -451,30 +496,7 @@
     document.getElementById('jumlah_cicil').addEventListener("keyup", function (evt) {
       tampilkan_cicilan();      
     }, false);
-
-    // Modul Sweet Alert
-    var statusProses = '<?= $status_proses; ?>';
-    
-    if(statusProses==='SUKSES SIMPAN JUAL'){
-        Swal.fire({
-        //position: 'top-end',
-        icon: 'success',
-        title: 'Berhasil Memproses Transaksi',
-        showConfirmButton: false,
-        timer: 1000
         
-        })
-    }    
-    if(statusProses==='SUKSES SIMPAN BELI'){
-        Swal.fire({
-        //position: 'top-end',
-        icon: 'success',
-        title: 'Berhasil Memproses Transaksi',
-        showConfirmButton: false,
-        timer: 2000
-        
-        })
-    }    
 </script>
 
 <?php

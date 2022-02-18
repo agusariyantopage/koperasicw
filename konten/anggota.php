@@ -47,7 +47,7 @@
                     <td>Nomor Identitas</td>
                     <td>Nama</td>
                     <td>Alamat</td>
-                    <td>No Telepon</td>
+                    <td>Belanja Wajib</td>
                     <td>Tipe</td>
                     
                     <td>Aksi</td>
@@ -64,7 +64,7 @@
                   <td><?= $kolom['no_identitas']; ?></td>
                   <td><?= $kolom['nama']; ?></td>
                   <td><?= $kolom['alamat']; ?></td>
-                  <td><?= $kolom['telepon']; ?></td>
+                  <td><?= number_format($kolom['belanja_wajib']); ?></td>
                   <td>
                     <?php 
                       if($kolom['is_individual']==1){
@@ -140,7 +140,11 @@
             
 
           </select>
-        </div>       
+        </div>    
+        <div>
+          <label for="belanja_wajib">Belanja Wajib</label>
+          <input type="text" name="belanja_wajib" class="form-control" value="<?= $kolom['belanja_wajib']; ?>">
+        </div>    
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

@@ -83,7 +83,9 @@
                   <td><?= $kolom['petugas']; ?></td>                  
                   <td><?= $kolom['dibuat_pada']; ?></td>
                   <td>
-                  <a target="blank" href="index.php?p=pembelian-info&token=<?= md5($kolom['id_beli']); ?>"><button type="button" class="btn btn-link"><i class="fas fa-info"></i></button></a>                    
+                  <!--<a target="blank" href="index.php?p=pembelian-info&token=<?= md5($kolom['id_beli']); ?>"><button type="button" class="btn btn-link"><i class="fas fa-info"></i></button></a>-->
+                  <a target="blank" href="index.php?p=pembelian-edit&token=<?= $kolom['id_beli']; ?>"><button type="button" class="btn btn-link"><i class="fas fa-edit"></i></button></a>                    
+                  <button type="button" class="btn btn-link infopembelian" data-toggle="modal" data-target="#infoPembelianModal" data-id="<?= $kolom['id_beli']; ?>"><i class="fas fa-info"></i></button> 
                   </td>
                 </tr>
            
@@ -104,48 +106,22 @@
   </div>
   <!-- /.content-wrapper -->
 
-  <!-- Modal Untuk Tambah Anggota -->
+  <!-- Modal Untuk Informasi Pembelian -->
   <!-- Modal Edit -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="infoPembelianModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Tambah Anggota</h5>
+        <h5 class="modal-title" id="editModalLabel">Informasi Transaksi Pembelian</h5>
         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form method="post" enctype="multipart/form-data" action="aksi/pemasok.php">
-        <input type="hidden" name="aksi" value="tambah">
-        
-        <div>
-          <label for="no_identitas">Nomer Identitas</label>
-          <input type="text" name="no_identitas" class="form-control">
-        </div>
-        <div>
-          <label for="tanggal_bergabung">Tanggal Bergabung</label>
-          <input type="date" name="tanggal_bergabung" class="form-control">
-        </div>
-        <div>
-          <label for="nama">Nama</label>
-          <input type="text" name="nama" class="form-control">
-        </div>
-        <div>
-          <label for="alamat">Alamat</label>
-          <textarea name="alamat" id="alamat" class="form-control" rows="3"></textarea>
-        </div>
-        <div>
-          <label for="telepon">Nomor Telepon</label>
-          <input type="text" name="telepon" class="form-control">
-        </div>  
-        <div>
-          <label for="email">Email</label>
-          <input type="email" name="email" class="form-control">
-        </div>        
+         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-        <button type="submit" class="btn btn-primary">Tambah</button>
-        </form>
+       
+        
       </div>
     </div>
   </div>
