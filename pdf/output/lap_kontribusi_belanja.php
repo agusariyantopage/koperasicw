@@ -36,9 +36,9 @@ $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Agus Ariyanto');
-$pdf->SetTitle('Laporan Penjualan - Umum');
-$pdf->SetSubject('Laporan Penjualan');
-$pdf->SetKeywords('Laporan Penjualan');
+$pdf->SetTitle('Laporan Kontribusi Belanja');
+$pdf->SetSubject('Laporan Kontribusi Belanja');
+$pdf->SetKeywords('Laporan Kontribusi Belanja');
 
 // set default header data
 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -74,7 +74,8 @@ $pdf->SetFont('dejavusans', '', 10);
 
 // add a page
 $pdf->AddPage();
-
+$tanggal_awal = $_GET['tanggal_awal'];
+$tanggal_akhir = $_GET['tanggal_akhir'];
 // writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
@@ -82,10 +83,10 @@ $pdf->AddPage();
 $html = '<p style="text-align: center;"><strong>Laporan Kontribusi Belanja Toko Anggota</strong></p>
 <table style="width:100%;">    
     <tr>
-        <td>Periode</td>
-        <td>: Keseluruhan </td>
-        <td>Metode Bayar</td>
-        <td>: Semua Metode Bayar</td>
+        <td style="width:10%;">Periode</td>
+        <td style="width:50%;">: ' . $tanggal_awal . ' S/D ' . $tanggal_akhir . ' </td>
+        <td style="width:15%;">Metode Bayar</td>
+        <td style="width:25%;">: Semua Metode Bayar</td>
     </tr>
 </table>
 <br><br>
@@ -101,7 +102,7 @@ $html = '<p style="text-align: center;"><strong>Laporan Kontribusi Belanja Toko 
 
 <tbody>';
 
-$sql1="select nama,alamat,is_individual,sum(total) as kontribusi from jual,anggota where jual.id_anggota=anggota.id_anggota group by jual.id_anggota";
+$sql1="select nama,alamat,is_individual,sum(total) as kontribusi from jual,anggota where jual.id_anggota=anggota.id_anggota and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir') group by jual.id_anggota";
 $query1=mysqli_query($koneksi,$sql1);
 
 $no=0;
@@ -137,7 +138,8 @@ $html.='<tr><td align="center" colspan="4">GRANDTOTAL</td>
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //Close and output PDF document
-$pdf->Output('lap_pemjualan_umum.pdf', 'I');
+$nama_file="laporan_kontribusi_belanja_".date('Y_m_d_H_i_s').".pdf";
+$pdf->Output($nama_file, 'I');
 
 //============================================================+
 // END OF FILE

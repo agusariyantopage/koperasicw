@@ -74,6 +74,8 @@ $pdf->SetFont('dejavusans', '', 10);
 
 // add a page
 $pdf->AddPage();
+$tanggal_awal=$_GET['tanggal_awal'];
+$tanggal_akhir=$_GET['tanggal_akhir'];
 
 // writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
@@ -82,10 +84,10 @@ $pdf->AddPage();
 $html = '<p style="text-align: center;"><strong>Laporan Transaksi Pembelian</strong></p>
 <table style="width:100%;">    
     <tr>
-        <td>Periode</td>
-        <td>: Keseluruhan </td>
-        <td>Metode Bayar</td>
-        <td>: Semua Metode Bayar</td>
+        <td style="width:10%;">Periode</td>
+        <td style="width:50%;">: '.$tanggal_awal.' S/D '.$tanggal_akhir.' </td>
+        <td style="width:15%;">Metode Bayar</td>
+        <td style="width:25%;">: Semua Metode Bayar</td>
     </tr>
 </table>
 <br><br>
@@ -101,7 +103,7 @@ $html = '<p style="text-align: center;"><strong>Laporan Transaksi Pembelian</str
 
 <tbody>';
 
-$sql1="select beli.*,nama from beli,pemasok where beli.id_pemasok=pemasok.id_pemasok";
+$sql1="select beli.*,nama from beli,pemasok where beli.id_pemasok=pemasok.id_pemasok and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
 $query1=mysqli_query($koneksi,$sql1);
 
 $no=0;
@@ -132,7 +134,8 @@ $html.='<tr><td align="center" colspan="4">GRANDTOTAL</td>
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //Close and output PDF document
-$pdf->Output('lap_pembelian_umum.pdf', 'I');
+$nama_file="laporan_pembelian_umum_".date('Y_m_d_H_i_s').".pdf";
+$pdf->Output($nama_file, 'I');
 
 //============================================================+
 // END OF FILE

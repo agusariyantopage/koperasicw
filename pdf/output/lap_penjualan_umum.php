@@ -44,8 +44,8 @@ $pdf->SetKeywords('Laporan Penjualan');
 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
 // set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 // set default monospaced font
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
@@ -62,9 +62,9 @@ $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 // set some language-dependent strings (optional)
-if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-	require_once(dirname(__FILE__).'/lang/eng.php');
-	$pdf->setLanguageArray($l);
+if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+    require_once(dirname(__FILE__) . '/lang/eng.php');
+    $pdf->setLanguageArray($l);
 }
 
 // ---------------------------------------------------------
@@ -74,7 +74,8 @@ $pdf->SetFont('dejavusans', '', 10);
 
 // add a page
 $pdf->AddPage();
-
+$tanggal_awal = $_GET['tanggal_awal'];
+$tanggal_akhir = $_GET['tanggal_akhir'];
 // writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
@@ -82,15 +83,14 @@ $pdf->AddPage();
 $html = '<p style="text-align: center;"><strong>Laporan Transaksi Penjualan</strong></p>
 <table style="width:100%;">    
     <tr>
-        <td>Periode</td>
-        <td>: Keseluruhan </td>
-        <td>Metode Bayar</td>
-        <td>: Semua Metode Bayar</td>
+        <td style="width:10%;">Periode</td>
+        <td style="width:50%;">: ' . $tanggal_awal . ' S/D ' . $tanggal_akhir . ' </td>
+        <td style="width:15%;">Metode Bayar</td>
+        <td style="width:25%;">: Semua Metode Bayar</td>
     </tr>
 </table>
 <br><br>
 <table style=" border-collapse: collapse;" border="1">
-
     <tr>      
       <th align="center" style="width:5%;">#</th>
       <th align="center" style="width:35%;">Anggota</th>
@@ -101,38 +101,39 @@ $html = '<p style="text-align: center;"><strong>Laporan Transaksi Penjualan</str
 
 <tbody>';
 
-$sql1="select jual.*,nama from jual,anggota where jual.id_anggota=anggota.id_anggota";
-$query1=mysqli_query($koneksi,$sql1);
+$sql1 = "select jual.*,nama from jual,anggota where jual.id_anggota=anggota.id_anggota and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
+$query1 = mysqli_query($koneksi, $sql1);
 
-$no=0;
-$grandtotal=0;
-while($kolom1=mysqli_fetch_array($query1)){
-$no++;
-$grandtotal=$grandtotal+$kolom1['total'];
-$html.='
+$no = 0;
+$grandtotal = 0;
+while ($kolom1 = mysqli_fetch_array($query1)) {
+    $no++;
+    $grandtotal = $grandtotal + $kolom1['total'];
+    $html .= '
         <tr>
-            <td>'.$no.'</td>
-            <td>'.$kolom1['nama'].'</td>
-            <td>'.$kolom1['tanggal_transaksi'].'</td>
-            <td>'.$kolom1['metode_bayar'].'</td>
-            <td align="right">'.number_format($kolom1['total']).'</td>
+            <td>' . $no . '</td>
+            <td>' . $kolom1['nama'] . '</td>
+            <td>' . $kolom1['tanggal_transaksi'] . '</td>
+            <td>' . $kolom1['metode_bayar'] . '</td>
+            <td align="right">' . number_format($kolom1['total']) . '</td>
         </tr>
         ';
-}        
+}
 
-$html.='<tr><td align="center" colspan="4">GRANDTOTAL</td>
-        <td align="right">'.number_format($grandtotal).'</td></tr>
+$html .= '<tr><td align="center" colspan="4">GRANDTOTAL</td>
+        <td align="right">' . number_format($grandtotal) . '</td></tr>
 </tbody>
 </table>
 <br><br>
-<i>-- Dicetak Pada : '.date('Y-m-d H:i:s').' --</i>
+<i>-- Dicetak Pada : ' . date('Y-m-d H:i:s') . ' --</i>
 <p>&nbsp;</p>';
 
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //Close and output PDF document
-$pdf->Output('lap_pemjualan_umum.pdf', 'I');
+$nama_file="laporan_penjualan_umum_".date('Y_m_d_H_i_s').".pdf";
+$pdf->Output($nama_file, 'I');
 
 //============================================================+
 // END OF FILE

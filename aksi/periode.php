@@ -25,7 +25,7 @@
             //echo $sql;
             $query=mysqli_query($koneksi,$sql);
             while($kolom=mysqli_fetch_array($query)){  
-                //$id_anggota=$kolom['ida'];
+                $id_anggota=$kolom['ida'];
                 //$belanja_wajib=50000;    
                 //$total_belanja=$kolom['total_belanja']+$kolom['total_belanja_cicil'];
                 //$saldo_awal=$kolom['saldo']+$total_belanja;
@@ -53,18 +53,18 @@
                 $total_potongan=$potongan_toko;
                 // Catat Mutasi Saldo
                 $sql1="insert into anggota_mutasi_saldo(id_anggota,tanggal,jumlah,keterangan) values($id_anggota,'$tanggal_selesai',$total_potongan,'$kode')";
-                //mysqli_query($koneksi,$sql1);
+                mysqli_query($koneksi,$sql1);
 
                 // Update Saldo Anggota
                 if($sisa_saldo_belanja<0){
                     $sisa_saldo_belanja=0;
                 }
                 $sql2="update anggota set saldo=$sisa_saldo_belanja where id_anggota=$id_anggota";
-               //mysqli_query($koneksi,$sql2);
+                mysqli_query($koneksi,$sql2);
 
                 // Kunci Periode Keuangan
-                $sql3="update periode set is_locked=1 where kode='$kode'";
-                //mysqli_query($koneksi,$sql3);
+                $sql3="update periode_pembukuan set is_locked=1 where kode='$kode'";
+                mysqli_query($koneksi,$sql3);
 
                 // Update Status Cicilan
                 $sql5="update jual_cicil set is_terbayar=1,diubah_pada=DEFAULT where tanggal_jatuh_tempo>='$tanggal_mulai' and tanggal_jatuh_tempo<='$tanggal_selesai'";
@@ -75,8 +75,10 @@
                 mysqli_query($koneksi,$sql4);
                 
                 //echo $sql1."<br>";
-                header('location:../index.php?p=keuangan-periode');
+                
                 }
+                header('location:../index.php?p=keuangan-periode');
+
         }
     }
 

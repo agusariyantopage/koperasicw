@@ -80,7 +80,7 @@
             $link='location:../index.php?p=pembelian';
             header($link);
         }
-        else if($_POST['aksi']=='ubah-pembelian'){
+        else if($_POST['aksi']=='ubah-pembelian'){ // Set Perintah Ubah Pembelian
             $id_beli=$_POST['id_beli'];
             $id_pemasok=$_POST['id_pemasok'];
             $id_user=$_SESSION['backend_user_id'];
@@ -110,11 +110,8 @@
             }
 
             $link="location:../index.php?p=pembelian-edit&token=$id_beli";
+            //echo $jumlah_data;
             header($link);
-
-            
-            
-
         }
     }
 

@@ -36,9 +36,9 @@ $pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Agus Ariyanto');
-$pdf->SetTitle('Laporan Penjualan - Umum');
-$pdf->SetSubject('Laporan Penjualan');
-$pdf->SetKeywords('Laporan Penjualan');
+$pdf->SetTitle('Laporan Penjualan Per Lembaga');
+$pdf->SetSubject('Laporan Penjualan Per Lembaga');
+$pdf->SetKeywords('Laporan Penjualan Per Lembaga');
 
 // set default header data
 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -71,7 +71,69 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 
 // set font
 $pdf->SetFont('dejavusans', '', 10);
-$sql0="select anggota.*,id_jual from anggota,jual where anggota.id_anggota=jual.id_anggota and is_individual=0 GROUP by nama";
+$pdf->AddPage();
+$tanggal_awal = $_GET['tanggal_awal'];
+$tanggal_akhir = $_GET['tanggal_akhir'];
+
+$html = '<p style="text-align: center;"><strong>Rekap Belanja Lembaga / Unit Kerja</strong></p>
+<table style="width:100%;">    
+    <tr>
+        <td style="width:10%;">Periode</td>
+        <td style="width:50%;">: '.$tanggal_awal.' S/D '.$tanggal_akhir.' </td>
+        <td style="width:15%;">Metode Bayar</td>
+        <td style="width:25%;">: Semua Metode Bayar</td>
+    </tr>
+</table>
+<br><br>
+<table style=" border-collapse: collapse;" border="1">
+
+    <tr>      
+      <th align="center" style="width:5%;">#</th>
+      <th align="center" style="width:35%;">Anggota</th>
+      <th align="center" style="width:15%;">Alamat</th>
+      <th align="center" style="width:30%;">Jenis</th>
+      <th align="center" style="width:15%;">Total</th>
+    </tr>
+
+<tbody>';
+
+$sql1="select nama,alamat,is_individual,sum(total) as kontribusi from jual,anggota where jual.id_anggota=anggota.id_anggota and is_individual=0 and jual.metode_bayar!='KAS' and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir') group by nama";
+$query1=mysqli_query($koneksi,$sql1);
+
+$no=0;
+$grandtotal=0;
+while($kolom1=mysqli_fetch_array($query1)){
+$no++;
+$grandtotal=$grandtotal+$kolom1['kontribusi'];
+if($kolom1['is_individual']==1){
+    $tipe="Individu/Perseorangan";
+} else {
+    $tipe="Kelompok/Lembaga";
+}
+$html.='
+        <tr>
+            <td>'.$no.'</td>
+            <td>'.$kolom1['nama'].'</td>
+            <td>'.$kolom1['alamat'].'</td>
+            <td>'.$tipe.'</td>
+            <td align="right">'.number_format($kolom1['kontribusi']).'</td>
+        </tr>
+        ';
+}        
+
+$html.='<tr><td align="center" colspan="4">GRANDTOTAL</td>
+        <td align="right">'.number_format($grandtotal).'</td></tr>
+</tbody>
+</table>
+<br><br>
+<i>-- Dicetak Pada : '.date('Y-m-d H:i:s').' --</i>
+<p>&nbsp;</p>';
+
+// output the HTML content
+$pdf->writeHTML($html, true, false, true, false, '');
+
+// Batas Laporan Detail
+$sql0="select anggota.*,id_jual from anggota,jual where anggota.id_anggota=jual.id_anggota and is_individual=0 and jual.metode_bayar!='KAS' and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir') GROUP by nama";
 $query0=mysqli_query($koneksi,$sql0);
 while($kolom0=mysqli_fetch_array($query0)){
     // add a page
@@ -86,10 +148,10 @@ while($kolom0=mysqli_fetch_array($query0)){
     <br>'.$kolom0['nama'].'</strong></p>
     <table style="width:100%;">    
         <tr>
-            <td>Periode</td>
-            <td>: Keseluruhan </td>
-            <td>Lembaga / Unit</td>
-            <td>: </td>
+            <td style="width:10%;">Periode</td>
+            <td style="width:50%;">: '.$tanggal_awal.' S/D '.$tanggal_akhir.' </td>
+            <td style="width:15%;">Metode Bayar</td>
+            <td style="width:25%;">: Semua Metode Bayar</td>
         </tr>
     </table>
     <br><br>
@@ -105,7 +167,7 @@ while($kolom0=mysqli_fetch_array($query0)){
 
     <tbody>';
 
-    $sql2="select jual_detail.*,produk.nama,jual.id_anggota,jual.tanggal_transaksi from jual_detail,produk,jual where jual_detail.id_produk=produk.id_produk and jual_detail.id_jual=jual.id_jual and id_anggota='$id_anggota'";
+    $sql2="select jual_detail.*,produk.nama,jual.id_anggota,jual.tanggal_transaksi from jual_detail,produk,jual where jual_detail.id_produk=produk.id_produk and jual_detail.id_jual=jual.id_jual and id_anggota='$id_anggota' and jual.metode_bayar!='KAS' and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
     $query2=mysqli_query($koneksi,$sql2);
     $no=0;
     $grandtotal=0;
@@ -138,7 +200,9 @@ while($kolom0=mysqli_fetch_array($query0)){
     $pdf->writeHTML($html, true, false, true, false, '');
 }
 //Close and output PDF document
-$pdf->Output('lap_pemjualan_umum.pdf', 'I');
+$nama_file="laporan_belanja_lembaga_".date('Y_m_d_H_i_s').".pdf";
+$pdf->Output($nama_file, 'I');
+
 
 //============================================================+
 // END OF FILE

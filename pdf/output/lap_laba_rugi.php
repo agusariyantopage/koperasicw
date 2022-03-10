@@ -74,7 +74,8 @@ $pdf->SetFont('dejavusans', '', 10);
 
 // add a page
 $pdf->AddPage();
-
+$tanggal_awal = $_GET['tanggal_awal'];
+$tanggal_akhir = $_GET['tanggal_akhir'];
 // writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
 // writeHTMLCell($w, $h, $x, $y, $html='', $border=0, $ln=0, $fill=0, $reseth=true, $align='', $autopadding=true)
 
@@ -82,16 +83,15 @@ $pdf->AddPage();
 $html = '<p style="text-align: center;"><strong>Laporan Laba Rugi Toko</strong></p>
 <table style="width:100%;">    
     <tr>
-        <td>Periode</td>
-        <td>: Keseluruhan </td>
-        <td>Metode Bayar</td>
-        <td>: Semua Metode Bayar</td>
+        <td style="width:10%;">Periode</td>
+        <td style="width:90%;">: ' . $tanggal_awal . ' S/D ' . $tanggal_akhir . ' </td>
+        
     </tr>
 </table>
 <br><br>
 ';
 
-$sql="select sum(hpp*jumlah) as total_hpp,sum(harga_jual*jumlah) as total_jual from jual_detail";
+$sql="select sum(jual_detail.hpp*jual_detail.jumlah) as total_hpp,sum(jual_detail.harga_jual*jual_detail.jumlah) as total_jual from jual_detail,jual where jual_detail.id_jual=jual.id_jual and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
 $query=mysqli_query($koneksi,$sql);
 $data=mysqli_fetch_array($query);
 $total_hpp=$data['total_hpp'];
@@ -157,7 +157,8 @@ $html.='
 $pdf->writeHTML($html, true, false, true, false, '');
 
 //Close and output PDF document
-$pdf->Output('lap_pemjualan_umum.pdf', 'I');
+$nama_file="laporan_laba_rugi_".date('Y_m_d_H_i_s').".pdf";
+$pdf->Output($nama_file, 'I');
 
 //============================================================+
 // END OF FILE

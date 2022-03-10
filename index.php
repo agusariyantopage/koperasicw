@@ -1,5 +1,6 @@
 <?php
     session_start();
+    
     if(empty($_SESSION['backend_user_id'])){
       header("location:login.php");
     }
