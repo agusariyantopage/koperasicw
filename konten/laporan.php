@@ -106,6 +106,23 @@
            </a>
          </div>
          <!-- ./col -->
+
+         <div class="col-lg-3 col-6">
+           <!-- small box -->
+           <a href="#" data-target="#laporanKasToko" data-toggle="modal">
+             <div class="small-box bg-success">
+               <div class="inner">
+                 <h3>Cetak</h3>
+
+                 <p>Laporan Kas Toko</p>
+               </div>
+               <div class="icon">
+                 <i class="ion ion-clipboard"></i>
+               </div>
+             </div>
+           </a>
+         </div>
+         <!-- ./col -->
          
        </div>
        <!-- /.row -->
@@ -239,6 +256,34 @@
        </div>
        <div class="modal-body">
          <form method="get" target="blank" action="pdf/output/lap_penjualan_per_lembaga.php">
+           <div>
+             <label for="tanggal_awal">Tanggal Awal</label>
+             <input type="date" name="tanggal_awal" class="form-control" required>
+           </div>
+           <div>
+             <label for="tanggal_akhir">Tanggal AKhir</label>
+             <input type="date" name="tanggal_akhir" class="form-control" required>
+           </div>
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+         <button type="submit" class="btn btn-primary">Cetak</button>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Modal Laporan Kas Toko -->
+ <div class="modal fade" id="laporanKasToko" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Pilih Periode Laporan Kas Toko</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="get" target="blank" action="pdf/output/lap_kas_toko.php">
            <div>
              <label for="tanggal_awal">Tanggal Awal</label>
              <input type="date" name="tanggal_awal" class="form-control" required>

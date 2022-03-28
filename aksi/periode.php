@@ -42,7 +42,8 @@
 
                 $belanja_wajib=$kolom['belanja_wajib'];    
                 $total_belanja=$kolom['total_belanja']+$kolom['total_belanja_cicil'];
-                $saldo_awal=$kolom['saldo']+$total_belanja;
+                //$saldo_awal=$kolom['saldo']+$total_belanja;
+                $saldo_awal=$kolom['saldo']+$kolom['total_belanja'];                
                 $sisa_saldo_belanja=$saldo_awal+$belanja_wajib-$total_belanja;    
                 if($sisa_saldo_belanja>=0){
                 $potongan_toko=$kolom['belanja_wajib'];

@@ -85,8 +85,8 @@
                 $cicil[3]=$_POST['jumlah_bayar4'];                
                 $cicil[4]=$_POST['jumlah_bayar5'];                
 
-                $sql6="update anggota set saldo=saldo-$cicil[0] where id_anggota=$id_anggota";
-                mysqli_query($koneksi,$sql6);
+                //$sql6="update anggota set saldo=saldo-$cicil[0] where id_anggota=$id_anggota";
+                //mysqli_query($koneksi,$sql6);
 
                 for($i=0;$i<$jumlah_cicil;$i++){
                     $keterangan="Pembayaran ke -".($i+1);
