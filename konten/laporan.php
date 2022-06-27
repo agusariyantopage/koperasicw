@@ -123,7 +123,24 @@
            </a>
          </div>
          <!-- ./col -->
-         
+
+         <div class="col-lg-3 col-6">
+           <!-- small box -->
+           <a href="#" data-target="#laporanBelanjaIndividu" data-toggle="modal">
+             <div class="small-box bg-success">
+               <div class="inner">
+                 <h3>Cetak</h3>
+
+                 <p>Laporan Belanja Individu</p>
+               </div>
+               <div class="icon">
+                 <i class="ion ion-clipboard"></i>
+               </div>
+             </div>
+           </a>
+         </div>
+         <!-- ./col -->
+
        </div>
        <!-- /.row -->
 
@@ -291,6 +308,46 @@
            <div>
              <label for="tanggal_akhir">Tanggal AKhir</label>
              <input type="date" name="tanggal_akhir" class="form-control" required>
+           </div>
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+         <button type="submit" class="btn btn-primary">Cetak</button>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Modal Laporan Belanja Individu -->
+ <div class="modal fade" id="laporanBelanjaIndividu" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Pilih Periode & Anggota</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="get" target="blank" action="pdf/output/lap_penjualan_per_individu.php">
+           <div>
+             <label for="tanggal_awal">Tanggal Awal</label>
+             <input type="date" name="tanggal_awal" class="form-control" required>
+           </div>
+           <div>
+             <label for="tanggal_akhir">Tanggal AKhir</label>
+             <input type="date" name="tanggal_akhir" class="form-control" required>
+           </div>
+           <div>
+             <label for="id_anggota">Anggota</label>
+             <select name="id_anggota" class="form-control" required>
+               <?php
+                $sql="select * from anggota order by nama";
+                $query=mysqli_query($koneksi,$sql);
+                while($kolom=mysqli_fetch_array($query)){ 
+                  echo "<option value='$kolom[id_anggota]'>$kolom[nama]</option>";
+                }
+               ?>
+             </select>
            </div>
 
        </div>
