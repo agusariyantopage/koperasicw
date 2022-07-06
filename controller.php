@@ -97,6 +97,15 @@
         $title  ="App Koperasi V 1.0 | Laporan";
         $konten="konten/laporan.php";
     }
+
+    else if($_GET['p']=='pemeliharaan'){
+        $title  ="App Koperasi V 1.0 | Pemeliharaan";
+        $konten="konten/pemeliharaan.php";
+    }
+    else if($_GET['p']=='pemeliharaan-tidakwajar'){
+        $title  ="App Koperasi V 1.0 | Transaksi Tidak Wajar";
+        $konten="konten/pemeliharaan-tidakwajar.php";
+    }
     else if($_GET['p']=='keuangan-periode'){
         $title  ="App Koperasi V 1.0 | Periode Pembukuan";
         $konten="konten/keuangan-periode.php";

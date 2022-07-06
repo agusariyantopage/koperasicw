@@ -252,7 +252,7 @@
           </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" onclick="return confirm('Yakin akan diproses??');" class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
         </form>
       </div>
@@ -338,7 +338,7 @@
           </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" onclick="return confirm('Yakin akan diproses??');" class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
         </form>
       </div>
@@ -382,7 +382,7 @@
         
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" onclick="return confirm('Yakin akan diproses??');" class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
         </form>
       </div>

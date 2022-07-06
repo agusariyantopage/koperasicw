@@ -143,3 +143,11 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="index.php?p=pemeliharaan" class="nav-link">
+              <i class="nav-icon fas fa-cog"></i>
+              <p>
+                Pemeliharaan
+              </p>
+            </a>
+          </li>

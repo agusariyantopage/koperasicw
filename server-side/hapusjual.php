@@ -43,6 +43,7 @@ echo '
             $query2 = mysqli_query($koneksi, $sql2);
             $no = 0;
             $grandtotal = 0;
+            $upd_stok="";
             while ($kolom2 = mysqli_fetch_array($query2)) {
                 $no++;
                 $qty_now = number_format($kolom2['qty_now']);
@@ -55,6 +56,8 @@ echo '
                 }
 
                 $token = md5($kolom2['id_jual']);
+                $res_sql1="update produk set qty=$qty_after where id_produk=$kolom2[id_produk] and servis=0;";
+                $upd_stok=$upd_stok.$res_sql1;
                 echo "
 		<tr>
 			<td>$no</td>			
@@ -81,17 +84,19 @@ echo '
             $saldo_perubahan = $saldo_awal + $belanja;
             ?>
             <tr>
-                <td><?= $no; ?></td>
+                <td><?= $no+1; ?></td>
                 <td><b>SALDO BELANJA ANGGOTA</b> <?= $kolom1['napel']; ?></td>
                 <td align="right"><?= number_format($saldo_awal); ?></td>
                 <td align="right"><?= number_format($belanja); ?></td>
                 <td align="right"><?= number_format($saldo_perubahan); ?></td>
             </tr>
             <input type="hidden" name="saldo" value="<?= $saldo_perubahan; ?>">
+            <input type="hidden" name="perintah_update_stok" value="<?= $upd_stok; ?>">
 
         </tbody>
 
     </table>
+    
     <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah anda yakin akan menghapus data transaksi ini?')"><i class="fas fa-trash"></i> Proses Hapus</button>
 </form>
 <?php

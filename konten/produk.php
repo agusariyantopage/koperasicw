@@ -43,6 +43,7 @@
                 <!-- Kepala Tabel -->
                 <thead>
                   <tr>
+                    <td>ID</td>
                     <td>Nama Produk</td>
                     <td>Barcode</td>
                     <td>Kategori</td>
@@ -60,6 +61,7 @@
    while($kolom=mysqli_fetch_array($query)){
 ?>                
                 <tr>
+                  <td><?= $kolom['id_produk']; ?></td>
                   <td><?= $kolom['nama']; ?></td>
                   <td><?= $kolom['barcode']; ?></td>
                   <td><?= $kolom['produk_kategori']; ?></td>

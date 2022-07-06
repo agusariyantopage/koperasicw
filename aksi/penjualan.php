@@ -113,6 +113,33 @@
             $link='location:../index.php?p=penjualan&last='.md5($id_jual);
             header($link);
         }
+
+        else if($_POST['aksi']=='hapus-penjualan'){
+            $id_jual=$_POST['id_jual'];
+            $id_anggota=$_POST['id_anggota'];
+            $saldo=$_POST['saldo'];
+            $perintah_update_stok=$_POST['perintah_update_stok'];
+
+            // Update Saldo Belanja
+            $sql1="update anggota set saldo=$saldo where id_anggota=$id_anggota";
+            mysqli_query($koneksi,$sql1);
+            
+            // Delete Nota
+            $sql3="delete from jual where id_jual=$id_jual";
+            mysqli_query($koneksi,$sql3);
+
+            // Update Stok
+            mysqli_multi_query($koneksi,$perintah_update_stok); 
+            $sukses=mysqli_affected_rows($koneksi);
+            if($sukses>=1){
+                $_SESSION['status_proses'] ='SUKSES SIMPAN JUAL';                    
+            }                      
+
+           
+
+            // Redirection
+            header('location:../index.php?p=daftar-penjualan');
+        }
     }
 
     if(!empty($_GET['aksi'])){
