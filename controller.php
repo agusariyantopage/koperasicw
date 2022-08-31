@@ -15,6 +15,10 @@
         $title  ="App Koperasi V 1.0 | Produk";
         $konten="konten/produk.php";
     }
+    else if($_GET['p']=='produk-konsinyasi'){
+        $title  ="App Koperasi V 1.0 | Produk Konsinyasi";
+        $konten="konten/produk_konsinyasi.php";
+    }
     else if($_GET['p']=='produk-tambah'){
         $title  ="App Koperasi V 1.0 | Tambah Produk";
         $konten="konten/produk_tambah.php";
@@ -98,14 +102,7 @@
         $konten="konten/laporan.php";
     }
 
-    else if($_GET['p']=='pemeliharaan'){
-        $title  ="App Koperasi V 1.0 | Pemeliharaan";
-        $konten="konten/pemeliharaan.php";
-    }
-    else if($_GET['p']=='pemeliharaan-tidakwajar'){
-        $title  ="App Koperasi V 1.0 | Transaksi Tidak Wajar";
-        $konten="konten/pemeliharaan-tidakwajar.php";
-    }
+    
     else if($_GET['p']=='keuangan-periode'){
         $title  ="App Koperasi V 1.0 | Periode Pembukuan";
         $konten="konten/keuangan-periode.php";
@@ -122,4 +119,19 @@
         $title  ="App Koperasi V 1.0 | Saldo Anggota Individu";
         $konten="konten/anggota-saldo-individu.php";
     }
+
+    // (START)  Menu Pemeliharaan
+    else if($_GET['p']=='pemeliharaan'){
+        $title  ="App Koperasi V 1.0 | Pemeliharaan";
+        $konten="konten/pemeliharaan.php";
+    }
+    else if($_GET['p']=='pemeliharaan-tidakwajar'){
+        $title  ="App Koperasi V 1.0 | Transaksi Dengan Harga Tidak Wajar";
+        $konten="konten/pemeliharaan-tidakwajar.php";
+    }
+    else if($_GET['p']=='pemeliharaan-beda-total'){
+        $title  ="App Koperasi V 1.0 | Transaksi Beda Total";
+        $konten="konten/pemeliharaan-beda-total.php";
+    }
+    // (END)  Menu Pemeliharaan
 ?>

@@ -6,6 +6,20 @@
     $nama=$kolom1['nama']." (".$kolom1['alamat'].")";
     $saldo_real=$kolom1['saldo'];
 
+    // Cari Total Belanja Potong Saldo
+    $sql2="select sum(total) as total from jual where metode_bayar='POTONG SALDO ANGGOTA' and md5(id_anggota)='$id'";
+    $query2=mysqli_query($koneksi,$sql2);
+    $kolom2=mysqli_fetch_array($query2);
+    $total_belanja_potong_saldo=$kolom2['total'];
+
+    // Cari Total Belanja Cicilan
+    
+    $sql3="SELECT SUM(jual_cicil.jumlah_tagihan) as total from jual,jual_cicil WHERE jual.id_jual=jual_cicil.id_jual AND jual_cicil.is_terbayar=1 AND md5(id_anggota)='$id'";
+    $query3=mysqli_query($koneksi,$sql3);
+    $kolom3=mysqli_fetch_array($query3);
+    $total_belanja_cicil=$kolom3['total'];
+
+
 ?>
 <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -169,14 +183,16 @@
                         <th>Keterangan</th>                        
                       </tr>
                       <tr>
-                        <th>Rp. <?= number_format($total_saldo-$total); ?></th>
+                        <th>Rp. <?= number_format($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil); ?></th>
                         <th>Rp. <?= number_format($saldo_real); ?></th>
                         <th>
                           <?php
-                            if(($total_saldo-$total)==$saldo_real){
+                            //$token=($kolom['id_anggota']);
+                            $akumulasi=$total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil;
+                            if(($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil)==$saldo_real){
                               echo "<font class='text-success'>BALANCE</font>";
                             } else {
-                              echo "<font class='text-danger'>UNBALANCE</font>";
+                              echo "<a href='aksi/anggota.php?aksi=balancing-saldo&akumulasi=$akumulasi&token=$id' class='text-danger'>UNBALANCE</a>";
                             }
                           ?>
                         </th>

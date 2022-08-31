@@ -56,7 +56,14 @@
             
 
         }
+        else if($_POST['aksi']=='ubah-status-konsinyasi'){
+            $id_produk=$_POST['id_produk'];
+            $konsinyasi=$_POST['konsinyasi'];
+            $sql="update produk set konsinyasi=$konsinyasi, diubah_pada=DEFAULT where id_produk=$id_produk";            
+            mysqli_query($koneksi,$sql);
+        }
     }
+    
 
     if(!empty($_GET['aksi'])){
         if($_GET['aksi']=='hapus'){

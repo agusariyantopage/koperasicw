@@ -23,11 +23,10 @@
      <div class="container-fluid">
        <row>
          <div class="col-12">
-           <div class="btn-group mb-3" role="group" aria-label="Basic example">
-             <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Beranda</button></a>
+           <div class="btn-group mb-3" role="group" aria-label="Basic example">             
              <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Data Ganda</button></a>
-             <a href="index.php?p=pemeliharaan-tidakwajar"><button type="button" class="btn btn-warning mr-1">Transaksi Tidak Wajar</button></a>
-             <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Semua Transaksi</button></a>
+             <a href="index.php?p=pemeliharaan-tidakwajar"><button type="button" class="btn btn-warning mr-1">Harga Tidak Wajar</button></a>
+             <a href="index.php?p=pemeliharaan-beda-total"><button type="button" class="btn btn-warning mr-1">Beda Total</button></a>
            </div>
 
            <div class="card">

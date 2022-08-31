@@ -3,8 +3,21 @@
     include "../koneksi.php";
 
     if(!empty($_POST)){
-        if($_POST['aksi']=='tambah'){
-            
+        if($_POST['aksi']=='proses-beda-total'){
+            $id_jual=$_POST['id_jual'];
+            $selisih=$_POST['selisih'];
+            $id_anggota=$_POST['id_anggota'];
+
+            $sql1="UPDATE jual set total=total+$selisih WHERE id_jual=$id_jual";
+            $sql2="UPDATE anggota set saldo=saldo-$selisih WHERE id_anggota=$id_anggota";
+
+            mysqli_query($koneksi,$sql1);
+            mysqli_query($koneksi,$sql2);
+
+            $sukses=mysqli_affected_rows($koneksi);
+            if($sukses>=1){
+                $_SESSION['status_proses'] ='SUKSES SIMPAN JUAL';                    
+            }   
         }
         
         else if($_POST['aksi']=='ubah'){

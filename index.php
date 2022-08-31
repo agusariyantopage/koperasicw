@@ -361,6 +361,34 @@
       });
     });
 
+    $(document).on('click','.cek-konsinyasi',function(){
+    //$('.infopembelian').click(function(){
+   
+      var id_produk = $(this).data('id');
+      var aksi='ubah-status-konsinyasi';
+      var konsinyasi=0;      
+      //alert(id_produk);
+      if (document.getElementById('cek-konsinyasi'+id_produk).checked) {
+        konsinyasi=1;
+      } else {
+        konsinyasi=0;
+      }
+      
+      // AJAX request
+      $.ajax({
+        url: 'aksi/produk.php',
+        type: 'post',
+        data: {id_produk: id_produk, konsinyasi:konsinyasi, aksi:aksi},
+        success: function(response){ 
+          // Add response in Modal body
+          //$('.modal-body').html(response);
+          //alert(id_produk+'-'+aksi+'-'+konsinyasi);
+
+         
+        }
+      });
+    });
+
     //$('.select2').select2();
     //Initialize Select2 Elements
     $('.select2bs4').select2({

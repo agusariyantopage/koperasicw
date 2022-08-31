@@ -66,6 +66,16 @@
             //echo $sql;
             header('location:../index.php?p=anggota');
         }
+        if($_GET['aksi']=='balancing-saldo'){
+            $id_anggota=$_GET['token'];
+            $akumulasi=$_GET['akumulasi'];
+            $sql="UPDATE anggota SET saldo=$akumulasi WHERE md5(id_anggota)='$id_anggota'";
+            mysqli_query($koneksi,$sql);
+            //echo $sql;
+            $link="location:../index.php?p=anggota-saldo-individu&token=".$id_anggota;
+            header($link);
+
+        }
         
     }
 ?>

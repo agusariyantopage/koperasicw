@@ -10,7 +10,7 @@
          <div class="col-sm-6">
            <ol class="breadcrumb float-sm-right">
              <li class="breadcrumb-item"><a href="#">Pemeliharaan</a></li>
-             <li class="breadcrumb-item active">Transaksi Tidak Wajar</li>
+             <li class="breadcrumb-item active">Transaksi Harga Jual Tidak Wajar</li>
            </ol>
          </div><!-- /.col -->
        </div><!-- /.row -->
@@ -24,45 +24,44 @@
        <row>
          <div class="col-12">
            <div class="btn-group mb-3" role="group" aria-label="Basic example">
-             <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Beranda</button></a>
              <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Data Ganda</button></a>
-             <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Transaksi Tidak Wajar</button></a>
-             <a href="index.php?p=pemeliharaan"><button type="button" class="btn btn-warning mr-1">Semua Transaksi</button></a>
+             <a href="index.php?p=pemeliharaan-tidakwajar"><button type="button" class="btn btn-warning mr-1">Harga Tidak Wajar</button></a>
+             <a href="index.php?p=pemeliharaan-beda-total"><button type="button" class="btn btn-warning mr-1">Beda Total</button></a>
            </div>
 
            <div class="card">
              <div class="card-header">
-               <h3>Data Suspend Transaksi Ganda</h3>
+               <h3>Data Suspend Harga Jual Tidak Wajar</h3>
              </div>
              <div class="card-body">
-              
+
 
                <table id="example1" class="table table-bordered table-striped">
                  <!-- Kepala Tabel -->
                  <thead>
                    <tr>
                      <td>#</td>
-                     <td>ID Trx</td>                                     
+                     <td>ID Trx</td>
                      <td>ID Produk</td>
-                     <td>Harga Pokok</td>                     
-                     <td>Harga Jual</td>                
+                     <td>Harga Pokok</td>
+                     <td>Harga Jual</td>
                      <td>Aksi</td>
                    </tr>
                  </thead>
                  <!-- Isi Tabel -->
                  <?php
-                  $no=0;
-                  $sql="SELECT * FROM jual_detail WHERE harga_jual<hpp ORDER BY id_jual DESC";
+                  $no = 0;
+                  $sql = "SELECT * FROM jual_detail WHERE harga_jual<hpp ORDER BY id_jual DESC";
                   $query = mysqli_query($koneksi, $sql);
                   while ($kolom = mysqli_fetch_array($query)) {
                     $no++;
                   ?>
                    <tr>
                      <td><?= $no; ?></td>
-                     <td><button type="button" class="btn btn-link infopenjualan" data-toggle="modal" data-target="#exampleModal" data-id="<?= $kolom['id_jual']; ?>"><?= $kolom['id_jual'];?></button></td>
-                     <td><?= $kolom['id_produk']; ?></td>  
-                     <td><?= number_format($kolom['hpp']); ?></td> 
-                     <td><?= number_format($kolom['harga_jual']); ?></td> 
+                     <td><button type="button" class="btn btn-link infopenjualan" data-toggle="modal" data-target="#exampleModal" data-id="<?= $kolom['id_jual']; ?>"><?= $kolom['id_jual']; ?></button></td>
+                     <td><?= $kolom['id_produk']; ?></td>
+                     <td><?= number_format($kolom['hpp']); ?></td>
+                     <td><?= number_format($kolom['harga_jual']); ?></td>
                      <td></td>
                    </tr>
 
