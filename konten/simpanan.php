@@ -41,29 +41,27 @@
                     <td>Anggota</td>
                     <td>Jenis Simpanan</td>
                     <td>Periode Kontrak</td>
-                    <td>Bunga Per-Tahun</td>
-                    <td>Jumlah Simpanan</td>
+                    <td>Saldo</td>
                     <td>Status</td>
                     <td>Aksi</td>
                   </tr>
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-  $sql="select simpanan.*,anggota.nama as napel,user.nama as petugas from simpanan,anggota,user where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user  order by simpanan.id_simpanan desc";  
+  $sql="SELECT simpanan.*,anggota.nama as napel,user.nama as petugas,simpanan_jenis.jenis_simpanan,simpanan_jenis.kode from simpanan,anggota,user,simpanan_jenis where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user and simpanan.id_simpanan_jenis=simpanan_jenis.id_simpanan_jenis  order by simpanan.id_simpanan desc";  
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
 ?>                
                 <tr>
                   <td><?= $kolom['id_simpanan']; ?></td>
                   <td><?= $kolom['napel']; ?></td>
-                  <td><?= $kolom['jenis_simpanan']; ?></td>
+                  <td><?= $kolom['kode']; ?> (<?= $kolom['jenis_simpanan']; ?>)</td>
                   <td><?= $kolom['tanggal_awal_kontrak']; ?> (<?= $kolom['durasi_kontrak_bulan']; ?> Bulan)</td>
-                  <td><?= number_format($kolom['bunga_tahunan']); ?> %</td>
-                  <td><?= number_format($kolom['jumlah_simpanan']); ?></td>                  
+                  <td><?= number_format($kolom['saldo_terakhir']); ?></td>                  
                   <td><?= $kolom['status_simpanan']; ?></td>
                   <td>
-                    <a target="blank" href="pdf/output/struk.php?token=<?= md5($kolom['id_simpanan']); ?>">
-                    <button type="button" class="btn btn-link"><i class="fas fa-print"></i></button>                    
+                    <a target="blank" href="index.php?p=simpanan-detail&id=<?= $kolom['id_simpanan']; ?>">
+                    <button type="button" class="btn btn-link"><i class="fas fa-info"></i></button>                    
                     </a>                    
                   </td>
                 </tr>

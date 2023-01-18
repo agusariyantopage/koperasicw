@@ -273,10 +273,29 @@
       "autoWidth": true,
       "responsive": true,
     });
+    $('#noorder-nopaging').DataTable({
+      "paging": false,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": false,
+      "info": true,
+      "autoWidth": true,
+      "responsive": true,
+    });
     
     // Modul Sweet Alert
     var statusProses = '<?= $status_proses; ?>';
     //alert('statusProses');
+    if(statusProses==='SUKSES'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'success',
+        title: 'Berhasil Memproses Transaksi',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }    
     if(statusProses==='SUKSES SIMPAN JUAL'){
         Swal.fire({
         //position: 'top-end',
@@ -357,6 +376,24 @@
 
           // Display Modal
           //$('#empModal').modal('show'); 
+        }
+      });
+    });
+
+    $(document).on('click','.simpanan_input_bayar',function(){    
+      var id_simpanan_detail = $(this).data('id');
+      var id_simpanan = $(this).data('id2');
+
+      //alert(id_simpanan_detail);
+      
+      // AJAX request
+      $.ajax({
+        url: 'server-side/simpanan_input_bayar.php',
+        type: 'post',
+        data: {id_simpanan_detail: id_simpanan_detail,id_simpanan:id_simpanan},
+        success: function(response){ 
+          // Add response in Modal body
+          $('.modal-body').html(response); 
         }
       });
     });

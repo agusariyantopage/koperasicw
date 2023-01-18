@@ -91,6 +91,14 @@
         $title  ="App Koperasi V 1.0 | Tambah Transaksi Simpanan";
         $konten="konten/simpanan-tambah.php";
     }
+    else if($_GET['p']=='simpanan-tambah-sw'){
+        $title  ="App Koperasi V 1.0 | Tambah Baru Simpanan Wajib";
+        $konten="konten/simpanan-tambah-sw.php";
+    }
+    else if($_GET['p']=='simpanan-detail'){
+        $title  ="App Koperasi V 1.0 | Detail Transaksi Simpanan";
+        $konten="konten/simpanan-detail.php";
+    }
     else if($_GET['p']=='pinjaman'){
         $title  ="App Koperasi V 1.0 | Daftar Pinjaman";
         $konten="konten/pinjaman.php";
@@ -118,6 +126,10 @@
     else if($_GET['p']=='anggota-saldo-individu'){
         $title  ="App Koperasi V 1.0 | Saldo Anggota Individu";
         $konten="konten/anggota-saldo-individu.php";
+    }
+    else if($_GET['p']=='anggota-poin'){
+        $title  ="App Koperasi V 1.0 | Poin Anggota";
+        $konten="konten/anggota-poin.php";
     }
 
     // (START)  Menu Pemeliharaan

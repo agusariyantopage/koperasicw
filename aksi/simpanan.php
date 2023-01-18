@@ -44,6 +44,46 @@
             header('location:../index.php?p=simpanan');
            
         }
+        else if($_POST['aksi']=='simpan-simpanan-sw'){
+            $id_anggota=$_POST['id_anggota'];
+            $id_user=$_SESSION['backend_user_id'];
+            $id_simpanan_jenis=$_POST['id_simpanan_jenis'];
+            $tanggal_transaksi=$_POST['tanggal_awal_kontrak'];
+            $tanggal_awal_kontrak=$_POST['tanggal_awal_kontrak'];           
+            $saldo_terakhir=$_POST['saldo_terakhir'];
+            
+            $sql="insert into simpanan (id_anggota, id_user, id_simpanan_jenis, tanggal_transaksi, tanggal_awal_kontrak, tanggal_akhir_kontrak, durasi_kontrak_bulan, bunga_tahunan, saldo_terakhir, dibuat_pada, diubah_pada, status_simpanan) values($id_anggota, $id_user, '$id_simpanan_jenis', '$tanggal_transaksi', '$tanggal_awal_kontrak', DEFAULT, DEFAULT, DEFAULT, $saldo_terakhir,DEFAULT,DEFAULT,DEFAULT)";
+            mysqli_query($koneksi,$sql);
+            //echo $sql;
+
+            // Input Data Setoran Awal Ke Mutasi Rekening (simpanan_mutasi)
+            $sql_get_id_simpanan="SELECT * FROM simpanan WHERE id_anggota=$id_anggota AND id_simpanan_jenis=$id_simpanan_jenis ORDER BY id_simpanan DESC LIMIT 1";
+            $query_get_id_simpanan=mysqli_query($koneksi,$sql_get_id_simpanan);
+            $data_get_id_simpanan=mysqli_fetch_array($query_get_id_simpanan);
+            $id_simpanan=$data_get_id_simpanan['id_simpanan'];
+            $sql_input_mutasi="INSERT INTO simpanan_mutasi (id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', 'Setoran', $saldo_terakhir, 'Setoran Awal', $id_user, DEFAULT, DEFAULT)";
+            mysqli_query($koneksi,$sql_input_mutasi);
+            $sukses=mysqli_affected_rows($koneksi);
+            if($sukses>=1){
+                $_SESSION['status_proses'] ='SUKSES';                    
+            } 
+            //echo $sql_input_mutasi;
+            header('location:../index.php?p=simpanan');
+           
+        }
+        else if($_POST['aksi']=='simpanan-input-bayar'){
+            $id_simpanan_detail=$_POST['id_simpanan_detail'];
+            $id_simpanan=$_POST['id_simpanan'];
+            $tanggal_realisasi_bayar=$_POST['tanggal_realisasi_bayar'];
+            $realisasi_pembayaran=$_POST['realisasi_pembayaran'];
+
+            $sql="UPDATE simpanan_detail SET tanggal_realisasi_bayar='$tanggal_realisasi_bayar',realisasi_pembayaran=realisasi_pembayaran+$realisasi_pembayaran,diubah_pada=DEFAULT WHERE id_simpanan_detail=$id_simpanan_detail";
+            mysqli_query($koneksi,$sql);
+            
+            //echo $sql;
+            $link='location:../index.php?p=simpanan-detail&id='.$id_simpanan;
+            header($link);            
+        }
     }
 
    

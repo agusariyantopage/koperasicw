@@ -9,8 +9,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Keanggotaan</a></li>
-              <li class="breadcrumb-item active"> Saldo Anggota</li>
+              <li class="breadcrumb-item"><a href="#">Keuangan</a></li>
+              <li class="breadcrumb-item active"> Saldo Belanja Anggota</li>
               
             </ol>
           </div><!-- /.col -->
