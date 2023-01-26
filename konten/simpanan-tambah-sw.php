@@ -1,16 +1,20 @@
 <?php
 // Ambil Nilai Formulir Jika Tidak Kosong
+
 if (!empty($_GET['id_anggota'])) {
-    $id_anggota = $_GET['id_anggota'];
-    $id_simpanan_jenis = $_GET['id_simpanan_jenis'];
+    $id_anggota = $_GET['id_anggota'];    
     $tanggal_awal_kontrak = $_GET['tanggal_awal_kontrak'];
+    $id_simpanan_jenis = $_GET['id_simpanan_jenis'];
     $saldo_terakhir = $_GET['saldo_terakhir'];
 } else {
     $id_anggota = '';
-    $id_simpanan_jenis = '';
+    $id_simpanan_jenis = $_GET['id_simpanan_jenis'];
     $tanggal_awal_kontrak = '';
     $saldo_terakhir = 0;
 }
+$sql_get_jenis_simpanan="SELECT * FROM simpanan_jenis WHERE id_simpanan_jenis=$id_simpanan_jenis";
+$get_jenis_simpanan=mysqli_fetch_array(mysqli_query($koneksi,$sql_get_jenis_simpanan));
+$jenis_simpanan=$get_jenis_simpanan['jenis_simpanan'];
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -19,13 +23,13 @@ if (!empty($_GET['id_anggota'])) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Transaksi Simpanan Wajib Baru</h1>
+                    <h1 class="m-0">Transaksi <?= $jenis_simpanan; ?> Baru</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Simpan Pinjam</a></li>
                         <li class="breadcrumb-item"><a href="index.php?p=simpanan">Simpanan</a></li>
-                        <li class="breadcrumb-item active">Input Simpanan Wajib</li>
+                        <li class="breadcrumb-item active">Input <?= $jenis_simpanan; ?></li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -40,13 +44,13 @@ if (!empty($_GET['id_anggota'])) {
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Input Transaksi Simpanan Wajib</h3>
+                            <h3>Input Transaksi <?= $jenis_simpanan; ?></h3>
                         </div>
                         <div class="card-body">
 
                             <form action="#" method="get">
                                 <input type="hidden" name="p" value="simpanan-tambah-sw">
-                                <input type="hidden" name="id_simpanan_jenis" value="4">
+                                <input type="hidden" name="id_simpanan_jenis" value="<?= $_GET['id_simpanan_jenis'];; ?>">
                                 <div class="form-row">
                                     <div class="form-group col-sm-12">
                                         <label for="id_anggota">Anggota</label>
@@ -95,10 +99,10 @@ if (!empty($_GET['id_anggota'])) {
                                 $query_cek=mysqli_query($koneksi,$sql_cek);
                                 $ketemu=mysqli_num_rows($query_cek);
                                 if($ketemu>=1){
-                                    echo "<span class='badge badge-danger'>Tidak dapat diproses karena Data Dengan Nama Anggota <b>".$nama."</b> Sudah Memiliki Rekening Simpanan Wajib</span>";
+                                    echo "<span class='badge badge-danger'>Tidak dapat diproses karena Data Dengan Nama Anggota <b>".$nama."</b> Sudah Memiliki Rekening ". $jenis_simpanan." </span>";
                                 } else {
                             ?>
-                                <span class="badge badge-success">Transaksi bisa diproses, tidak ditemukan rekening simpanan wajib dengan nama anggota <?= $nama; ?></span>
+                                <span class="badge badge-success">Transaksi bisa diproses, tidak ditemukan rekening <?= $jenis_simpanan; ?> dengan nama anggota <?= $nama; ?></span>
                                 <form action="aksi/simpanan.php" method="post">
                                     <input type="hidden" name="aksi" value="simpan-simpanan-sw">
                                     <input type="hidden" name="id_anggota" value="<?= $id_anggota; ?>">

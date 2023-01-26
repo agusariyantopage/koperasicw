@@ -1,15 +1,15 @@
 <?php
 // Ambil Nilai Formulir Jika Tidak Kosong
-if (!empty($_GET['jenis_simpanan'])) {
+if (!empty($_GET['id_anggota'])) {
   $id_anggota = $_GET['id_anggota'];
-  $jenis_simpanan = $_GET['jenis_simpanan'];
+  $id_simpanan_jenis = $_GET['id_simpanan_jenis'];
   $tanggal_awal_kontrak = $_GET['tanggal_awal_kontrak'];
   $durasi_kontrak_bulan = $_GET['durasi_kontrak_bulan'];
   $bunga_tahunan = $_GET['bunga_tahunan'];
   $jumlah_simpanan = $_GET['jumlah_simpanan'];
 } else {
   $id_anggota = '';
-  $jenis_simpanan = '';
+  $id_simpanan_jenis = $_GET['id_simpanan_jenis'];
   $tanggal_awal_kontrak = '';
   $durasi_kontrak_bulan = '';
   $bunga_tahunan = '';
@@ -77,15 +77,15 @@ if (!empty($_GET['jenis_simpanan'])) {
                 </div>
                 <div class="form-row">
                   <div class="form-group col-sm-4">
-                    <label for="jenis_simpanan">Jenis Simpanan</label>
-                    <select class="form-control" name="jenis_simpanan" id="" required>
+                    <label for="id_simpanan_jenis">Jenis Simpanan</label>
+                    <select class="form-control" name="id_simpanan_jenis" id="" required>
                       <?php
-                      if (!empty($_GET['jenis_simpanan'])) {
-                        echo "<option>$jenis_simpanan</option>";
-                      }
+                      $sql3 = "SELECT * FROM simpanan_jenis WHERE id_simpanan_jenis=$id_simpanan_jenis";
+                      $query3 = mysqli_query($koneksi, $sql3);
+                      $data3 = mysqli_fetch_array($query3);
                       ?>
-                      <option>TAHARA (Tabungan Hari Raya)</option>
-                      <option>SIDIDIK</option>
+                      <option value="<?= $data3['id_simpanan_jenis']; ?>"><?= $data3['jenis_simpanan']; ?></option>
+
                     </select>
                   </div>
                   <div class="form-group col-sm-4">
@@ -128,7 +128,7 @@ if (!empty($_GET['jenis_simpanan'])) {
                     <input type="hidden" name="aksi" value="simpan-simpanan">
                     <input type="hidden" name="id_anggota" value="<?= $id_anggota; ?>">
                     <input type="hidden" name="id_user" value="1">
-                    <input type="hidden" name="jenis_simpanan" value="<?= $jenis_simpanan; ?>">
+                    <input type="hidden" name="id_simpanan_jenis" value="<?= $id_simpanan_jenis; ?>">
                     <input type="hidden" name="tanggal_awal_kontrak" value="<?= $tanggal_awal_kontrak; ?>">
                     <input type="hidden" name="durasi_kontrak_bulan" value="<?= $durasi_kontrak_bulan; ?>">
                     <input type="hidden" name="bunga_tahunan" value="<?= $bunga_tahunan; ?>">
@@ -206,7 +206,7 @@ if (!empty($_GET['jenis_simpanan'])) {
                 <tfoot>
                   <td align='center' colspan="2">GRANDTOTAL</td>
                   <td align='right'>
-                    <p><?php if (!empty($_GET['jenis_simpanan'])) {
+                    <p><?php if (!empty($_GET['id_anggota'])) {
                           echo number_format($pokok * $durasi);
                         } ?></p>
                   </td>
@@ -231,7 +231,7 @@ if (!empty($_GET['jenis_simpanan'])) {
             echo "<button type='button' class='btn btn-success btn-block' onclick='window.print()'><i class='fas fa-print'></i> Cetak Ilustrasi </button>";
             echo "</div>";
             echo "<div class='col-sm-4 mb-1'>";
-            echo "<a href='index.php?p=simpanan-tambah'><button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModalCicil'><i class='fas fa-recycle'></i> Hitung Ulang </button></a>";
+            echo "<a href='index.php?p=simpanan-tambah&id_simpanan_jenis=$_GET[id_simpanan_jenis]'><button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModalCicil'><i class='fas fa-recycle'></i> Hitung Ulang </button></a>";
             echo "</div>";
             echo "</div>";
           }

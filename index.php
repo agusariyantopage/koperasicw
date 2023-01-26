@@ -99,7 +99,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="index.php" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">App Koperasi 1.0</span>
     </a>
@@ -243,7 +243,7 @@
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, "lengthChange": false, "autoWidth": false,"order": [[0, 'desc']],
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
@@ -291,6 +291,16 @@
         //position: 'top-end',
         icon: 'success',
         title: 'Berhasil Memproses Transaksi',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }    
+    if(statusProses==='GAGAL'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'error',
+        title: 'Gagal Memproses Transaksi',
         showConfirmButton: false,
         timer: 2000
         
@@ -393,7 +403,7 @@
         data: {id_simpanan_detail: id_simpanan_detail,id_simpanan:id_simpanan},
         success: function(response){ 
           // Add response in Modal body
-          $('.modal-body').html(response); 
+          $('.isi-input-bayar').html(response); 
         }
       });
     });

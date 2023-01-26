@@ -24,7 +24,7 @@
   $jumlah_produk=$data4['jumlah_produk'];
   $nilai_inventaris_toko=$data4['nilai_inventaris_toko'];
 
-  $sql5="select sum(durasi_kontrak_bulan*jumlah_simpanan) as total_simpanan from simpanan";
+  $sql5="select sum(saldo_terakhir) as total_simpanan from simpanan";
   $query5=mysqli_query($koneksi,$sql5);
   $data5=mysqli_fetch_array($query5);
   $total_simpanan=$data5['total_simpanan'];

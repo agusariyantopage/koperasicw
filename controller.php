@@ -82,7 +82,7 @@
         $konten="konten/penjualan-info-kas.php";
     }
 
-    // (START)  Menu Simpan Pinjam
+    // (START)  Menu Simpanan
     else if($_GET['p']=='simpanan'){
         $title  ="App Koperasi V 1.0 | Daftar Simpanan";
         $konten="konten/simpanan.php";
@@ -99,11 +99,22 @@
         $title  ="App Koperasi V 1.0 | Detail Transaksi Simpanan";
         $konten="konten/simpanan-detail.php";
     }
+    else if($_GET['p']=='simpanan-mutasi'){
+        $title  ="App Koperasi V 1.0 | Mutasi Transaksi Simpanan";
+        $konten="konten/simpanan-mutasi.php";
+    }
     else if($_GET['p']=='pinjaman'){
         $title  ="App Koperasi V 1.0 | Daftar Pinjaman";
         $konten="konten/pinjaman.php";
     }
-    // (END)    Menu Simpan Pinjam
+    // (END)    Menu Simpanan
+
+    // (START)  Menu Pinjamanan
+    else if($_GET['p']=='pinjaman-tambah'){
+        $title  ="App Koperasi V 1.0 | Tambah Transaksi Pinjaman";
+        $konten="konten/pinjaman-tambah.php";
+    }
+    // (END)    Menu Pinjamanan
 
     else if($_GET['p']=='laporan'){
         $title  ="App Koperasi V 1.0 | Laporan";
