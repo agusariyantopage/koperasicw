@@ -18,19 +18,27 @@
   $data3=mysqli_fetch_array($query3);
   $jumlah_pemasok=$data3['jumlah_pemasok'];
   
-  $sql4="select count(id_produk) as jumlah_produk,sum(hpp*qty) as nilai_inventaris_toko from produk";
+  $sql4="SELECT count(id_produk) as jumlah_produk from produk";
   $query4=mysqli_query($koneksi,$sql4);
   $data4=mysqli_fetch_array($query4);
   $jumlah_produk=$data4['jumlah_produk'];
-  $nilai_inventaris_toko=$data4['nilai_inventaris_toko'];
+  
+
+  $sql41="SELECT sum(hpp*qty) as nilai_inventaris_toko from produk WHERE servis=0 AND konsinyasi=0 AND qty>0";
+  $query41=mysqli_query($koneksi,$sql41);
+  $data41=mysqli_fetch_array($query41);
+  $nilai_inventaris_toko=$data41['nilai_inventaris_toko'];
 
   $sql5="select sum(saldo_terakhir) as total_simpanan from simpanan";
   $query5=mysqli_query($koneksi,$sql5);
   $data5=mysqli_fetch_array($query5);
   $total_simpanan=$data5['total_simpanan'];
 
-
-  $total_kredit=0;
+  $sql6="select sum(saldo_terakhir) as total_pinjaman from pinjaman";
+  $query6=mysqli_query($koneksi,$sql6);
+  $data6=mysqli_fetch_array($query6);
+  $total_pinjaman=$data6['total_pinjaman'];
+  $total_kredit=$total_pinjaman;
 
  ?>
  <!-- Content Wrapper. Contains page content -->

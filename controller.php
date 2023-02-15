@@ -114,6 +114,10 @@
         $title  ="App Koperasi V 1.0 | Tambah Transaksi Pinjaman";
         $konten="konten/pinjaman-tambah.php";
     }
+    else if($_GET['p']=='pinjaman-mutasi'){
+        $title  ="App Koperasi V 1.0 | Mutasi Transaksi Pinjaman";
+        $konten="konten/pinjaman-mutasi.php";
+    }
     // (END)    Menu Pinjamanan
 
     else if($_GET['p']=='laporan'){

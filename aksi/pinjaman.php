@@ -14,6 +14,16 @@ function pesan_transaksi($koneksi)
     }
 }
 
+function hitung_ulang_saldo($koneksi,$id_pinjaman){
+    // Update Saldo Pinjaman
+    $sql_update_saldo = "UPDATE pinjaman SET saldo_terakhir=jumlah_pinjaman-(SELECT SUM(cicilan_pokok) FROM pinjaman_mutasi WHERE id_pinjaman=$id_pinjaman) WHERE id_pinjaman=$id_pinjaman";
+    mysqli_query($koneksi, $sql_update_saldo);
+
+    // Update Status Lunas
+    $sql_update_status ="UPDATE pinjaman SET status_pinjaman='LUNAS' WHERE id_pinjaman=$id_pinjaman AND saldo_terakhir<=0";
+    mysqli_query($koneksi, $sql_update_status);
+}
+
 if (!empty($_POST)) {
     if ($_POST['aksi'] == 'simpan-pinjaman') { // Input pinjaman yang dibayarkan per-bulan (TAHARA & SIDIDIK)
         $id_anggota = $_POST['id_anggota'];
@@ -29,7 +39,7 @@ if (!empty($_POST)) {
         //echo $sql;
         //pesan_transaksi($koneksi);
         // // Simpan Detail Jual
-        // $sql1 = "select * from pinjaman where id_user=$id_user order by id_simpanan desc limit 1";
+        // $sql1 = "select * from pinjaman where id_user=$id_user order by id_pinjaman desc limit 1";
         // $query1 = mysqli_query($koneksi, $sql1);
         // $kolom1 = mysqli_fetch_array($query1);
         // //$id_jual=$kolom1['id_jual'];
@@ -49,11 +59,52 @@ if (!empty($_POST)) {
         // if ($sukses >= 1) {
         //     $_SESSION['status_proses'] = 'SUKSES';
         // }
+        pesan_transaksi($koneksi);
+        header('location:../index.php?p=pinjaman');
 
-         //header('location:../index.php?p=simpanan');
+    } else if ($_POST['aksi'] == 'pinjaman-input-bayar') {
+        
+        $id_pinjaman = $_POST['id_pinjaman'];
+        $urut = $_POST['urut'];
+        $tanggal_transaksi = $_POST['tanggal_realisasi_bayar'];
+        $tanggal_jatuh_tempo = $_POST['tanggal_jatuh_tempo'];
+        $jenis_transaksi="Pembayaran";        
+        $cicilan_pokok = str_replace(',','',$_POST['cicilan_pokok']);
+        $bunga = str_replace(',','',$_POST['bunga']);
+        $saldo=0;
+        $keterangan = "Pembayaran Pinjaman Ke-" . $urut;
+        
+
+        $sql="INSERT INTO pinjaman_mutasi(id_pinjaman, urut, tanggal_transaksi, jenis_transaksi, cicilan_pokok, bunga_persentase, bunga_nominal, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES($id_pinjaman, $urut, '$tanggal_transaksi', '$jenis_transaksi', $cicilan_pokok, $bunga, $bunga, -$cicilan_pokok+(SELECT saldo_terakhir FROM pinjaman WHERE id_pinjaman=$id_pinjaman), '$keterangan', $id_user, DEFAULT, DEFAULT)";
+        mysqli_query($koneksi,$sql);
+        
+        pesan_transaksi($koneksi);
+        hitung_ulang_saldo($koneksi,$id_pinjaman);       
+
+        $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
+        header($link);
     }
 }
 
 if (!empty($_GET['aksi'])) {
-    
+    if ($_GET['aksi'] == 'rekalkulasi-mutasi') {
+        $id_pinjaman = $_GET['id'];
+
+        $sql_loop = "SELECT * FROM pinjaman_mutasi WHERE id_pinjaman=$id_pinjaman ORDER BY urut";
+        $query_loop = mysqli_query($koneksi, $sql_loop);
+        $saldo = 0;
+        while ($data_loop = mysqli_fetch_array($query_loop)) {
+            $id_pinjaman_mutasi = $data_loop['id_pinjaman_mutasi'];
+            $urut = $data_loop['urut'];
+            $sql_update_saldo = "UPDATE pinjaman_mutasi SET saldo=(SELECT jumlah_pinjaman FROM pinjaman WHERE id_pinjaman=$id_pinjaman)-(SELECT SUM(cicilan_pokok) FROM pinjaman_mutasi WHERE id_pinjaman=$id_pinjaman AND urut<=$urut) WHERE id_pinjaman_mutasi=$id_pinjaman_mutasi";            
+
+            mysqli_query($koneksi, $sql_update_saldo);
+        }
+        hitung_ulang_saldo($koneksi,$id_pinjaman);
+        pesan_transaksi($koneksi);
+        // echo $sql_update_saldo;       
+
+        $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
+        header($link);
+    }
 }

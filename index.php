@@ -28,6 +28,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title><?= $title; ?></title>
+  <link rel="shortcut icon" type="image/png" href="dist/img/AdminLTELogo.png"/>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -237,6 +238,9 @@
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- Select2 -->
 <script src="plugins/select2/js/select2.full.min.js"></script>
+<!-- numberformatter -->
+<script src="dist/js/easy-number-separator.js"></script>
+
 <?php //include "script-alert.php" ?>
 
 <!-- Page specific script -->
@@ -282,6 +286,8 @@
       "autoWidth": true,
       "responsive": true,
     });
+
+    
     
     // Modul Sweet Alert
     var statusProses = '<?= $status_proses; ?>';
@@ -382,10 +388,7 @@
         data: {idbeli: idbeli},
         success: function(response){ 
           // Add response in Modal body
-          $('.modal-body').html(response);
-
-          // Display Modal
-          //$('#empModal').modal('show'); 
+          $('.modal-body').html(response);          
         }
       });
     });
@@ -404,6 +407,52 @@
         success: function(response){ 
           // Add response in Modal body
           $('.isi-input-bayar').html(response); 
+        }
+      });
+    });
+    
+    
+    // Konten Interaktif Tambah Input Pembayaran Pinjaman
+    $(document).on('click','.pinjaman_input_bayar',function(){    
+      
+      var id_pinjaman = $(this).data('id');      
+      
+      $.ajax({
+        url: 'server-side/pinjaman_input_bayar.php',
+        type: 'post',
+        data: {id_pinjaman:id_pinjaman},
+        success: function(response){           
+          $('.isi-input-bayar-pinjaman').html(response); 
+        }
+      });
+    });
+
+    // Konten Interaktif Untuk Ubah Anggota
+    $(document).on('click','.ubah_anggota',function(){    
+      
+      var id_anggota = $(this).data('id');      
+      
+      $.ajax({
+        url: 'server-side/anggota_ubah.php',
+        type: 'post',
+        data: {id_anggota:id_anggota},
+        success: function(response){           
+          $('.isi-anggota-ubah').html(response); 
+        }
+      });
+    });
+
+    // Konten Interaktif Untuk Cek Data Terkait Sebelum Hapus Anggota
+    $(document).on('click','.konfirmasi_hapus_anggota',function(){    
+      
+      var id_anggota = $(this).data('id');      
+      //alert(id_anggota);
+      $.ajax({
+        url: 'server-side/anggota_konfirmasi_hapus.php',
+        type: 'post',
+        data: {id_anggota:id_anggota},
+        success: function(response){           
+          $('.isi-anggota-konfirmasi-hapus').html(response); 
         }
       });
     });

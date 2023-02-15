@@ -77,83 +77,11 @@
 
 
                      <td>
-                       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#editModal<?= $kolom['id_anggota']; ?>"><i class="fas fa-edit"></i></button>
-                       <button type="button" class="btn btn-link"><a onclick="return confirm('Data yang dapat dihapus adalah data yang tidak tercatat pada transaksi toko ataupun simpan pinjam,Apakah anda yakin data ini dihapus??')" href="aksi/anggota.php?aksi=hapus&token=<?= md5($kolom['id_anggota']); ?>"><i class="fas fa-trash"></i></a></button>
+                      <button type="button" class="btn btn-link ubah_anggota" data-toggle="modal" title="Ubah Anggota" data-target="#editModal" data-id="<?= $kolom['id_anggota']; ?>"><i class="fas fa-edit"></i></button>
+                       <button type="button" class="btn btn-link konfirmasi_hapus_anggota" title="Hapus Anggota" data-toggle="modal" data-target="#konfirmHapusAnggota" data-id="<?= $kolom['id_anggota']; ?>"><i class="fas fa-trash"></i></button>
                      </td>
                    </tr>
-                   <!-- Modal Edit -->
-                   <div class="modal fade" id="editModal<?= $kolom['id_anggota']; ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                     <div class="modal-dialog">
-                       <div class="modal-content">
-                         <div class="modal-header">
-                           <h5 class="modal-title" id="editModalLabel">Ubah Anggota</h5>
-                           <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                         </div>
-                         <div class="modal-body">
-                           <form method="post" enctype="multipart/form-data" action="aksi/anggota.php">
-                             <input type="hidden" name="aksi" value="ubah">
-                             <div>
-                               <label for="id_anggota">ID Anggota</label>
-                               <input type="text" class="form-control" readonly name="id_anggota" value="<?= $kolom['id_anggota']; ?>">
-                             </div>
-                             <div>
-                               <label for="no_identitas">Nomer Identitas</label>
-                               <input type="text" name="no_identitas" class="form-control" value="<?= $kolom['no_identitas']; ?>">
-                             </div>
-                             <div>
-                               <label for="tanggal_bergabung">Tanggal Bergabung</label>
-                               <input type="date" name="tanggal_bergabung" class="form-control" value="<?= $kolom['tanggal_bergabung']; ?>">
-                             </div>
-                             <div>
-                               <label for="nama">Nama</label>
-                               <input type="text" name="nama" class="form-control" value="<?= $kolom['nama']; ?>">
-                             </div>
-                             <div>
-                               <label for="alamat">Alamat</label>
-                               <textarea name="alamat" id="alamat" class="form-control" rows="3"><?= $kolom['alamat']; ?></textarea>
-                             </div>
-                             <div>
-                               <label for="telepon">Nomor Telepon</label>
-                               <input type="text" name="telepon" class="form-control" value="<?= $kolom['telepon']; ?>">
-                             </div>
-                             <div>
-                               <label for="email">Email</label>
-                               <input type="email" name="email" class="form-control" value="<?= $kolom['email']; ?>">
-                             </div>
-                             <div>
-                               <label for="is_individual">Tipe Keanggotaan</label>
-                               <select name="is_individual" class="form-control" required>
-                                 <?php
-                                  if ($kolom['is_individual'] == 1) {
-                                    echo "
-                  <option value='1'>Individual</option>
-                  <option value='0'>Lembaga / Unit Kerja</option>
-                ";
-                                  } else {
-                                    echo "
-                  <option value='0'>Lembaga / Unit Kerja</option>
-                  <option value='1'>Individual</option>
-                 ";
-                                  }
 
-                                  ?>
-
-
-                               </select>
-                             </div>
-                             <div>
-                               <label for="belanja_wajib">Belanja Wajib</label>
-                               <input type="text" name="belanja_wajib" class="form-control" value="<?= $kolom['belanja_wajib']; ?>">
-                             </div>
-                         </div>
-                         <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                           <button type="submit" class="btn btn-primary">Ubah</button>
-                           </form>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
                  <?php
                   }
                   ?>
@@ -220,6 +148,44 @@
          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
          <button type="submit" class="btn btn-primary">Tambah</button>
          </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- Modal Untuk Cek Data Terkait Sebelum Hapus  -->
+ <div class="modal fade" id="konfirmHapusAnggota" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-md">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Konfirmasi Hapus Data Anggota</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <div class="isi-anggota-konfirmasi-hapus"></div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- Modal Edit -->
+ <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Ubah Anggota</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <div class="isi-anggota-ubah"></div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>         
        </div>
      </div>
    </div>

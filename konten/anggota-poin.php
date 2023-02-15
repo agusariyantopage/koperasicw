@@ -92,6 +92,22 @@
                                     }
                                     ?>
                              </table>
+
+                             <?php
+                                if (!empty($_GET['poin'])) {
+                                ?>
+                                <form action="aksi/anggota.php" method="post">
+                                    <input type="hidden" name="aksi" value="proses-poin">
+                                    <input type="hidden" name="tanggal_awal" value="<?= $tanggal_awal; ?>">
+                                    <input type="hidden" name="tanggal_akhir" value="<?= $tanggal_akhir; ?>">
+                                    <input type="hidden" name="poin" value="<?= $poin; ?>">
+                                    <button onclick="return confirm('Poin akan dimasukkan sebagai saldo belanja anggota,Apakah anda yakin akan melakukan proses ini??')" type="submit" class="btn btn-success btn-block mt-3"><i class="fas fa-plus"></i> Tambahkan Poin Ke Saldo Anggota</button>
+                                </form>
+
+                             <?php
+                                }
+
+                                ?>
                          </div>
                      </div>
                  </div>

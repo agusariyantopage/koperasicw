@@ -172,12 +172,13 @@ if (!empty($_GET['id_anggota'])) {
                         }
                         $tanggal_jatuh_tempo = $tahunTransaksi . "-" . $bulanTransaksi . "-" . $hariTransaksi;
 
-                        if ($grandtotal == 0) {
-                          $bunga_nominal = $bunga_persen / 100 * $pokok;
-                        } else {
-                          $bunga_nominal = $bunga_persen / 100 * $grandtotal;
-                        }
-                        // $bunga_nominal=$bunga_persen/100*$grandtotal;
+                        //if ($grandtotal == 0) {
+                        //  $bunga_nominal = $bunga_persen / 100 * $pokok;
+                        //} else {
+                        //  $bunga_nominal = $bunga_persen / 100 * $grandtotal;
+                        //}
+
+                        $bunga_nominal=$bunga_persen/100*$grandtotal;
                         $grandtotal_row = $grandtotal + $pokok + $bunga_nominal;
                         echo "
                         <tr>

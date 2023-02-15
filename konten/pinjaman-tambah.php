@@ -79,8 +79,8 @@ if (!empty($_GET['id_anggota'])) {
                                     <div class="form-group col-sm-4">
                                         <label for="id_pinjaman_jenis">Jenis Pinjaman</label>
                                         <select class="form-control" name="id_pinjaman_jenis" id="" required>
-                                            <option>Bunga Menetap</option>
-                                            <option>Bunga Menurun</option>
+                                            <option>Dengan Jaminan</option>
+                                            <option>Tanpa Jaminan</option>
 
                                         </select>
                                     </div>
@@ -217,18 +217,27 @@ if (!empty($_GET['id_anggota'])) {
 
                         </div>
                     </div>
+                    <?php if ($_GET['id_pinjaman_jenis'] == "Dengan Jaminan") { ?>
+                        <label for="jaminan">Jaminan</label>
+                        <textarea name="jaminan" class="form-control" rows="3" required></textarea>
+                        <label for="nilai_jaminan">Nilai Jaminan</label>
+                        <input type="number" name="nilai_jaminan" class="form-control" required>
+                    <?php } else { ?>
+                        <input type="hidden" name="jaminan" value="-- Tidak Ada Jaminan --">
+                        <input type="hidden" name="nilai_jaminan" value="0">
+                    <?php } ?>
                     <?php
                                 if ($grandtotal > 0) {
-                                    echo "Pilih Aksi Selanjutnya : ";
-                                    echo "<div class='row'>";
+                                    // echo "Pilih Aksi Selanjutnya : ";
+                                    echo "<div class='row mt-3'>";
                                     echo "<div class='col-sm-4 mb-1'>";
                                     echo "<button type='submit' class='btn btn-success btn-block'><i class='fas fa-save'></i> Simpan Transaksi </button>";
                                     echo "</div>";
                                     echo "<div class='col-sm-4 mb-1'>";
-                                    echo "<button type='button' class='btn btn-success btn-block' onclick='window.print()'><i class='fas fa-print'></i> Cetak Ilustrasi </button>";
+                                    echo "<button type='button' class='btn btn-info btn-block' onclick='window.print()'><i class='fas fa-print'></i> Cetak Ilustrasi </button>";
                                     echo "</div>";
                                     echo "<div class='col-sm-4 mb-1'>";
-                                    echo "<a href='index.php?p=pinjaman-tambah&id_pinjaman_jenis=$_GET[id_pinjaman_jenis]'><button type='button' class='btn btn-success btn-block' data-toggle='modal' data-target='#simpanJualModalCicil'><i class='fas fa-recycle'></i> Hitung Ulang </button></a>";
+                                    echo "<a href='index.php?p=pinjaman-tambah&id_pinjaman_jenis=$_GET[id_pinjaman_jenis]'><button type='button' class='btn btn-danger btn-block' data-toggle='modal' data-target='#simpanJualModalCicil'><i class='fas fa-recycle'></i> Hitung Ulang </button></a>";
                                     echo "</div>";
                                     echo "</div>";
                                 }
