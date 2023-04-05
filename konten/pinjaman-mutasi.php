@@ -1,5 +1,8 @@
 <?php
 $id_pinjaman = $_GET['id'];
+$sql00 = "SELECT pinjaman.*,anggota.nama as napel,user.nama as petugas from pinjaman,anggota,user where pinjaman.id_anggota=anggota.id_anggota and pinjaman.id_user=user.id_user AND id_pinjaman=$id_pinjaman";
+$query00 = mysqli_query($koneksi, $sql00);
+$info_umum = mysqli_fetch_array($query00);
 
 // $sql00 = "SELECT * FROM pinjaman WHERE id_pinjaman=$id_pinjaman";
 
@@ -30,11 +33,64 @@ $id_pinjaman = $_GET['id'];
         <div class="container-fluid">
             <row>
                 <div class="col-12">
+                <div class="card">
+                        <div class="card-header">
+                            <h5>Informasi Umum Pinjaman</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3"><b>Nama Nasabah</b></div>
+                                <div class="col-3"><?= $info_umum['napel']; ?></div>
+                                <div class="col-3"><b>Pagu Bulanan</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['pagu_bulanan']); ?></div>
+                            </div>
+                            <div class="row">                                
+                                <div class="col-3"><b>Jaminan</b></div>
+                                <div class="col-3"><?= $info_umum['jaminan']; ?></div>
+                                <div class="col-3"><b>Nilai Taksir Jaminan</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['nilai_jaminan']); ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Tanggal Awal Kontrak</b></div>
+                                <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_awal_kontrak'])); ?></div>
+                                <div class="col-3"><b>Tanggal Akhir Kontrak</b></div>
+                                <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak'])); ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Durasi Kontrak (Bulan)</b></div>
+                                <div class="col-3"><?= $info_umum['durasi_kontrak_bulan']; ?></div>
+                                <div class="col-3"><b>Bunga Per-Tahun (Per-Bulan)</b></div>
+                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>% (<?= $info_umum['bunga_tahunan'] / 12; ?>%)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Jumlah Pinjaman</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['jumlah_pinjaman']); ?></div>
+                                <div class="col-3"><b>Sisa Hutang</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['saldo_terakhir']); ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Potong Otomatis</b></div>
+                                <div class="col-3"><?php if ($info_umum['potong_otomatis'] == 1) {
+                                                        echo "Ya";
+                                                    } else {
+                                                        echo "Tidak";
+                                                    } ?></div>
+                                <div class="col-3"><b>Status</b></div>
+                                <div class="col-3"><?= $info_umum['status_pinjaman']; ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Dibuat Pada</b></div>
+                                <div class="col-3"><?= $info_umum['dibuat_pada']; ?></div>
+                                <div class="col-3"><b>Terakhir Diubah Pada</b></div>
+                                <div class="col-3"><?= $info_umum['diubah_pada']; ?></div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="card">
                         <div class="card-header">
-                            <h3>Data Mutasi Pinjaman</h3>
+                            <h5>Data Mutasi Pinjaman</h5>
                         </div>
                         <div class="card-body">
                             <button type="button" class="btn btn-primary mb-2 pinjaman_input_bayar" data-toggle="modal" data-target="#inputPembayaran" data-id="<?= $id_pinjaman; ?>"><i class="fas fa-cash-register"></i> Input Pembayaran</button>

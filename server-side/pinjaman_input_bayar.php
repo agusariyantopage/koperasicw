@@ -10,21 +10,29 @@ $urut = $data_cek_urut['pembayaran_ke'] + 1;
 $sql_umum = "SELECT * FROM pinjaman WHERE id_pinjaman=$id_pinjaman";
 $query_umum = mysqli_query($koneksi, $sql_umum);
 $data_umum = mysqli_fetch_array($query_umum);
-
-$cicilan_nominal = round($data_umum['jumlah_pinjaman'] / $data_umum['durasi_kontrak_bulan']);
-if (($cicilan_nominal * 2) > $data_umum['saldo_terakhir']) {
-  $cicilan_nominal = round($data_umum['saldo_terakhir']);
-}
+$pagu_bulanan = $data_umum['pagu_bulanan'];
 $bunga_persen = $data_umum['bunga_tahunan'] / 12;
 $bunga_nominal = round($bunga_persen * $data_umum['saldo_terakhir'] / 100);
+
+if ($pagu_bulanan > 0) {
+  $cicilan_nominal=$pagu_bulanan-$bunga_nominal;
+  if (($cicilan_nominal * 2) > $data_umum['saldo_terakhir']) {
+    $cicilan_nominal = round($data_umum['saldo_terakhir']);
+  }
+} else {
+  $cicilan_nominal = round($data_umum['jumlah_pinjaman'] / $data_umum['durasi_kontrak_bulan']);
+  if (($cicilan_nominal * 2) > $data_umum['saldo_terakhir']) {
+    $cicilan_nominal = round($data_umum['saldo_terakhir']);
+  }
+}
 
 $tanggal_awal = $data_umum['tanggal_awal_kontrak'];
 $tahunTransaksi = substr($tanggal_awal, 0, 4);
 $bulanTransaksi = substr($tanggal_awal, 5, 2);
 $hariTransaksi = substr($tanggal_awal, 8, 2);
 
-if ($hariTransaksi > 20) { // Tutup Buka Diatur Setiap Tanggal 20
-  $hariTransaksi = 20;
+if ($hariTransaksi > 28) { // Maksimal Tutup Buku Diatur Setiap Tanggal 28
+  $hariTransaksi = 28;
 }
 $bulanTransaksi = (int)$bulanTransaksi + ($urut - 0);
 if ($bulanTransaksi > 12) {

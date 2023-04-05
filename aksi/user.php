@@ -44,13 +44,15 @@
                 
                 // Update Status User
                 $sql2="update user set terakhir_login=DEFAULT,status='ONLINE' where id_user=$_SESSION[backend_user_id]";
-                mysqli_query($koneksi,$sql2);        
+                mysqli_query($koneksi,$sql2);  
+                $_SESSION['status_proses'] = 'LOGIN-SUKSES';      
                 header("location:../index.php");
                 
             } else {
                 $sql2="update user set status='OFFLINE' where username='$username' and password='$password'";
-                mysqli_query($koneksi,$sql2);        
-                header("location:../index.php?page=login&msg=gagal-login");                
+                mysqli_query($koneksi,$sql2);   
+                $_SESSION['status_proses'] = 'LOGIN-GAGAL';      
+                header("location:../login.php");                
             }
         
         }

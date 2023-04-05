@@ -18,6 +18,8 @@
     $data1=mysqli_fetch_array($query1);
 
     $periode=$data1['kode'];
+    $periode_mulai=$data1['tanggal_mulai'];
+    $periode_selesai=$data1['tanggal_selesai'];
     
     
 ?>
@@ -286,12 +288,42 @@
       "autoWidth": true,
       "responsive": true,
     });
+    $('#polos').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#polos_wrapper .col-md-6:eq(0)');
 
     
     
     // Modul Sweet Alert
     var statusProses = '<?= $status_proses; ?>';
     //alert('statusProses');
+    if(statusProses==='LOGIN-SUKSES'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'success',
+        title: 'Login Berhasil',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }    
+    if(statusProses==='LOGIN-GAGAL'){
+        Swal.fire({
+        //position: 'top-end',
+        icon: 'error',
+        title: 'Login Gagal, Username / Password Salah',
+        showConfirmButton: false,
+        timer: 2000
+        
+        })
+    }    
     if(statusProses==='SUKSES'){
         Swal.fire({
         //position: 'top-end',

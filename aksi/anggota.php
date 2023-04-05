@@ -40,9 +40,13 @@ if (!empty($_POST)) {
         $saldo = 0;
         $poin = 0;
         $is_individual = $_POST['is_individual'];
+        $potongan_simpanan_wajib = $_POST['potongan_simpanan_wajib'];
+        $potongan_simpanan_suka_rela = $_POST['potongan_simpanan_suka_rela'];
+        $potongan_simpanan_penyertaan = $_POST['potongan_simpanan_penyertaan'];
+        $potongan_suka_duka = $_POST['potongan_suka_duka'];
 
-
-        $sql = "update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, belanja_wajib=$belanja_wajib, is_individual=$is_individual, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
+        $sql = "update anggota set no_identitas='$no_identitas', tanggal_bergabung='$tanggal_bergabung', nama='$nama', alamat='$alamat', telepon='$telepon', email='$email', saldo=saldo, poin=poin, belanja_wajib=$belanja_wajib, is_individual=$is_individual, potongan_simpanan_wajib=$potongan_simpanan_wajib, potongan_simpanan_suka_rela=$potongan_simpanan_suka_rela, potongan_simpanan_penyertaan=$potongan_simpanan_penyertaan, potongan_suka_duka=$potongan_suka_duka, dibuat_pada=dibuat_pada, diubah_pada=DEFAULT where id_anggota=$id_anggota";
+        // echo $sql;
         mysqli_query($koneksi, $sql);
         pesan_transaksi($koneksi);
         header('location:../index.php?p=anggota');

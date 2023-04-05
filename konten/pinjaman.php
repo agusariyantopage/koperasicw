@@ -30,9 +30,11 @@
                              <h3>Data Pinjaman</h3>
                          </div>
                          <div class="card-body">
+                             <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
+                                 <i class="fas fa-plus"></i> Tambah Pinjaman Baru</button>
+                             <a href="index.php?p=pinjaman-autopay"><button type="button" class="btn btn-success mb-2"><i class="fas fa-wallet"></i> Proses Potong Gaji</button></a>
 
-                             <a href="index.php?p=pinjaman-tambah"><button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
-                                     <i class="fas fa-plus"></i> Tambah Pinjaman Baru</button></a>
+                            
 
                              <table id="example1" class="table table-bordered table-striped table-sm">
                                  <!-- Kepala Tabel -->
@@ -83,3 +85,30 @@
      <!-- /.content -->
  </div>
  <!-- /.content-wrapper -->
+ <!-- Modal Untuk Tambah Pinjaman -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+     <div class="modal-dialog modal-md">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h5 class="modal-title" id="editModalLabel">Pilih Metode Cicilan Pinjaman</h5>
+                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 
+                 <div class="row">
+                     <div class="col-6">
+                         <a href="index.php?p=pinjaman-tambah"><button type="button" class="btn btn-warning btn-block mb-2"><i class="fas fa-file-invoice"></i> Cicilan Menurun</button></a>
+                     </div>
+                     <div class="col-6">
+                         <a href="index.php?p=pinjaman-tambah-cicilan-tetap"><button type="button" class="btn btn-warning btn-block mb-2"><i class="fas fa-file-invoice"></i> Cicilan Tetap</button></a>
+                     </div>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>

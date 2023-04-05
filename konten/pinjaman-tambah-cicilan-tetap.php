@@ -7,7 +7,7 @@ if (!empty($_GET['id_anggota'])) {
     $durasi_kontrak_bulan = $_GET['durasi_kontrak_bulan'];
     $bunga_tahunan = $_GET['bunga_tahunan'];
     $jumlah_pinjaman = $_GET['jumlah_pinjaman'];
-    $pagu_bulanan = 0;
+    $pagu_bulanan = $_GET['pagu_bulanan'];
 } else {
     $id_anggota = '';
     $id_pinjaman_jenis = '';
@@ -15,7 +15,7 @@ if (!empty($_GET['id_anggota'])) {
     $durasi_kontrak_bulan = '';
     $bunga_tahunan = '';
     $jumlah_pinjaman = '';
-    $pagu_bulanan = 0;
+    $pagu_bulanan = '';
 }
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -51,9 +51,9 @@ if (!empty($_GET['id_anggota'])) {
                         <div class="card-body">
 
                             <form action="#" method="get">
-                                <input type="hidden" name="p" value="pinjaman-tambah">
+                                <input type="hidden" name="p" value="pinjaman-tambah-cicilan-tetap">
                                 <div class="form-row">
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-sm-6">
                                         <label for="id_anggota">Anggota</label>
                                         <select name="id_anggota" class="select2bs4 form-control" required>
 
@@ -76,6 +76,10 @@ if (!empty($_GET['id_anggota'])) {
                                             ?>
                                         </select>
                                     </div>
+                                    <div class="form-group col-sm-6">
+                                        <label for="pagu_bulanan">Pagu Bulanan</label>
+                                        <input class="form-control" type="number" placeholder="Masukkan Jumlah Pagu Pembayaran Bulanan (Cth: 400,000)" value="<?= $pagu_bulanan; ?>" name="pagu_bulanan" required>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-sm-4">
@@ -89,7 +93,6 @@ if (!empty($_GET['id_anggota'])) {
                                                 <option>Tanpa Jaminan</option>
                                                 <option>Dengan Jaminan</option>
                                             <?php } ?>
-
                                         </select>
                                     </div>
                                     <div class="form-group col-sm-4">
@@ -135,7 +138,6 @@ if (!empty($_GET['id_anggota'])) {
                                             <input type="hidden" name="id_user" value="1">
                                             <input type="hidden" name="id_pinjaman_jenis" value="<?= $id_pinjaman_jenis; ?>">
                                             <input type="hidden" name="tanggal_awal_kontrak" value="<?= $tanggal_awal_kontrak; ?>">
-                                            <input type="hidden" name="durasi_kontrak_bulan" value="<?= $durasi_kontrak_bulan; ?>">
                                             <input type="hidden" name="bunga_tahunan" value="<?= $bunga_tahunan; ?>">
                                             <input type="hidden" name="jumlah_pinjaman" value="<?= $jumlah_pinjaman; ?>">
                                             <input type="hidden" name="pagu_bulanan" value="<?= $pagu_bulanan; ?>">
@@ -151,7 +153,8 @@ if (!empty($_GET['id_anggota'])) {
                                                 $tanggal_awal = $_GET['tanggal_awal_kontrak'];
                                                 $pokok = $_GET['jumlah_pinjaman'];
                                                 $durasi = $_GET['durasi_kontrak_bulan'];
-                                                $cicilan_bulanan = $pokok / $durasi;
+                                                $pagu_bulanan = $_GET['pagu_bulanan']; //diff1
+                                                // $cicilan_bulanan = $_GET['pagu_bulanan']; //diff1
                                                 $bunga_persen = $_GET['bunga_tahunan'] / 12;
                                                 $sum_bunga = 0;
 
@@ -184,8 +187,25 @@ if (!empty($_GET['id_anggota'])) {
                                                     }
                                                     $tanggal_jatuh_tempo = $tahunTransaksi . "-" . $bulanTransaksi . "-" . $hariTransaksi;
 
+                                                    // Dengan Cicilan Menurun
+                                                    // $bunga_nominal = $bunga_persen / 100 * $pokok;
+                                                    // $sum_bunga = $sum_bunga + $bunga_nominal;
+                                                    // $pokok = $pokok - $cicilan_bulanan;
+
+                                                    // Dengan Cicilan Tetap
                                                     $bunga_nominal = $bunga_persen / 100 * $pokok;
                                                     $sum_bunga = $sum_bunga + $bunga_nominal;
+                                                    if ($pokok + $bunga_nominal <= $pagu_bulanan) {
+                                                        $cicilan_bulanan = $pokok;
+                                                        if ($pokok > 0) {
+                                                            // Merubah Durasi Kontrak dan Tanggal Akhir Kontrak ,Ke Bulan Pinjaman Sudah Lunas (Bila Pinjaman Sudah Lunas Sebelum Durasi Kontrak Yang Ditentukan)
+                                                            $durasi_kontrak_bulan = $no;
+                                                            $tanggal_akhir_kontrak = $tanggal_jatuh_tempo;
+                                                        }
+                                                    } else {
+                                                        $cicilan_bulanan = $pagu_bulanan - $bunga_nominal;
+                                                    }
+
                                                     $pokok = $pokok - $cicilan_bulanan;
 
                                                     // $bunga_nominal=$bunga_persen/100*$grandtotal;
@@ -224,12 +244,14 @@ if (!empty($_GET['id_anggota'])) {
                                         <td align='right'><?= number_format($sum_bunga); ?></td>
                                         <td align='right' colspan="2"><?= number_format($_GET['jumlah_pinjaman'] + $sum_bunga); ?></td>
 
+
                                     </tfoot>
                                 </table>
 
                         </div>
                     </div>
-                    <input type="hidden" name="tanggal_akhir_kontrak" value="<?= $tanggal_jatuh_tempo; ?>">
+                    <input type="hidden" name="durasi_kontrak_bulan" value="<?= $durasi_kontrak_bulan; ?>">
+                    <input type="hidden" name="tanggal_akhir_kontrak" value="<?= $tanggal_akhir_kontrak; ?>">
                     <?php if ($_GET['id_pinjaman_jenis'] == "Dengan Jaminan") { ?>
                         <label for="jaminan">Jaminan</label>
                         <textarea name="jaminan" class="form-control" rows="3" required></textarea>
@@ -239,13 +261,20 @@ if (!empty($_GET['id_anggota'])) {
                         <input type="hidden" name="jaminan" value="-- Tidak Ada Jaminan --">
                         <input type="hidden" name="nilai_jaminan" value="0">
                     <?php } ?>
+
                     <?php
                                 if ($grandtotal > 0) {
                                     // echo "Pilih Aksi Selanjutnya : ";
                                     echo "<div class='row mt-3'>";
-                                    echo "<div class='col-sm-4 mb-1'>";
-                                    echo "<button type='submit' class='btn btn-success btn-block'><i class='fas fa-save'></i> Simpan Transaksi </button>";
-                                    echo "</div>";
+                                    if ($pokok == 0) {
+                                        echo "<div class='col-sm-4 mb-1'>";
+                                        echo "<button type='submit' class='btn btn-success btn-block'><i class='fas fa-save'></i> Simpan Transaksi </button>";
+                                        echo "</div>";
+                                    } else {
+                                        echo "<div class='col-sm-4 mb-1'>";
+                                        echo "<button type='submit' title='Tidak Dapat Disimpan Karena Pinjaman Tidak Dapat Dilunasi Dengan Durasi Pinjaman [$_GET[durasi_kontrak_bulan] Bulan]'  disabled class='btn btn-success btn-block'><i class='fas fa-save'></i> Simpan Transaksi </button>";
+                                        echo "</div>";
+                                    }
                                     echo "<div class='col-sm-4 mb-1'>";
                                     echo "<button type='button' class='btn btn-info btn-block' onclick='window.print()'><i class='fas fa-print'></i> Cetak Ilustrasi </button>";
                                     echo "</div>";

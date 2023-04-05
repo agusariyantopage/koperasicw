@@ -15,8 +15,8 @@ if (!empty($_POST)) {
         $id_simpanan_jenis = $_POST['id_simpanan_jenis'];
         $tanggal_transaksi = $_POST['tanggal_awal_kontrak'];
         $tanggal_awal_kontrak = $_POST['tanggal_awal_kontrak'];
-        $tanggal_akhir_kontrak = $_POST['tanggal_awal_kontrak'];
         $durasi_kontrak_bulan = $_POST['durasi_kontrak_bulan'];
+        $tanggal_akhir_kontrak = $_POST['tanggal_jatuh_tempo'][$durasi_kontrak_bulan - 1];
         $bunga_tahunan = $_POST['bunga_tahunan'];
         $jumlah_simpanan = $_POST['jumlah_simpanan'];
 
@@ -196,6 +196,52 @@ if (!empty($_POST)) {
         //echo $sql;
         $link = 'location:../index.php?p=simpanan-mutasi&id=' . $id_simpanan;
         header($link);
+    } else if ($_POST['aksi'] == 'autopay') {
+        // Looping Data Pada Transaksi Yang Terpilih Berdasarkan Tanggal
+        $periode_mulai = $_POST['periode_mulai'];
+        $periode_selesai = $_POST['periode_selesai'];
+        $tanggal_transaksi = $_POST['tanggal_transaksi'];
+        $sql = "SELECT simpanan_detail.*,simpanan.id_simpanan_jenis,simpanan.potong_otomatis,anggota.nama,simpanan_jenis.jenis_simpanan FROM simpanan_detail,simpanan,anggota,simpanan_jenis WHERE simpanan_detail.id_simpanan=simpanan.id_simpanan AND simpanan.id_anggota=anggota.id_anggota AND simpanan.id_simpanan_jenis=simpanan_jenis.id_simpanan_jenis AND simpanan_detail.tanggal_jatuh_tempo BETWEEN '$periode_mulai' AND '$periode_selesai' AND simpanan_detail.tanggal_realisasi_bayar IS NULL AND simpanan.potong_otomatis=1";
+        $query = mysqli_query($koneksi, $sql);
+        while ($kolom = mysqli_fetch_array($query)) {
+            $tanggal_realisasi_bayar = $tanggal_transaksi;
+            $id_simpanan = $kolom['id_simpanan'];
+            $id_simpanan_detail = $kolom['id_simpanan_detail'];
+            $realisasi_pembayaran = $kolom['anggaran_pembayaran'];
+            $urut=$kolom['urut'];
+
+            $sql_update_simpanan_detail = "UPDATE simpanan_detail SET tanggal_realisasi_bayar='$tanggal_realisasi_bayar',realisasi_pembayaran=realisasi_pembayaran+$realisasi_pembayaran,auto_pay=1,diubah_pada=DEFAULT WHERE id_simpanan_detail=$id_simpanan_detail";
+            //echo $sql_update_simpanan_detail,"<br>";
+            mysqli_query($koneksi,$sql_update_simpanan_detail);
+
+            // Input Ke Mutasi Simpanan
+            $jumlah = $realisasi_pembayaran;
+            $jenis_transaksi = "Setoran";
+            $keterangan = "Pembayaran Simpanan Ke-" . $urut;
+            $bunga_nominal = $kolom['bunga_nominal'];
+            $jenis_transaksi_bunga = "Bunga";
+            $keterangan_bunga = "Pembayaran Bunga Simpanan Ke-" . $urut;
+
+
+            // Input Mutasi Setoran
+            $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $jumlah+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan', $id_user, DEFAULT, DEFAULT)";
+            echo $sql."<br>";
+            mysqli_query($koneksi, $sql);
+
+            // // Update Saldo Simpanan &
+            $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
+            mysqli_query($koneksi, $sql_update_saldo);
+
+            // Input Mutasi Bunga
+            $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi_bunga', $bunga_nominal, $bunga_nominal+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan_bunga', $id_user, DEFAULT, DEFAULT)";
+            echo $sql."<br>";
+            mysqli_query($koneksi, $sql);
+            
+            // // Update Saldo Simpanan &
+            $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
+            mysqli_query($koneksi, $sql_update_saldo);
+        }
+        header('location:../index.php?p=simpanan');
     }
 }
 
@@ -228,4 +274,3 @@ if (!empty($_GET['aksi'])) {
         header($link);
     }
 }
-

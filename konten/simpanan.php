@@ -33,6 +33,7 @@
 
                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
                  <i class="fas fa-plus"></i> Tambah Simpanan Baru</button>
+               <a href="index.php?p=simpanan-autopay"><button type="button" class="btn btn-success mb-2"><i class="fas fa-wallet"></i> Proses Potong Gaji</button></a>
 
                <table id="example1" class="table table-bordered table-striped table-sm">
                  <!-- Kepala Tabel -->
@@ -105,7 +106,7 @@
                <td align="center">Pilih</td>
              </tr>
            </thead>
-           <tbody>  
+           <tbody>
              <!-- Isi Tabel -->
              <?php
               $sql = "SELECT * FROM simpanan_jenis ORDER BY jenis_simpanan";

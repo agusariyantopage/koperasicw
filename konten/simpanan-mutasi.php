@@ -1,7 +1,9 @@
 <?php
 $id_simpanan = $_GET['id'];
 
-$sql00 = "SELECT * FROM simpanan WHERE id_simpanan=$id_simpanan";
+$sql00 = "SELECT simpanan.*,anggota.nama as napel,user.nama as petugas,simpanan_jenis.jenis_simpanan,simpanan_jenis.kode from simpanan,anggota,user,simpanan_jenis where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user and simpanan.id_simpanan_jenis=simpanan_jenis.id_simpanan_jenis AND simpanan.id_simpanan=$id_simpanan";
+$query00 = mysqli_query($koneksi, $sql00);
+$info_umum = mysqli_fetch_array($query00);
 
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -30,24 +32,76 @@ $sql00 = "SELECT * FROM simpanan WHERE id_simpanan=$id_simpanan";
         <div class="container-fluid">
             <row>
                 <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Informasi Umum Simpanan</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3"><b>Nama Nasabah</b></div>
+                                <div class="col-3"><?= $info_umum['napel']; ?></div>
+                                <div class="col-3"><b>Jenis Simpanan</b></div>
+                                <div class="col-3"><?= $info_umum['kode']; ?> (<?= $info_umum['jenis_simpanan']; ?>)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Tanggal Awal Kontrak</b></div>
+                                <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_awal_kontrak'])); ?></div>
+                                <div class="col-3"><b>Tanggal Akhir Kontrak</b></div>
+                                <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak'])); ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Durasi Kontrak (Bulan)</b></div>
+                                <div class="col-3"><?= $info_umum['durasi_kontrak_bulan']; ?></div>
+                                <div class="col-3"><b>Bunga Per-Tahun (Per-Bulan)</b></div>
+                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>% (<?= $info_umum['bunga_tahunan'] / 12; ?>%)</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Anggaran Bulanan</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['jumlah_simpanan']); ?></div>
+                                <div class="col-3"><b>Saldo Terakhir</b></div>
+                                <div class="col-3">Rp. <?= number_format($info_umum['saldo_terakhir']); ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Potong Otomatis</b></div>
+                                <div class="col-3"><?php if ($info_umum['potong_otomatis'] == 1) {
+                                                        echo "Ya";
+                                                    } else {
+                                                        echo "Tidak";
+                                                    } ?></div>
+                                <div class="col-3"><b>Status</b></div>
+                                <div class="col-3"><?= $info_umum['status_simpanan']; ?></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"><b>Dibuat Pada</b></div>
+                                <div class="col-3"><?= $info_umum['dibuat_pada']; ?></div>
+                                <div class="col-3"><b>Terakhir Diubah Pada</b></div>
+                                <div class="col-3"><?= $info_umum['diubah_pada']; ?></div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <div class="card">
                         <div class="card-header">
-                            <h3>Data Mutasi Simpanan</h3>
+                            <h5>Data Mutasi Simpanan</h5>
                         </div>
                         <div class="card-body">
-                            <button type="button" class="btn btn-primary mb-2 simpanan_input_bayar" data-toggle="modal" data-target="#inputPembayaran" data-id="1" data-id2="<?= $id_simpanan; ?>"><i class="fas fa-cash-register"></i> Input Pembayaran</button>
+                            <?php if ($info_umum['id_simpanan_jenis'] == 1 || $info_umum['id_simpanan_jenis'] == 2) {
+                            ?>
+                                <button type="button" class="btn btn-primary mb-2 simpanan_input_bayar" data-toggle="modal" data-target="#inputPembayaran" data-id="1" data-id2="<?= $id_simpanan; ?>"><i class="fas fa-cash-register"></i> Input Pembayaran</button>
+                            <?php
+                            } else {
+                            ?>
 
-                            <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fas fa-plus"></i> Tambah Transaksi</button>
+                                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fas fa-plus"></i> Tambah Transaksi</button>
 
+                                <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#prosesBunga">
+                                    <i class="fas fa-percent"></i> Proses Bunga</button>
 
-                            <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#prosesBunga">
-                                <i class="fas fa-percent"></i> Proses Bunga</button>
-
-                            <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/simpanan.php?aksi=rekalkulasi-mutasi&id=<?= $id_simpanan; ?>"><button type="button" class="btn btn-warning mb-2">
-                                    <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
+                                <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/simpanan.php?aksi=rekalkulasi-mutasi&id=<?= $id_simpanan; ?>"><button type="button" class="btn btn-warning mb-2">
+                                        <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
+                            <?php } ?>
                             <table id="example1" class="table table-bordered table-striped table-sm">
                                 <!-- Kepala Tabel -->
                                 <thead>
@@ -185,7 +239,7 @@ $sql00 = "SELECT * FROM simpanan WHERE id_simpanan=$id_simpanan";
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="isi-input-bayar"></div>
+                <div class="isi-input-bayar"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

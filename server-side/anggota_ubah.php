@@ -64,5 +64,21 @@ $kolom = mysqli_fetch_array($query_anggota);
         <label for="belanja_wajib">Belanja Wajib</label>
         <input type="text" name="belanja_wajib" class="form-control" value="<?= $kolom['belanja_wajib']; ?>">
     </div>
+    <div>
+        <label for="potongan_simpanan_wajib">Potongan Simpanan Wajib</label>
+        <input type="text" name="potongan_simpanan_wajib" class="form-control" value="<?= $kolom['potongan_simpanan_wajib']; ?>">
+    </div>
+    <div>
+        <label for="potongan_simpanan_suka_rela">Potongan Simpanan Sukarela</label>
+        <input type="text" name="potongan_simpanan_suka_rela" class="form-control" value="<?= $kolom['potongan_simpanan_suka_rela']; ?>">
+    </div>
+    <div>
+        <label for="potongan_simpanan_penyertaan">Potongan Simpanan Penyertaan</label>
+        <input type="text" name="potongan_simpanan_penyertaan" class="form-control" value="<?= $kolom['potongan_simpanan_penyertaan']; ?>">
+    </div>
+    <div>
+        <label for="potongan_suka_duka">Potongan Simpanan Suka Duka</label>
+        <input type="text" name="potongan_suka_duka" class="form-control" value="<?= $kolom['potongan_suka_duka']; ?>">
+    </div>
     <button type="submit" class="btn btn-primary btn-block mt-2">Ubah</button>
 </form>

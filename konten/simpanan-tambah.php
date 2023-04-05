@@ -153,6 +153,9 @@ if (!empty($_GET['id_anggota'])) {
                         $tahunTransaksi = substr($tanggal_awal, 0, 4);
                         $bulanTransaksi = substr($tanggal_awal, 5, 2);
                         $hariTransaksi = substr($tanggal_awal, 8, 2);
+                        if ($hariTransaksi > 28) { // Maksimal Tutup Buku Diatur Setiap Tanggal 28
+                          $hariTransaksi = 28;
+                        }
                         $bulanTransaksi = (int)$bulanTransaksi + ($i - 1);
                         if ($bulanTransaksi > 12) {
                           //$tahun_inc=round($bulanTransaksi/12,0,PHP_ROUND_HALF_DOWN);
