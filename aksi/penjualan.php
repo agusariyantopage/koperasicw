@@ -127,6 +127,8 @@
             // Delete Nota
             $sql3="delete from jual where id_jual=$id_jual";
             mysqli_query($koneksi,$sql3);
+            $sql4="delete from jual_detail where id_jual=$id_jual";
+            mysqli_query($koneksi,$sql4);
 
             // Update Stok
             mysqli_multi_query($koneksi,$perintah_update_stok); 

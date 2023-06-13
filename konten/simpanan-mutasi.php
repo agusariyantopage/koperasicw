@@ -47,11 +47,20 @@ $info_umum = mysqli_fetch_array($query00);
                                 <div class="col-3"><b>Tanggal Awal Kontrak</b></div>
                                 <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_awal_kontrak'])); ?></div>
                                 <div class="col-3"><b>Tanggal Akhir Kontrak</b></div>
-                                <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak'])); ?></div>
+                                <div class="col-3">
+                                    <?php if(is_null($info_umum['tanggal_akhir_kontrak'])){
+                                        echo "-- Tidak Ditentukan --";
+                                    } else {
+                                      echo date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak'])); 
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-3"><b>Durasi Kontrak (Bulan)</b></div>
-                                <div class="col-3"><?= $info_umum['durasi_kontrak_bulan']; ?></div>
+                                <div class="col-3"><b>Periode</b></div>
+                                <div class="col-3">April 2023</div>
+                                <!--<div class="col-3"><b>Durasi Kontrak (Bulan)</b></div>
+                                <div class="col-3"><?= $info_umum['durasi_kontrak_bulan']; ?></div>-->
                                 <div class="col-3"><b>Bunga Per-Tahun (Per-Bulan)</b></div>
                                 <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>% (<?= $info_umum['bunga_tahunan'] / 12; ?>%)</div>
                             </div>
@@ -88,7 +97,7 @@ $info_umum = mysqli_fetch_array($query00);
                         <div class="card-body">
                             <?php if ($info_umum['id_simpanan_jenis'] == 1 || $info_umum['id_simpanan_jenis'] == 2) {
                             ?>
-                                <button type="button" class="btn btn-primary mb-2 simpanan_input_bayar" data-toggle="modal" data-target="#inputPembayaran" data-id="1" data-id2="<?= $id_simpanan; ?>"><i class="fas fa-cash-register"></i> Input Pembayaran</button>
+                                <button type="button" class="btn btn-primary mb-2 simpanan_input_bayar" data-toggle="modal" data-target="#inputPembayaran" data-id="1" data-id2="<?= $id_simpanan; ?>"><i class="fas fa-cash-register"></i> Input Pembayaran Terjadwal</button>
                             <?php
                             } else {
                             ?>
@@ -235,7 +244,7 @@ $info_umum = mysqli_fetch_array($query00);
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Input Pembayaran Simpanan</h5>
+                <h5 class="modal-title" id="editModalLabel">Input Pembayaran Simpanan Terjadwal</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

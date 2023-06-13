@@ -7,6 +7,7 @@
     
     include "koneksi.php";
     include "controller.php";
+    include "function.php";
     $status_proses=$_SESSION['status_proses'];
     date_default_timezone_set('Asia/Singapore');
 

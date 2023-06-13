@@ -1,3 +1,10 @@
+<?php
+    if (!empty($_POST['id_simpanan_jenis'])) {
+        $id_simpanan_jenis = $_POST['id_simpanan_jenis'];
+    } else {
+        $id_simpanan_jenis = '';
+    }
+    ?>
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
    <!-- Content Header (Page header) -->
@@ -31,9 +38,30 @@
              </div>
              <div class="card-body">
 
-               <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
-                 <i class="fas fa-plus"></i> Tambah Simpanan Baru</button>
-               <a href="index.php?p=simpanan-autopay"><button type="button" class="btn btn-success mb-2"><i class="fas fa-wallet"></i> Proses Potong Gaji</button></a>
+               <div class="row">
+                 <div class="col">
+                   <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#exampleModal">
+                     <i class="fas fa-plus"></i> Tambah Simpanan Baru</button>
+                   <a href="index.php?p=simpanan-autopay"><button type="button" class="btn btn-success mb-2"><i class="fas fa-wallet"></i> Proses Potong Gaji</button></a>
+                   <button type="button" class="btn btn-warning mb-2" data-toggle="modal" data-target="#imporModal">
+                     <i class="fas fa-download"></i> Proses Data Migrasi</button>
+                 </div>
+               </div>
+
+               <div class="row mb-2">
+                 <div class="col">
+                   <form action="" method="post">
+                     <select class="form-control" name="id_simpanan_jenis">
+                       <option value="">-- ALL --</option>
+                       <?= call_option_selected($koneksi, "simpanan_jenis", "jenis_simpanan", "id_simpanan_jenis", "jenis_simpanan", $id_simpanan_jenis); ?>
+                     </select>
+                 </div>
+                 <div class="col">
+                   <button class="btn btn-info btn-block"> <i class="fas fa-table"></i> Terapkan Tampilan Sesuai Jenis </button>
+                   </form>
+                 </div>
+               </div>
+
 
                <table id="example1" class="table table-bordered table-striped table-sm">
                  <!-- Kepala Tabel -->
@@ -50,7 +78,11 @@
                  </thead>
                  <!-- Isi Tabel -->
                  <?php
+                 if (!empty($_POST['id_simpanan_jenis'])) {
+                  $sql = "SELECT simpanan.*,anggota.nama as napel,user.nama as petugas,simpanan_jenis.jenis_simpanan,simpanan_jenis.kode from simpanan,anggota,user,simpanan_jenis where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user and simpanan.id_simpanan_jenis=simpanan_jenis.id_simpanan_jenis and simpanan.id_simpanan_jenis=$id_simpanan_jenis  order by simpanan.id_simpanan desc";
+                 } else {
                   $sql = "SELECT simpanan.*,anggota.nama as napel,user.nama as petugas,simpanan_jenis.jenis_simpanan,simpanan_jenis.kode from simpanan,anggota,user,simpanan_jenis where simpanan.id_anggota=anggota.id_anggota and simpanan.id_user=user.id_user and simpanan.id_simpanan_jenis=simpanan_jenis.id_simpanan_jenis  order by simpanan.id_simpanan desc";
+                 }
                   $query = mysqli_query($koneksi, $sql);
                   while ($kolom = mysqli_fetch_array($query)) {
                   ?>
@@ -84,6 +116,46 @@
    <!-- /.content -->
  </div>
  <!-- /.content-wrapper -->
+
+ <!-- Modal Untuk Proses Data Tanpa Mutasi -->
+ <div class="modal fade" id="imporModal" tabindex="-1" aria-labelledby="imporModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="imporModalLabel">Proses Data Tanpa Mutasi</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <?php
+          $sql_no_mutasi = "SELECT simpanan.id_simpanan,simpanan_mutasi.id_simpanan_mutasi FROM simpanan LEFT JOIN simpanan_mutasi ON simpanan.id_simpanan=simpanan_mutasi.id_simpanan WHERE ISNULL(simpanan_mutasi.id_simpanan_mutasi)=1 ORDER BY simpanan_mutasi.id_simpanan_mutasi";
+          $query_no_mutasi = mysqli_query($koneksi, $sql_no_mutasi);
+          $jumlah_data = mysqli_num_rows($query_no_mutasi);
+          // echo $jumlah_data;
+          ?>
+         <form action="aksi/simpanan.php" method='post'>
+           <input type="hidden" name="aksi" value="tambah-mutasi-impor">
+           <label for="">Hasil Pengecekan Data Terkait</label>
+           <table class="table" style="width:100%;">
+             <tr>
+               <td>Data Transaksi Tanpa Mutasi</td>
+               <td><?= number_format($jumlah_data); ?> Data</td>
+             </tr>
+           </table>
+           <?php if ($jumlah_data <= 0) { ?>
+             <div class="alert alert-success"><i>Keterangan : Semua Data Normal</i></div>
+           <?php } else { ?>
+             <button onclick="return confirm('Data mutasi transaksi akan ditambahkan sesuai dengan saldo terakhir,Apakah anda akan melanjutkan proses??')" type="submit" class="btn btn-warning mt-2 btn-block"><i class="fas fa-download"></i> Proses Data Transaksi [100]</button>
+           <?php } ?>
+         </form>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
 
  <!-- Modal Untuk Tambah Simpanan -->
  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">

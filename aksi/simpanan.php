@@ -2,6 +2,7 @@
 $BASE_URL = "http://localhost/koperasi/";
 session_start();
 include "../koneksi.php";
+include "../function.php";
 $id_user = $_SESSION['backend_user_id'];
 
 if (!empty($_POST)) {
@@ -243,6 +244,27 @@ if (!empty($_POST)) {
         }
         header('location:../index.php?p=simpanan');
     }
+    else if ($_POST['aksi'] == 'tambah-mutasi-impor') {
+        $sql1="SELECT simpanan.*,simpanan_mutasi.id_simpanan_mutasi FROM simpanan LEFT JOIN simpanan_mutasi ON simpanan.id_simpanan=simpanan_mutasi.id_simpanan WHERE ISNULL(simpanan_mutasi.id_simpanan_mutasi)=1 ORDER BY simpanan_mutasi.id_simpanan_mutasi LIMIT 100";
+        $query1=mysqli_query($koneksi,$sql1);
+        while($data1=mysqli_fetch_array($query1)){
+            $id_simpanan=$data1['id_simpanan'];
+            $tanggal_transaksi=$data1['tanggal_transaksi'];
+            $jenis_transaksi="Setoran";
+            $jumlah=$data1['saldo_terakhir'];
+            $saldo=$data1['saldo_terakhir'];
+            $keterangan="Setoran Awal [Migrasi Data]";
+            $id_user=$data1['id_user'];
+
+            $sql2 = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $saldo, '$keterangan', $id_user, DEFAULT, DEFAULT)";
+            mysqli_query($koneksi,$sql2);
+            
+
+        }
+        pesan_transaksi($koneksi);
+        header('location:../index.php?p=simpanan');
+    }
+    
 }
 
 if (!empty($_GET['aksi'])) {
