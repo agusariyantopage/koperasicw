@@ -37,7 +37,7 @@ if (!empty($_POST)) {
             $bunga_persentase = $_POST['bunga_persentase'][$i];
             $bunga_nominal = $_POST['bunga_nominal'][$i];
             $anggaran_saldo_akhir = $_POST['anggaran_saldo_akhir'][$i];
-            $sql2 = "insert into simpanan_detail(id_simpanan, urut, tanggal_jatuh_tempo, tanggal_realisasi_bayar, anggaran_pembayaran, realisasi_pembayaran, bunga_persentase, bunga_nominal, anggaran_saldo_akhir, realisasi_saldo_akhir, dibuat_pada, diubah_pada, diterima_oleh) values($id_simpanan, $urut, '$tanggal_jatuh_tempo', DEFAULT, $anggaran_pembayaran, DEFAULT, $bunga_persentase, $bunga_nominal, $anggaran_saldo_akhir, DEFAULT, DEFAULT, DEFAULT, DEFAULT)";
+            $sql2 = "INSERT into simpanan_detail(id_simpanan, urut, tanggal_jatuh_tempo, tanggal_realisasi_bayar, anggaran_pembayaran, realisasi_pembayaran, bunga_persentase, bunga_nominal, anggaran_saldo_akhir, realisasi_saldo_akhir, dibuat_pada, diubah_pada, diterima_oleh) values($id_simpanan, $urut, '$tanggal_jatuh_tempo', DEFAULT, $anggaran_pembayaran, DEFAULT, $bunga_persentase, $bunga_nominal, $anggaran_saldo_akhir, DEFAULT, DEFAULT, DEFAULT, DEFAULT)";
             //echo $sql2."<br>";
             mysqli_query($koneksi, $sql2);
         }
@@ -235,7 +235,7 @@ if (!empty($_POST)) {
 
             // Input Mutasi Bunga
             $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi_bunga', $bunga_nominal, $bunga_nominal+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan_bunga', $id_user, DEFAULT, DEFAULT)";
-            echo $sql."<br>";
+            // echo $sql."<br>";
             mysqli_query($koneksi, $sql);
             
             // // Update Saldo Simpanan &
@@ -256,8 +256,10 @@ if (!empty($_POST)) {
             $keterangan="Setoran Awal [Migrasi Data]";
             $id_user=$data1['id_user'];
 
-            $sql2 = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $saldo, '$keterangan', $id_user, DEFAULT, DEFAULT)";
-            mysqli_query($koneksi,$sql2);
+            setup_anggaran_simpanan_berjangka($koneksi,$id_simpanan);
+
+            // $sql2 = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $saldo, '$keterangan', $id_user, DEFAULT, DEFAULT)";
+            // mysqli_query($koneksi,$sql2);
             
 
         }

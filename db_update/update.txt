@@ -1,0 +1,11 @@
+UPDATE `simpanan` SET `tanggal_transaksi` = '2023-03-28', `tanggal_awal_kontrak` = '2023-03-28', `tanggal_akhir_kontrak` = '2026-02-28', `durasi_kontrak_bulan` = '36',dibuat_pada=DEFAULT,diubah_pada=DEFAULT WHERE id_simpanan_jenis=1;
+
+// Update Tahara Nyepi
+UPDATE `simpanan` SET `tanggal_transaksi` = '2023-02-28', `tanggal_awal_kontrak` = '2023-02-28', `tanggal_akhir_kontrak` = '2024-03-28', `durasi_kontrak_bulan` = '12',dibuat_pada=DEFAULT,diubah_pada=DEFAULT WHERE id_simpanan_jenis=2 AND id_simpanan>94; (415)
+
+// Update Tahara Natal
+UPDATE `simpanan` SET `tanggal_transaksi` = '2022-12-28', `tanggal_awal_kontrak` = '2022-12-28', `tanggal_akhir_kontrak` = '2023-11-28', `durasi_kontrak_bulan` = '12',dibuat_pada=DEFAULT,diubah_pada=DEFAULT WHERE id_simpanan_jenis=2 AND id_simpanan<95; (416)
+
+Pibri Sididik Dihapus
+
+

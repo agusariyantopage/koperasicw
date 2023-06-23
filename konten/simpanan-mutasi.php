@@ -57,12 +57,10 @@ $info_umum = mysqli_fetch_array($query00);
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3"><b>Periode</b></div>
-                                <div class="col-3">April 2023</div>
-                                <!--<div class="col-3"><b>Durasi Kontrak (Bulan)</b></div>
-                                <div class="col-3"><?= $info_umum['durasi_kontrak_bulan']; ?></div>-->
-                                <div class="col-3"><b>Bunga Per-Tahun (Per-Bulan)</b></div>
-                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>% (<?= $info_umum['bunga_tahunan'] / 12; ?>%)</div>
+                                <div class="col-3"><b>Bunga Per-Tahun</b></div>
+                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>%</div>                               
+                                <div class="col-3"><b>Bunga Per-Bulan</b></div>
+                                <div class="col-3"><?= number_format($info_umum['bunga_tahunan'] / 12,2); ?>%</div>
                             </div>
                             <div class="row">
                                 <div class="col-3"><b>Anggaran Bulanan</b></div>

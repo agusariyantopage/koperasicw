@@ -1,0 +1,14 @@
+{
+    "name": "agusariyanto/appkoperasi",
+    "description": "Aplikasi Koperasi Berbasis Web",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "Agusariyanto\\Appkoperasi\\": "src/"
+        }
+    },
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.12"
+    }
+}
