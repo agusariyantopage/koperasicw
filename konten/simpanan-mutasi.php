@@ -48,19 +48,19 @@ $info_umum = mysqli_fetch_array($query00);
                                 <div class="col-3"><?= date("d-m-Y", strtotime($info_umum['tanggal_awal_kontrak'])); ?></div>
                                 <div class="col-3"><b>Tanggal Akhir Kontrak</b></div>
                                 <div class="col-3">
-                                    <?php if(is_null($info_umum['tanggal_akhir_kontrak'])){
+                                    <?php if (is_null($info_umum['tanggal_akhir_kontrak'])) {
                                         echo "-- Tidak Ditentukan --";
                                     } else {
-                                      echo date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak'])); 
+                                        echo date("d-m-Y", strtotime($info_umum['tanggal_akhir_kontrak']));
                                     }
                                     ?>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-3"><b>Bunga Per-Tahun</b></div>
-                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>%</div>                               
+                                <div class="col-3"><?= $info_umum['bunga_tahunan']; ?>%</div>
                                 <div class="col-3"><b>Bunga Per-Bulan</b></div>
-                                <div class="col-3"><?= number_format($info_umum['bunga_tahunan'] / 12,2); ?>%</div>
+                                <div class="col-3"><?= number_format($info_umum['bunga_tahunan'] / 12, 2); ?>%</div>
                             </div>
                             <div class="row">
                                 <div class="col-3"><b>Anggaran Bulanan</b></div>
@@ -106,9 +106,9 @@ $info_umum = mysqli_fetch_array($query00);
                                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#prosesBunga">
                                     <i class="fas fa-percent"></i> Proses Bunga</button>
 
-                                <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/simpanan.php?aksi=rekalkulasi-mutasi&id=<?= $id_simpanan; ?>"><button type="button" class="btn btn-warning mb-2">
-                                        <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
                             <?php } ?>
+                            <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/simpanan.php?aksi=rekalkulasi-mutasi&id=<?= $id_simpanan; ?>"><button type="button" class="btn btn-warning mb-2">
+                                    <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
                             <table id="example1" class="table table-bordered table-striped table-sm">
                                 <!-- Kepala Tabel -->
                                 <thead>
