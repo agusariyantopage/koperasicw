@@ -74,23 +74,45 @@ if (!empty($_POST)) {
         $jenis_transaksi = "Pembayaran";
         $cicilan_pokok = str_replace(',', '', $_POST['cicilan_pokok']);
         $bunga = str_replace(',', '', $_POST['bunga']);
+        $denda = str_replace(',', '', $_POST['denda']);
         $bunga_persentase = 0;
         $saldo = 0;
         $keterangan = "Pembayaran Cicilan Pinjaman Ke-" . $urut;
 
 
-        $sql = "INSERT INTO pinjaman_mutasi(id_pinjaman, urut, tanggal_transaksi, jenis_transaksi, cicilan_pokok, bunga_persentase, bunga_nominal, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES($id_pinjaman, $urut, '$tanggal_transaksi', '$jenis_transaksi', $cicilan_pokok, $bunga, $bunga, -$cicilan_pokok+(SELECT saldo_terakhir FROM pinjaman WHERE id_pinjaman=$id_pinjaman), '$keterangan', $id_user, DEFAULT, DEFAULT)";
+        $sql = "INSERT INTO pinjaman_mutasi(id_pinjaman, urut, tanggal_transaksi, jenis_transaksi, cicilan_pokok, bunga_persentase, bunga_nominal,denda_nominal, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES($id_pinjaman, $urut, '$tanggal_transaksi', '$jenis_transaksi', $cicilan_pokok, (SELECT bunga_tahunan/12 FROM pinjaman WHERE id_pinjaman=$id_pinjaman), $bunga,$denda, -$cicilan_pokok+(SELECT saldo_terakhir FROM pinjaman WHERE id_pinjaman=$id_pinjaman), '$keterangan', $id_user, DEFAULT, DEFAULT)";
         mysqli_query($koneksi, $sql);
+        pesan_transaksi($koneksi);
 
         $sql = "UPDATE pinjaman_detail SET tanggal_realisasi_bayar='$tanggal_transaksi',realisasi_pembayaran=$cicilan_pokok,realisasi_saldo_akhir=-$cicilan_pokok+(SELECT saldo_terakhir FROM pinjaman WHERE id_pinjaman=$id_pinjaman),diubah_pada=DEFAULT WHERE id_pinjaman=$id_pinjaman AND urut=$urut";
-        echo $sql;
+        
         mysqli_query($koneksi, $sql);
 
-        pesan_transaksi($koneksi);
+        
         hitung_ulang_saldo($koneksi, $id_pinjaman);
 
         $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
         header($link);
+    } else if ($_POST['aksi'] == 'pinjaman-ubah-bayar') {
+        $id_pinjaman = $_POST['id_pinjaman'];
+        $id_pinjaman_mutasi = $_POST['id_pinjaman_mutasi'];
+        $urut = $_POST['urut'];
+        $tanggal_transaksi = $_POST['tanggal_realisasi_bayar'];        
+        $cicilan_pokok = str_replace(',', '', $_POST['cicilan_pokok']);
+        $bunga_nominal = str_replace(',', '', $_POST['bunga']);
+        $denda_nominal = str_replace(',', '', $_POST['denda']);
+        // $saldo_awal = $_POST['saldo_awal'];
+        $saldo_akhir = $_POST['saldo_awal']-$cicilan_pokok;
+
+        $sql="UPDATE pinjaman_mutasi SET tanggal_transaksi='$tanggal_transaksi', cicilan_pokok=$cicilan_pokok, bunga_nominal=$bunga_nominal, denda_nominal=$denda_nominal, saldo=$saldo_akhir, diubah_pada=DEFAULT WHERE id_pinjaman_mutasi=$id_pinjaman_mutasi";
+        mysqli_query($koneksi, $sql); 
+        pesan_transaksi($koneksi);       
+        
+        hitung_ulang_saldo($koneksi, $id_pinjaman);
+        $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
+        header($link);
+
+
     } else if ($_POST['aksi'] == 'autopay') {
         $periode_mulai = $_POST['periode_mulai'];
         $periode_selesai = $_POST['periode_selesai'];
@@ -142,6 +164,18 @@ if (!empty($_GET['aksi'])) {
         pesan_transaksi($koneksi);
         hitung_ulang_saldo($koneksi, $id_pinjaman);
         // echo $sql_update_saldo;       
+
+        $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
+        header($link);
+    }
+    else if ($_GET['aksi'] == 'hapus') {
+        $id_pinjaman = $_GET['id_pinjaman'];
+        $id_pinjaman_mutasi = $_GET['id_pinjaman_mutasi'];
+        $sql = "DELETE from pinjaman_mutasi WHERE id_pinjaman_mutasi=$id_pinjaman_mutasi";
+        mysqli_query($koneksi, $sql);
+
+        pesan_transaksi($koneksi);
+        hitung_ulang_saldo($koneksi, $id_pinjaman);
 
         $link = 'location:../index.php?p=pinjaman-mutasi&id=' . $id_pinjaman;
         header($link);

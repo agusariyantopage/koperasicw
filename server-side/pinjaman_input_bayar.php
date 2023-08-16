@@ -75,6 +75,9 @@ $tanggal_jatuh_tempo = $tahunTransaksi . "-" . $bulanTransaksi . "-" . $hariTran
   <label for="bunga">Bunga</label>
   <input type="text" name="bunga" id="bunga" value="<?= $bunga_nominal; ?>" class="form-control number-separator text-right" required readonly>
 
+  <label for="denda">Denda</label>
+  <input type="text" name="denda" id="denda" value="0" class="form-control number-separator text-right">
+
   <label for="jumlah">Total Angsuran</label>
   <input type="text" name="jumlah" id="jumlah" value="<?= $cicilan_nominal + $bunga_nominal; ?>" class="form-control number-separator text-right" required>
 
@@ -98,9 +101,12 @@ $tanggal_jatuh_tempo = $tahunTransaksi . "-" . $bulanTransaksi . "-" . $hariTran
     jumlah = jumlah.replace(/,/gi, '');
     var bunga = document.getElementById("bunga").value;
     bunga = bunga.replace(/,/gi, '');
+    var denda = document.getElementById("denda").value;
+    denda = denda.replace(/,/gi, '');
     var cicilan_pokok = document.getElementById("cicilan_pokok").value;
     cicilan_pokok = cicilan_pokok.replace(/,/gi, '');
-    cicilan_pokok = jumlah - bunga;
+    // cicilan_pokok = jumlah - bunga;
+    cicilan_pokok = jumlah - bunga-denda;
     cicilan_pokok = cicilan_pokok.toLocaleString('en-US');
     // document.getElementById("cicilan_pokok").innerHTML="Rp. "+kembali;
     document.getElementById("cicilan_pokok").value = cicilan_pokok;
@@ -110,6 +116,12 @@ $tanggal_jatuh_tempo = $tahunTransaksi . "-" . $bulanTransaksi . "-" . $hariTran
     hitung_porsi_angsuran();
   }, false);
   document.getElementById('jumlah').addEventListener("keyup", function(evt) {
+    hitung_porsi_angsuran();
+  }, false);
+  document.getElementById('denda').addEventListener("mouseup", function(evt) {
+    hitung_porsi_angsuran();
+  }, false);
+  document.getElementById('denda').addEventListener("keyup", function(evt) {
     hitung_porsi_angsuran();
   }, false);
 </script>

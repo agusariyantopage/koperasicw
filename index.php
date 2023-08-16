@@ -460,6 +460,21 @@
       });
     });
 
+    // Konten Interaktif Ubah Pembayaran Pinjaman
+    $(document).on('click','.pinjaman_edit_bayar',function(){    
+      
+      var id_pinjaman_mutasi = $(this).data('id');      
+      
+      $.ajax({
+        url: 'server-side/pinjaman_edit_bayar.php',
+        type: 'post',
+        data: {id_pinjaman_mutasi:id_pinjaman_mutasi},
+        success: function(response){           
+          $('.isi-edit-bayar-pinjaman').html(response); 
+        }
+      });
+    });
+
     // Konten Interaktif Untuk Ubah Anggota
     $(document).on('click','.ubah_anggota',function(){    
       

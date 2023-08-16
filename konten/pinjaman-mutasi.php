@@ -33,7 +33,7 @@ $info_umum = mysqli_fetch_array($query00);
         <div class="container-fluid">
             <row>
                 <div class="col-12">
-                <div class="card">
+                    <div class="card">
                         <div class="card-header">
                             <h5>Informasi Umum Pinjaman</h5>
                         </div>
@@ -44,7 +44,7 @@ $info_umum = mysqli_fetch_array($query00);
                                 <div class="col-3"><b>Pagu Bulanan</b></div>
                                 <div class="col-3">Rp. <?= number_format($info_umum['pagu_bulanan']); ?></div>
                             </div>
-                            <div class="row">                                
+                            <div class="row">
                                 <div class="col-3"><b>Jaminan</b></div>
                                 <div class="col-3"><?= $info_umum['jaminan']; ?></div>
                                 <div class="col-3"><b>Nilai Taksir Jaminan</b></div>
@@ -101,7 +101,7 @@ $info_umum = mysqli_fetch_array($query00);
 
 
 
-                            <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/pinjaman.php?aksi=rekalkulasi-mutasi&id=<?= $id_pinjaman; ?>"><button type="button" class="btn btn-warning mb-2">
+                            <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/pinjaman.php?aksi=rekalkulasi-mutasi&id=<?= $id_pinjaman; ?>"><button type="button" class="btn btn-success mb-2">
                                     <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
                             <table id="example1" class="table table-bordered table-striped table-sm">
                                 <!-- Kepala Tabel -->
@@ -113,6 +113,7 @@ $info_umum = mysqli_fetch_array($query00);
                                         <td>Keterangan</td>
                                         <td>Cicilan Pokok</td>
                                         <td>Bunga</td>
+                                        <td>Denda</td>
                                         <td>Sisa Pinjaman</td>
                                         <td>Aksi</td>
                                     </tr>
@@ -123,6 +124,7 @@ $info_umum = mysqli_fetch_array($query00);
                                 $no = 0;
                                 $sql = "select * from pinjaman_mutasi where id_pinjaman=$id";
                                 $query = mysqli_query($koneksi, $sql);
+                                $last_trx=mysqli_num_rows($query);
                                 while ($kolom = mysqli_fetch_array($query)) {
                                     $no++;
                                 ?>
@@ -133,10 +135,16 @@ $info_umum = mysqli_fetch_array($query00);
                                         <td><?= $kolom['keterangan']; ?></td>
                                         <td align="right"><?= number_format($kolom['cicilan_pokok']); ?></td>
                                         <td align="right"><?= number_format($kolom['bunga_nominal']); ?></td>
+                                        <td align="right"><?= number_format($kolom['denda_nominal']); ?></td>
                                         <td align="right"><?= number_format($kolom['saldo']); ?></td>
 
                                         <td>
-
+                                            <?php if($no==$last_trx) { ?>
+                                            &nbsp;
+                                            <a title="Hapus Pembayaran" onclick="return confirm('Yakin Akan Hapus, Mutasi Pada Transaksi Ini??')" href="aksi/pinjaman.php?aksi=hapus&id_pinjaman_mutasi=<?= $kolom['id_pinjaman_mutasi']; ?>&id_pinjaman=<?= $kolom['id_pinjaman']; ?>"><i class="fas fa-trash text-info"></i></a>
+                                            &nbsp;
+                                            <a data-target='#editPembayaran' data-toggle='modal' class='text-dark pinjaman_edit_bayar' title='Ubah Pembayaran' data-id='<?= $kolom['id_pinjaman_mutasi']; ?>' href='#'><i class="fas fa-edit text-info"></i></a>
+                                            <?php } ?>
                                         </td>
                                     </tr>
 
@@ -217,6 +225,26 @@ $info_umum = mysqli_fetch_array($query00);
             </div>
             <div class="modal-body">
                 <div class="isi-input-bayar-pinjaman"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Pembayaran  -->
+<div class="modal fade" id="editPembayaran" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Ubah Pembayaran Pinjaman</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="isi-edit-bayar-pinjaman"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
