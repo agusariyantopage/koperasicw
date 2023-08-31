@@ -5,6 +5,12 @@ include "../koneksi.php";
 include "../function.php";
 $id_user = $_SESSION['backend_user_id'];
 
+function hitung_ulang_saldo($koneksi, $id_simpanan)
+{
+    $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
+    mysqli_query($koneksi, $sql_update_saldo);
+}
+
 if (!empty($_POST)) {
     if ($_POST['aksi'] == 'keranjang-tambah') {
         header('location:../index.php?p=penjualan');
@@ -98,6 +104,7 @@ if (!empty($_POST)) {
         // Input Mutasi Setoran
         $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $jumlah+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan', $id_user, DEFAULT, DEFAULT)";
         mysqli_query($koneksi, $sql);
+        pesan_transaksi($koneksi);
         // Update Saldo Simpanan &
         $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
         mysqli_query($koneksi, $sql_update_saldo);
@@ -209,11 +216,11 @@ if (!empty($_POST)) {
             $id_simpanan = $kolom['id_simpanan'];
             $id_simpanan_detail = $kolom['id_simpanan_detail'];
             $realisasi_pembayaran = $kolom['anggaran_pembayaran'];
-            $urut=$kolom['urut'];
+            $urut = $kolom['urut'];
 
             $sql_update_simpanan_detail = "UPDATE simpanan_detail SET tanggal_realisasi_bayar='$tanggal_realisasi_bayar',realisasi_pembayaran=realisasi_pembayaran+$realisasi_pembayaran,auto_pay=1,diubah_pada=DEFAULT WHERE id_simpanan_detail=$id_simpanan_detail";
             //echo $sql_update_simpanan_detail,"<br>";
-            mysqli_query($koneksi,$sql_update_simpanan_detail);
+            mysqli_query($koneksi, $sql_update_simpanan_detail);
 
             // Input Ke Mutasi Simpanan
             $jumlah = $realisasi_pembayaran;
@@ -226,7 +233,7 @@ if (!empty($_POST)) {
 
             // Input Mutasi Setoran
             $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $jumlah+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan', $id_user, DEFAULT, DEFAULT)";
-            echo $sql."<br>";
+            echo $sql . "<br>";
             mysqli_query($koneksi, $sql);
 
             // // Update Saldo Simpanan &
@@ -237,36 +244,70 @@ if (!empty($_POST)) {
             $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi_bunga', $bunga_nominal, $bunga_nominal+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan_bunga', $id_user, DEFAULT, DEFAULT)";
             // echo $sql."<br>";
             mysqli_query($koneksi, $sql);
-            
+
             // // Update Saldo Simpanan &
             $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
             mysqli_query($koneksi, $sql_update_saldo);
         }
         header('location:../index.php?p=simpanan');
-    }
-    else if ($_POST['aksi'] == 'tambah-mutasi-impor') {
-        $sql1="SELECT simpanan.*,simpanan_mutasi.id_simpanan_mutasi FROM simpanan LEFT JOIN simpanan_mutasi ON simpanan.id_simpanan=simpanan_mutasi.id_simpanan WHERE ISNULL(simpanan_mutasi.id_simpanan_mutasi)=1 ORDER BY simpanan_mutasi.id_simpanan_mutasi LIMIT 100";
-        $query1=mysqli_query($koneksi,$sql1);
-        while($data1=mysqli_fetch_array($query1)){
-            $id_simpanan=$data1['id_simpanan'];
-            $tanggal_transaksi=$data1['tanggal_transaksi'];
-            $jenis_transaksi="Setoran";
-            $jumlah=$data1['saldo_terakhir'];
-            $saldo=$data1['saldo_terakhir'];
-            $keterangan="Setoran Awal [Migrasi Data]";
-            $id_user=$data1['id_user'];
+    } else if ($_POST['aksi'] == 'tambah-mutasi-impor') {
+        $sql1 = "SELECT simpanan.*,simpanan_mutasi.id_simpanan_mutasi FROM simpanan LEFT JOIN simpanan_mutasi ON simpanan.id_simpanan=simpanan_mutasi.id_simpanan WHERE ISNULL(simpanan_mutasi.id_simpanan_mutasi)=1 ORDER BY simpanan_mutasi.id_simpanan_mutasi LIMIT 100";
+        $query1 = mysqli_query($koneksi, $sql1);
+        while ($data1 = mysqli_fetch_array($query1)) {
+            $id_simpanan = $data1['id_simpanan'];
+            $tanggal_transaksi = $data1['tanggal_transaksi'];
+            $jenis_transaksi = "Setoran";
+            $jumlah = $data1['saldo_terakhir'];
+            $saldo = $data1['saldo_terakhir'];
+            $keterangan = "Setoran Awal [Migrasi Data]";
+            $id_user = $data1['id_user'];
 
-            setup_anggaran_simpanan_berjangka($koneksi,$id_simpanan);
+            setup_anggaran_simpanan_berjangka($koneksi, $id_simpanan);
 
             // $sql2 = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_transaksi', '$jenis_transaksi', $jumlah, $saldo, '$keterangan', $id_user, DEFAULT, DEFAULT)";
             // mysqli_query($koneksi,$sql2);
-            
+
 
         }
         pesan_transaksi($koneksi);
         header('location:../index.php?p=simpanan');
+    } else if ($_POST['aksi'] == 'proses-massal-setoran') {
+        $id_user = $_SESSION['backend_user_id'];
+        $id_simpanan_jenis = $_POST['id_simpanan_jenis'];
+        $id_periode_pembukuan = $_POST['id_periode_pembukuan'];
+        $periode_pembukuan = get_single_data($koneksi, "periode_pembukuan", "id_periode", $id_periode_pembukuan);
+        $tanggal_mulai = $periode_pembukuan['tanggal_mulai'];
+        $tanggal_selesai = $periode_pembukuan['tanggal_selesai'];
+
+        $sql_loop = "SELECT * FROM simpanan WHERE id_simpanan_jenis=$id_simpanan_jenis AND status_simpanan='AKTIF'";
+        $query_loop = mysqli_query($koneksi, $sql_loop);
+        while ($loop = mysqli_fetch_array($query_loop)) {
+            $id_anggota = $loop['id_anggota'];
+            $id_simpanan = $loop['id_simpanan'];
+            $keterangan = 'Setoran [Proses Massal Periode ' . $tanggal_mulai . ' S/D ' . $tanggal_selesai . ']';
+            $sukses = 0;
+            if ($id_simpanan_jenis == 4) { // Setup Proses Simpanan Wajib
+                $anggota = get_single_data($koneksi, "anggota", "id_anggota", $id_anggota);
+                $setoran = $anggota['potongan_simpanan_wajib'];
+                if ($setoran > 0) {
+                    $jumlah_mutasi = get_mutasi_simpanan_periode($koneksi, $id_simpanan, $tanggal_mulai, $tanggal_selesai);
+                    if ($jumlah_mutasi <= 0) {
+                        $sql = "INSERT INTO simpanan_mutasi(id_simpanan, tanggal_transaksi, jenis_transaksi, jumlah, saldo, keterangan, id_user, dibuat_pada, diubah_pada) VALUES ($id_simpanan, '$tanggal_selesai', 'Setoran', $setoran, $setoran+(SELECT saldo_terakhir FROM simpanan WHERE id_simpanan=$id_simpanan), '$keterangan',$id_user , DEFAULT, DEFAULT)";
+                        mysqli_query($koneksi, $sql);
+                        $sukses_e = mysqli_affected_rows($koneksi);
+                        $sukses = $sukses + $sukses_e;
+                    }
+                    update_saldo_simpanan($koneksi, $id_simpanan);
+                }
+            }
+        }
+        if ($sukses >= 1) {
+            $_SESSION['status_proses'] = 'SUKSES';
+        } else {
+            $_SESSION['status_proses'] = 'GAGAL';
+        }
+        header('location:../index.php?p=simpanan');
     }
-    
 }
 
 if (!empty($_GET['aksi'])) {
@@ -293,6 +334,24 @@ if (!empty($_GET['aksi'])) {
 
         $sql_update_saldo = "UPDATE simpanan SET saldo_terakhir=(SELECT SUM(jumlah) FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan) WHERE id_simpanan=$id_simpanan";
         mysqli_query($koneksi, $sql_update_saldo);
+
+        $link = 'location:../index.php?p=simpanan-mutasi&id=' . $id_simpanan;
+        header($link);
+    } else if ($_GET['aksi'] == 'hapus') {
+        $id_simpanan = $_GET['id_simpanan'];
+        $id_simpanan_mutasi = $_GET['id_simpanan_mutasi'];
+        $sql_urut = "SELECT * FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan ORDER BY keterangan DESC limit 1";
+        // echo $sql_urut;
+        $query_urut = mysqli_query($koneksi, $sql_urut);
+        $data_urut = mysqli_fetch_array($query_urut);
+        $urut = intval(substr($data_urut['keterangan'], -1));
+        $sql="UPDATE simpanan_detail SET tanggal_realisasi_bayar=NULL, realisasi_pembayaran=0 WHERE id_simpanan=$id_simpanan AND urut=$urut";
+        mysqli_query($koneksi, $sql);
+        $sql = "DELETE from simpanan_mutasi WHERE id_simpanan_mutasi=$id_simpanan_mutasi OR (id_simpanan=$id_simpanan AND RIGHT(keterangan,1)='$urut')";
+        mysqli_query($koneksi, $sql);
+
+        pesan_transaksi($koneksi);
+        hitung_ulang_saldo($koneksi, $id_simpanan);
 
         $link = 'location:../index.php?p=simpanan-mutasi&id=' . $id_simpanan;
         header($link);

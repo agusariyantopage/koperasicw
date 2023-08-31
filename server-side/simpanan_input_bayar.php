@@ -2,8 +2,15 @@
 include "../koneksi.php";
 $id_simpanan_detail = $_POST['id_simpanan_detail'];
 $id_simpanan = $_POST['id_simpanan'];
+// Pembayaran Simpanan Ke-3
+$sql_urut="SELECT * FROM simpanan_mutasi WHERE id_simpanan=$id_simpanan ORDER BY keterangan DESC limit 1";
+// echo $sql_urut;
+$query_urut=mysqli_query($koneksi,$sql_urut);
+$data_urut=mysqli_fetch_array($query_urut);
+$urut=intval(substr($data_urut['keterangan'],-1))+1;
 
-$sql = "SELECT * FROM simpanan_detail WHERE id_simpanan=$id_simpanan AND realisasi_pembayaran<anggaran_pembayaran ORDER BY urut LIMIT 1";
+$sql = "SELECT * FROM simpanan_detail WHERE id_simpanan=$id_simpanan AND urut=$urut ORDER BY urut LIMIT 1";
+// $sql = "SELECT * FROM simpanan_detail WHERE id_simpanan=$id_simpanan AND realisasi_pembayaran<anggaran_pembayaran ORDER BY urut LIMIT 1";
 
 $query = mysqli_query($koneksi, $sql);
 $data = mysqli_fetch_array($query);

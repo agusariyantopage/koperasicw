@@ -45,6 +45,8 @@
                    <a href="index.php?p=simpanan-autopay"><button type="button" class="btn btn-success mb-2"><i class="fas fa-wallet"></i> Proses Potong Gaji</button></a>
                    <button type="button" class="btn btn-warning mb-2" data-toggle="modal" data-target="#imporModal">
                      <i class="fas fa-download"></i> Proses Data Migrasi</button>
+                   <button type="button" class="btn bg-purple mb-2" data-toggle="modal" data-target="#prosesMassalModal">
+                     <i class="fas fa-recycle"></i> Proses Massal Setoran</button>
                  </div>
                </div>
 
@@ -203,6 +205,39 @@
 
            </tbody>
          </table>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <!-- Modal Untuk Proses Massal Setoran -->
+ <div class="modal fade" id="prosesMassalModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Proses Massal Setoran</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form action="aksi/simpanan.php" method="post">
+          <input type="hidden" name="aksi" value="proses-massal-setoran">
+          <label for="id_simpanan_jenis">Jenis Simpanan</label>
+          <select name="id_simpanan_jenis" class="form-control">
+            <option value="">-- Pilih Jenis Simpanan --</option>
+            <?= call_option($koneksi,"simpanan_jenis","jenis_simpanan","id_simpanan_jenis","jenis_simpanan"); ?>
+          </select>
+          <label for="id_periode_pembukuan">Periode (Tahun & Bulan)</label>  
+          <select name="id_periode_pembukuan" class="form-control">
+            <option value="">-- Pilih Periode --</option>
+            <?= call_option($koneksi,"periode_pembukuan","kode","id_periode","kode"); ?>
+          </select>
+          <button type="submit" class="btn btn-info btn-block mt-2"> <i class="fas fa-save"></i> Proses</button>  
+         </form>
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>

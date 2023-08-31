@@ -128,6 +128,7 @@ $info_umum = mysqli_fetch_array($query00);
                                 $no = 0;
                                 $sql = "select * from simpanan_mutasi where id_simpanan=$id";
                                 $query = mysqli_query($koneksi, $sql);
+                                $last_trx = mysqli_num_rows($query);
                                 while ($kolom = mysqli_fetch_array($query)) {
                                     $no++;
                                 ?>
@@ -140,7 +141,12 @@ $info_umum = mysqli_fetch_array($query00);
                                         <td align="right"><?= number_format($kolom['saldo']); ?></td>
 
                                         <td>
-
+                                            <?php if ($no == $last_trx) { ?>
+                                                &nbsp;
+                                                <a title="Hapus Transaksi" onclick="return confirm('Yakin Akan Hapus, Mutasi Pada Transaksi Ini??')" href="aksi/simpanan.php?aksi=hapus&id_simpanan_mutasi=<?= $kolom['id_simpanan_mutasi']; ?>&id_simpanan=<?= $kolom['id_simpanan']; ?>"><i class="fas fa-trash text-info"></i></a>
+                                                &nbsp;
+                                                <a data-target='#editPembayaran' data-toggle='modal' class='text-dark simpanan_edit_bayar' title='Ubah Pembayaran' data-id='<?= $kolom['id_simpanan_mutasi']; ?>' href='#'><i class="fas fa-edit text-info"></i></a>
+                                            <?php } ?>
                                         </td>
                                     </tr>
 
