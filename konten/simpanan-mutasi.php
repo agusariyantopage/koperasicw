@@ -106,9 +106,13 @@ $info_umum = mysqli_fetch_array($query00);
                                 <button type="button" class="btn btn-success mb-2" data-toggle="modal" data-target="#prosesBunga">
                                     <i class="fas fa-percent"></i> Proses Bunga</button>
 
+
+
                             <?php } ?>
                             <a onclick="return confirm('Lakukan Re-Kalkulasi Mutasi Pada Akun Ini??')" href="aksi/simpanan.php?aksi=rekalkulasi-mutasi&id=<?= $id_simpanan; ?>"><button type="button" class="btn btn-warning mb-2">
                                     <i class="fas fa-calculator"></i> Re-Kalkulasi Mutasi</button></a>
+                            <button type="button" class="btn bg-purple mb-2" data-toggle="modal" data-target="#cetakMutasi">
+                                <i class="fas fa-print"></i> Cetak Mutasi</button>
                             <table id="example1" class="table table-bordered table-striped table-sm">
                                 <!-- Kepala Tabel -->
                                 <thead>
@@ -258,6 +262,39 @@ $info_umum = mysqli_fetch_array($query00);
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 
 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Untuk Cetak Mutasi -->
+<div class="modal fade" id="cetakMutasi" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Cetak Mutasi Transaksi</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="pdf/output/lap_mutasi_simpanan.php" target="_blank" method="get">
+                    
+                    <input type="hidden" name="id_simpanan" value="<?= $id_simpanan; ?>">
+
+                    <label for="tanggal_awal">Tanggal Awal</label>
+                    <input type="date" name="tanggal_awal" class="form-control" required>
+
+                    <label for="tanggal_akhir">Tanggal Akhir</label>
+                    <input type="date" name="tanggal_akhir" class="form-control" required>
+
+                    
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-info">Cetak</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+
+                </form>
             </div>
         </div>
     </div>
