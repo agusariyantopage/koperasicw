@@ -143,6 +143,52 @@
 
        </div>
        <!-- /.row -->
+       <hr>
+       <h4>Laporan Tahunan</h4>
+       <div class="row">
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <p>Laporan Fotocopy Lembaga</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <a href="#" data-toggle="modal" data-target="#modalFCLembaga" class="small-box-footer">Cetak <i class="fas fa-print"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+
+                            <p>Laporan Pendapatan Pulsa</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                        <a href="#" data-toggle="modal" data-target="#modalPulsa" class="small-box-footer">Cetak <i class="fas fa-print"></i></a>
+                    </div>
+                </div>
+               
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <p>Laporan Penjualan Kredit</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <a href="#" data-toggle="modal" data-target="#modalKredit" class="small-box-footer">Cetak <i class="fas fa-print"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+            </div>
+            <!-- /.row -->  
 
      </div><!-- /.container-fluid -->
    </section>
@@ -150,6 +196,78 @@
  </div>
  <!-- /.content-wrapper -->
 
+ <!-- Modal Laporan Fotokopi Lembaga -->
+ <div class="modal fade" id="modalFCLembaga" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Pilih Periode Laporan</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="get" target="blank" action="pdf/output/lap_rekap_fotocopy.php">
+           <div>
+             <label for="tahun">Tahun</label>
+             <input type="number" name="tahun" class="form-control" required>
+           </div>          
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+         <button type="submit" class="btn btn-primary">Cetak</button>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Modal Penjualan Pulsa -->
+ <div class="modal fade" id="modalPulsa" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Pilih Periode Laporan</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="get" target="blank" action="pdf/output/lap_rekap_pulsa.php">
+           <div>
+             <label for="tahun">Tahun</label>
+             <input type="number" name="tahun" class="form-control" required>
+           </div>          
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+         <button type="submit" class="btn btn-primary">Cetak</button>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Modal Penjualan Kredit -->
+ <div class="modal fade" id="modalKredit" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="editModalLabel">Pilih Periode Laporan</h5>
+         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="get" target="blank" action="pdf/output/lap_rekap_jual_kredit.php">
+           <div>
+             <label for="tahun">Tahun</label>
+             <input type="number" name="tahun" class="form-control" required>
+           </div>          
+
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+         <button type="submit" class="btn btn-primary">Cetak</button>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
  <!-- Modal Laporan Pembelian -->
  <div class="modal fade" id="laporanPembelianModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
    <div class="modal-dialog">
