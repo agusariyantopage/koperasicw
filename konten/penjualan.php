@@ -240,6 +240,14 @@
               <td align="right">Rp. <?= $grandtotal; ?></td>
             </tr>
             <tr>
+              <td>KUPON BELANJA</td>
+              <td>:</td>
+              <td align="right"><select name="kupon_belanja" id="kupon_belanja" required class="form-control">
+                <option value="0">-- Tanpa Kupon --</option>
+                <option value="100000">-- Kupon Rp. 100,000 --</option>                
+              </select></td>
+            </tr>
+            <tr>
               <td>PEMBAYARAN</td>
               <td>:</td>
               <td align="right"><input id="bayar" type="number" class="form-control text-right"></td>

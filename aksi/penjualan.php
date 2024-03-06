@@ -46,8 +46,13 @@
             $total=$_POST['total'];
             $diskon=0;
             $pajak=0;
+            if($metode_bayar=="KAS"){
+                $kupon_belanja=$_POST['kupon_belanja'];;
+            } else {
+                $kupon_belanja=0;
+            }
             
-            $sql="insert into jual (id_anggota, id_user, metode_bayar, tanggal_transaksi, total, diskon, pajak, dibuat_pada, diubah_pada) values($id_anggota,$id_user,'$metode_bayar','$tanggal_transaksi',$total,$diskon,$pajak,DEFAULT,DEFAULT)";
+            $sql="insert into jual (id_anggota, id_user, metode_bayar, tanggal_transaksi, total, kupon_belanja, diskon, pajak, dibuat_pada, diubah_pada) values($id_anggota,$id_user,'$metode_bayar','$tanggal_transaksi',$total,$kupon_belanja,$diskon,$pajak,DEFAULT,DEFAULT)";
             mysqli_query($koneksi,$sql);
 
             // Simpan Detail Jual
