@@ -38,7 +38,7 @@
                <a href="index.php?p=penjualan"><button type="button" class="btn btn-primary mb-2">
                    <i class="fas fa-plus"></i> Tambah Transaksi Baru</button></a>
 
-               <table id="noorder" class="table table-bordered table-striped">
+               <table id="noorder" class="table table-bordered table-striped table-sm">
                  <!-- Kepala Tabel -->
                  <thead>
                    <tr>
@@ -47,6 +47,7 @@
                      <td>Tanggal Transaksi</td>
                      <td>Metode Pembayaran</td>
                      <td>Total Belanja</td>
+                     <td>Kupon</td>
                      <td>Petugas</td>
                      <td>Waktu Input</td>
                      <td>Aksi</td>
@@ -80,6 +81,7 @@
                      <td><?= $kolom['tanggal_transaksi']; ?></td>
                      <td><?= $kolom['metode_bayar']; ?></td>
                      <td><?= number_format($kolom['total']); ?></td>
+                     <td><?= number_format($kolom['kupon_belanja']); ?></td>
                      <td><?= $kolom['petugas']; ?></td>
                      <td><?= $kolom['dibuat_pada']; ?></td>
                      <td>

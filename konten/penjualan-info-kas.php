@@ -73,7 +73,7 @@
                  </thead>
                  <!-- Isi Tabel -->
                  <?php
-                  $sql_belanja_awal = "SELECT SUM(total) AS belanja_awal FROM jual WHERE metode_bayar='KAS' AND tanggal_transaksi < '$tanggal_awal'";
+                  $sql_belanja_awal = "SELECT SUM(total-kupon_belanja) AS belanja_awal FROM jual WHERE metode_bayar='KAS' AND tanggal_transaksi < '$tanggal_awal'";
                   $query_belanja_awal = mysqli_query($koneksi, $sql_belanja_awal);
                   $kolom_belanja_awal = mysqli_fetch_array($query_belanja_awal);
                   $belanja_awal = $kolom_belanja_awal['belanja_awal'];
@@ -82,7 +82,7 @@
                   $total_masuk = 0;
                   $query = mysqli_query($koneksi, $sql);
                   while ($kolom = mysqli_fetch_array($query)) {
-                    $total_masuk = $total_masuk + $kolom['total'];
+                    $total_masuk = $total_masuk + $kolom['total'] - $kolom['kupon_belanja'];
                   ?>
                    <tr>
                      <td>
@@ -91,7 +91,7 @@
                      <td><?= $kolom['napel']; ?></td>
                      <td><?= $kolom['tanggal_transaksi']; ?></td>
                      <td><?= $kolom['metode_bayar']; ?></td>
-                     <td class="text-right"><?= number_format($kolom['total']); ?></td>
+                     <td class="text-right"><?= number_format($kolom['total']-$kolom['kupon_belanja']); ?></td>
                    </tr>
 
                  <?php
