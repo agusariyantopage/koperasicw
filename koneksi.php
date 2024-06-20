@@ -1,5 +1,7 @@
 <?php
     date_default_timezone_set("Asia/Kuala_Lumpur");
+    $adjustment_date='2023-12-31';
+    $adjustment_state=1; // Aktif
     // Variabel Koneksi
     $servername     ="localhost";
     $database       ="dbkoperasi";

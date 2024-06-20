@@ -54,7 +54,9 @@
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-  $sql="select * from anggota where is_individual=1";
+  $sql="select a.* from anggota a where is_individual=1";
+//   $sql="SELECT a.* from anggota a WHERE a.saldo!=(SELECT COALESCE(SUM(anggota_mutasi_saldo.jumlah),0) FROM anggota_mutasi_saldo WHERE anggota_mutasi_saldo.id_anggota=a.id_anggota) - 
+// (SELECT COALESCE(SUM(jual.total),0) FROM jual WHERE jual.id_anggota=a.id_anggota AND jual.metode_bayar='POTONG SALDO ANGGOTA') - (SELECT COALESCE(SUM(jual_cicil.jumlah_tagihan),0) FROM jual_cicil,jual WHERE jual_cicil.id_jual=jual.id_jual AND jual_cicil.is_terbayar=1 AND jual.id_anggota=a.id_anggota) AND a.is_individual=1 ORDER BY `a`.`nama` ASC";
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
 ?>                

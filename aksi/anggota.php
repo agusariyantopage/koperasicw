@@ -92,21 +92,21 @@ if (!empty($_GET['aksi'])) {
         //echo $sql;
         header('location:../index.php?p=anggota');
     }
-    if ($_GET['aksi'] == 'set-kapital') {
+    else if ($_GET['aksi'] == 'set-kapital') {
         $sql = "update anggota set nama=upper(nama)";
         mysqli_query($koneksi, $sql);
         pesan_transaksi($koneksi);
         //echo $sql;
         header('location:../index.php?p=anggota');
     }
-    if ($_GET['aksi'] == 'set-proper') {
+    else if ($_GET['aksi'] == 'set-proper') {
         $sql = "UPDATE anggota SET nama = CONCAT(UPPER(SUBSTRING(nama, 1, 1)), LOWER(SUBSTRING(nama FROM 2)))";
         mysqli_query($koneksi, $sql);
         pesan_transaksi($koneksi);
         //echo $sql;
         header('location:../index.php?p=anggota');
     }
-    if ($_GET['aksi'] == 'balancing-saldo') {
+    else if ($_GET['aksi'] == 'balancing-saldo') {
         $id_anggota = $_GET['token'];
         $akumulasi = $_GET['akumulasi'];
         $sql = "UPDATE anggota SET saldo=$akumulasi WHERE md5(id_anggota)='$id_anggota'";
@@ -114,6 +114,16 @@ if (!empty($_GET['aksi'])) {
         pesan_transaksi($koneksi);
         //echo $sql;
         $link = "location:../index.php?p=anggota-saldo-individu&token=" . $id_anggota;
+        header($link);
+    }
+    else if ($_GET['aksi'] == 'adjustment-saldo') {
+        $id_anggota = $_GET['id_anggota'];
+        $adjustment = $_GET['adjustment'];
+        $sql = "INSERT INTO anggota_mutasi_saldo(id_anggota_mutasi_saldo, id_anggota, tanggal, jumlah, keterangan) VALUES (DEFAULT, $id_anggota, '$adjustment_date', $adjustment, 'Adjustment Saldo')";
+        mysqli_query($koneksi, $sql);
+        pesan_transaksi($koneksi);
+        //echo $sql;
+        $link = "location:../index.php?p=anggota-saldo-individu&token=" . md5($id_anggota);
         header($link);
     }
 }

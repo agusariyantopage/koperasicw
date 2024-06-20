@@ -5,6 +5,7 @@
     $kolom1=mysqli_fetch_array($query1);
     $nama=$kolom1['nama']." (".$kolom1['alamat'].")";
     $saldo_real=$kolom1['saldo'];
+    $id_anggota=$kolom1['id_anggota'];
 
     // Cari Total Belanja Potong Saldo
     $sql2="select sum(total) as total from jual where metode_bayar='POTONG SALDO ANGGOTA' and md5(id_anggota)='$id'";
@@ -95,11 +96,11 @@
                 <!-- Isi Tabel -->
 <?php
   if(empty($_GET['mulai'])){
-    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id'";
+    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id' order by tanggal";
   } else {
     $mulai=$_GET['mulai'];
     $selesai=$_GET['selesai'];
-    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id' and (tanggal>='$mulai' and tanggal<='$selesai')";
+    $sql="select * from anggota_mutasi_saldo where md5(id_anggota)='$id' and (tanggal>='$mulai' and tanggal<='$selesai') order by tanggal";
   }  
   
   $query=mysqli_query($koneksi,$sql);
@@ -183,7 +184,19 @@
                         <th>Keterangan</th>                        
                       </tr>
                       <tr>
-                        <th>Rp. <?= number_format($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil); ?></th>
+                        <th>Rp. 
+                        <?php
+                            //$token=($kolom['id_anggota']);
+                            $adjustment=$saldo_real-($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil);
+                            if(($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil)!=$saldo_real&&$adjustment_state==1){
+                              
+                              echo "<a href='aksi/anggota.php?aksi=adjustment-saldo&adjustment=$adjustment&id_anggota=$id_anggota' class='text-dark'>".number_format($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil)."</a>";
+                            }  else {
+                        ?>
+
+                        <?= number_format($total_saldo-$total_belanja_potong_saldo-$total_belanja_cicil); ?>
+                      <?php } ?>
+                      </th>
                         <th>Rp. <?= number_format($saldo_real); ?></th>
                         <th>
                           <?php
