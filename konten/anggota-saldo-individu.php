@@ -8,10 +8,11 @@
     $id_anggota=$kolom1['id_anggota'];
 
     // Cari Total Belanja Potong Saldo
-    $sql2="select sum(total) as total from jual where metode_bayar='POTONG SALDO ANGGOTA' and md5(id_anggota)='$id'";
+    $sql2="select sum(total-kupon_belanja) as total from jual where metode_bayar='POTONG SALDO ANGGOTA' and md5(id_anggota)='$id'";
     $query2=mysqli_query($koneksi,$sql2);
     $kolom2=mysqli_fetch_array($query2);
-    $total_belanja_potong_saldo=$kolom2['total'];
+    $total_belanja_potong_saldo=$kolom2['total']; // Update Implementasi Kupon Belanja
+    // $total_belanja_potong_saldo=$kolom2['total'];
 
     // Cari Total Belanja Cicilan
     
@@ -152,7 +153,8 @@
   $total=0;
   while($kolom=mysqli_fetch_array($query)){  
       if($kolom['metode_bayar']!="KAS"){
-        $total=$total+$kolom['total'];
+        $total=$total+$kolom['total']-$kolom['kupon_belanja'];
+        // $total=$total+$kolom['total'];
       }
       
 ?>                
@@ -162,7 +164,7 @@
                   </td>                  
                   <td><?= $kolom['tanggal_transaksi']; ?></td>
                   <td><?= $kolom['metode_bayar']; ?></td>                                  
-                  <td align="right"><?= number_format($kolom['total']); ?></td>  
+                  <td align="right"><?= number_format($kolom['total']-$kolom['kupon_belanja']); ?></td>  
                 </tr>
               
 <?php

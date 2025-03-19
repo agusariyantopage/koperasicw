@@ -38,7 +38,7 @@
                <a href="index.php?p=penjualan"><button type="button" class="btn btn-primary mb-2">
                    <i class="fas fa-plus"></i> Tambah Transaksi Baru</button></a>
 
-               <table id="noorder" class="table table-bordered table-striped table-sm">
+               <table id="example1" class="table table-bordered table-striped table-sm">
                  <!-- Kepala Tabel -->
                  <thead>
                    <tr>

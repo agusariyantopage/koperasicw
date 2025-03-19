@@ -1,5 +1,5 @@
           <li class="nav-item">
-            <a href="index.php?p=pesanan" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 Data Pokok                

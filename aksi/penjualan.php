@@ -47,7 +47,9 @@
             $diskon=0;
             $pajak=0;
             if($metode_bayar=="KAS"){
-                $kupon_belanja=$_POST['kupon_belanja'];;
+                $kupon_belanja=$_POST['kupon_belanja'];
+            } else if($metode_bayar=="POTONG SALDO ANGGOTA") {
+                $kupon_belanja=$_POST['kupon_belanja'];
             } else {
                 $kupon_belanja=0;
             }
@@ -105,7 +107,7 @@
             }
 
             if($metode_bayar=="POTONG SALDO ANGGOTA"){
-                $sql6="update anggota set saldo=saldo-$total where id_anggota=$id_anggota";
+                $sql6="update anggota set saldo=saldo-$total-$kupon_belanja where id_anggota=$id_anggota";
                 mysqli_query($koneksi,$sql6);
             }
 

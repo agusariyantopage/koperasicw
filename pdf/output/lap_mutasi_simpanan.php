@@ -134,7 +134,7 @@ $html.='
 ';
 
 //$sql1 = "select jual.*,nama from jual,anggota where jual.id_anggota=anggota.id_anggota and (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
-$sql1 = "SELECT * from simpanan_mutasi where id_simpanan=$id_simpanan AND (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir')";
+$sql1 = "SELECT * from simpanan_mutasi where id_simpanan=$id_simpanan AND (tanggal_transaksi BETWEEN '$tanggal_awal' and '$tanggal_akhir') ORDER BY tanggal_transaksi";
 $query1 = mysqli_query($koneksi, $sql1);
 
 $no = 1;
