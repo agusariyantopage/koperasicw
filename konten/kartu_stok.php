@@ -45,7 +45,7 @@
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-   $sql="select produk.*,produk_kategori,(select SUM(jumlah) from beli_detail where beli_detail.id_produk=produk.id_produk limit 1) as produk_in,(select SUM(jumlah) from jual_detail where jual_detail.id_produk=produk.id_produk limit 1) as produk_out from produk,produk_kategori where produk.id_produk_kategori=produk_kategori.id_produk_kategori order by nama";
+   $sql="SELECT produk.*,produk_kategori,(select SUM(jumlah) from beli_detail where beli_detail.id_produk=produk.id_produk limit 1) as produk_in,(select SUM(jumlah) from jual_detail where jual_detail.id_produk=produk.id_produk limit 1) as produk_out from produk,produk_kategori where produk.id_produk_kategori=produk_kategori.id_produk_kategori order by nama";
    $query=mysqli_query($koneksi,$sql);
    while($kolom=mysqli_fetch_array($query)){
 ?>                

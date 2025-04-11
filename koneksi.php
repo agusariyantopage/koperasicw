@@ -4,6 +4,7 @@
     $adjustment_state=1; // Aktif
     // Variabel Koneksi
     $servername     ="localhost";
+    // $database       ="dbkoperasi_2025_03";
     $database       ="dbkoperasi";
     $username       ="root";
     $password       ="";

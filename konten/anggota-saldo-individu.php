@@ -1,4 +1,5 @@
 <?php
+    // $id=md5($_GET['token']);
     $id=$_GET['token'];
     $sql1="select * from anggota where md5(id_anggota)='$id'";
     $query1=mysqli_query($koneksi,$sql1);

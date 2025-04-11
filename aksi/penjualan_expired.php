@@ -14,7 +14,7 @@
                 $id_user=$_SESSION['backend_user_id'];
                 $jumlah=$_POST['jumlah'];
                 $id_produk=$kolom1['id_produk'];
-                $harga=$kolom1['harga_jual'];
+                $harga=$kolom1['hpp'];
                 $hpp=$kolom1['hpp'];
                 // Cek Sudah Ada Dikeranjang ??
                 $sql2="select * from keranjang where id_produk=$id_produk and id_user=$id_user";
@@ -29,14 +29,14 @@
                 mysqli_query($koneksi,$sql);
             }
             
-            header('location:../index.php?p=penjualan');
+            header('location:../index.php?p=penjualan-expired');
         }
         else if($_POST['aksi']=='keranjang-ubah'){
             $x0=$_POST['id'];
             $x1=$_POST['qty'];
             $sql="update keranjang set jumlah=$x1,diubah_pada=DEFAULT where id_keranjang=$x0";
             mysqli_query($koneksi,$sql);
-            header('location:../index.php?p=penjualan');
+            header('location:../index.php?p=penjualan-expired');
         }
         else if($_POST['aksi']=='simpan-penjualan'){
             $id_anggota=$_POST['id_anggota'];
@@ -83,34 +83,7 @@
                 $_SESSION['status_proses'] ='SUKSES SIMPAN JUAL';                    
             }
 
-            // Simpan Jadwal Pembayaran Jika Metode Bayar Adalah Cicilan
-            if($metode_bayar=="CICIL BAYAR"){
-                $jumlah_cicil=$_POST['jumlah_cicil'];
-                $cicil[0]=$_POST['jumlah_bayar1'];                
-                $cicil[1]=$_POST['jumlah_bayar2'];                
-                $cicil[2]=$_POST['jumlah_bayar3'];                
-                $cicil[3]=$_POST['jumlah_bayar4'];                
-                $cicil[4]=$_POST['jumlah_bayar5'];                
-
-                //$sql6="update anggota set saldo=saldo-$cicil[0] where id_anggota=$id_anggota";
-                //mysqli_query($koneksi,$sql6);
-
-                for($i=0;$i<$jumlah_cicil;$i++){
-                    $keterangan="Pembayaran ke -".($i+1);
-                    $tanggal_jatuh_tempo=$_POST['tanggal_jatuh_tempo'][$i];
-                    $jumlah_tagihan=$cicil[$i];
-                    $is_terbayar=0;
-
-                    $sql5="insert into jual_cicil(id_jual, keterangan, tanggal_jatuh_tempo, jumlah_tagihan, is_terbayar, dibuat_pada, diubah_pada) values($id_jual,'$keterangan','$tanggal_jatuh_tempo',$jumlah_tagihan,$is_terbayar,DEFAULT,DEFAULT)";
-                    mysqli_query($koneksi,$sql5);
-                }
-            }
-
-            if($metode_bayar=="POTONG SALDO ANGGOTA"){
-                $sql6="update anggota set saldo=saldo-($total-$kupon_belanja) where id_anggota=$id_anggota";
-                // echo $sql6;
-                mysqli_query($koneksi,$sql6);
-            }
+            
 
             // Kosongkan Keranjang
             $sql4="delete from keranjang where id_user=$id_user";
@@ -157,7 +130,7 @@
             $x0=$_GET['token'];
             $sql="delete from keranjang where md5(id_keranjang)='$x0'";
             mysqli_query($koneksi,$sql);
-            header('location:../index.php?p=penjualan');
+            header('location:../index.php?p=penjualan-expired');
         }
         else if($_GET['aksi']=='keranjang-tambah'){
             $token=$_GET['token'];
@@ -169,23 +142,24 @@
                 $id_user=$_SESSION['backend_user_id'];
                 $jumlah=1;
                 $id_produk=$kolom1['id_produk'];
-                $harga=$kolom1['harga_jual'];
+                $harga=0; // Harga Jual Barang Expired = 0 (Rugi)
                 $hpp=$kolom1['hpp'];
+                $jenis='expired';
                 // Cek Sudah Ada Dikeranjang ??
                 $sql2="select * from keranjang where id_produk=$id_produk and id_user=$id_user";
                 $query2=mysqli_query($koneksi,$sql2);
                 $ketemu=mysqli_num_rows($query2);
                 if($ketemu<=0){
-                    $sql="insert into keranjang (id_user, id_produk, harga, jumlah,hpp) values($id_user, $id_produk, $harga, $jumlah,$hpp)";   
+                    $sql="insert into keranjang (id_user, id_produk, harga, jumlah,hpp,jenis) values($id_user, $id_produk, $harga, $jumlah,$hpp,'$jenis')";   
                 } else {
-                    $sql="update keranjang set jumlah=jumlah+$jumlah,diubah_pada=DEFAULT where id_produk=$id_produk and id_user=$id_user";
+                    $sql="update keranjang set jumlah=jumlah+$jumlah,diubah_pada=DEFAULT where id_produk=$id_produk and id_user=$id_user and jenis='$jenis'";
                 }
                 mysqli_query($koneksi,$sql);
                 
                 
             }
             
-            header('location:../index.php?p=penjualan');
+            header('location:../index.php?p=penjualan-expired');
         }
     }
 ?>

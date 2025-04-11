@@ -54,6 +54,10 @@
         $title  ="App Koperasi V $app_version | Informasi Penjualan";
         $konten="konten/penjualan-info.php";
     }
+    else if($_GET['p']=='penjualan-expired'){
+        $title  ="App Koperasi V $app_version | Stok Expired"; // Ditambahkan pada 21 Maret 2025
+        $konten="konten/penjualan-expired.php";
+    }
     else if($_GET['p']=='daftar-pembelian'){
         $title  ="App Koperasi V $app_version | Daftar Pembelian";
         $konten="konten/pembelian-daftar.php";

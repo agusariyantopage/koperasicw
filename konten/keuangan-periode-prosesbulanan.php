@@ -60,8 +60,8 @@
                 </thead>
                 <!-- Isi Tabel -->
 <?php
-  $sql="select id_anggota as ida,nama,alamat,is_individual,saldo,belanja_wajib,(select sum(total) from jual where id_anggota=ida and metode_bayar='POTONG SALDO ANGGOTA' and (tanggal_transaksi>='$tanggal_mulai' and tanggal_transaksi<='$tanggal_selesai')) as total_belanja,(select SUM(jual_cicil.jumlah_tagihan) from jual_cicil,jual where jual_cicil.id_jual=jual.id_jual and jual.id_anggota=ida and (tanggal_jatuh_tempo>='$tanggal_mulai' and tanggal_jatuh_tempo<='$tanggal_selesai')) as total_belanja_cicil from anggota where is_individual=1 and id_anggota!=1 order by nama";
-  //echo $sql;
+  $sql="SELECT id_anggota as ida,nama,alamat,is_individual,saldo,belanja_wajib,(select sum(total-kupon_belanja) from jual where id_anggota=ida and metode_bayar='POTONG SALDO ANGGOTA' and (tanggal_transaksi>='$tanggal_mulai' and tanggal_transaksi<='$tanggal_selesai')) as total_belanja,(select SUM(jual_cicil.jumlah_tagihan) from jual_cicil,jual where jual_cicil.id_jual=jual.id_jual and jual.id_anggota=ida and jual_cicil.is_terbayar=0 and (tanggal_jatuh_tempo>='$tanggal_mulai' and tanggal_jatuh_tempo<='$tanggal_selesai')) as total_belanja_cicil from anggota where is_individual=1 and id_anggota!=1  order by nama";
+  // echo $sql;
   $query=mysqli_query($koneksi,$sql);
   while($kolom=mysqli_fetch_array($query)){  
     $belanja_wajib=$kolom['belanja_wajib'];    

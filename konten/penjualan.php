@@ -72,7 +72,8 @@
                 <tbody>
                   <?php
                   $id_user = $_SESSION['backend_user_id'];
-                  $sql2 = "select keranjang.*,produk.nama from keranjang,produk where keranjang.id_produk=produk.id_produk and id_user=$id_user";
+                  $sql2 = "SELECT keranjang.*,produk.nama from keranjang,produk where keranjang.id_produk=produk.id_produk and id_user=$id_user";
+                  // $sql2 = "SELECT keranjang.*,produk.nama from keranjang,produk where keranjang.id_produk=produk.id_produk and id_user=$id_user and jenis='penjualan'";
                   $query2 = mysqli_query($koneksi, $sql2);
                   $no = 0;
                   $grandtotal = 0;
